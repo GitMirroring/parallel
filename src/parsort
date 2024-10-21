@@ -137,7 +137,7 @@ GetOptions(
     "help" => \$opt::dummy,
     ) || exit(255);
 $Global::progname = ($0 =~ m:(^|/)([^/]+)$:)[1];
-$Global::version = 20240922;
+$Global::version = 20241022;
 if($opt::version) { version(); exit 0; }
 # Remove -D and --parallel=N
 my @s = (grep { ! /^-D$|^--parallel=\S+$/ }

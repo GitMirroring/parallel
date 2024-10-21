@@ -2888,7 +2888,7 @@ sub check_invalid_option_combinations() {
 
 sub init_globals() {
     # Defaults:
-    $Global::version = 20241017;
+    $Global::version = 20241022;
     $Global::progname = 'parallel';
     $::name = "GNU Parallel";
     $Global::infinity = 2**31;
@@ -5946,8 +5946,8 @@ sub usage() {
 	 "If you use programs that use GNU Parallel to process data for an article in a",
 	 "scientific publication, please cite:",
 	 "",
-	 "  Tange, O. (2024, September 22). GNU Parallel 20240922 ('Gold Apollo AR924').",
-	 "  Zenodo. https://doi.org/10.5281/zenodo.13826092",
+	 "  Tange, O. (2024, October 22). GNU Parallel 20241022 ('Sinwar Nasrallah').",
+	 "  Zenodo. https://doi.org/10.5281/zenodo.13957646",
 	 "",
 	 # Before changing these lines,  please read
 	 # https://www.gnu.org/software/parallel/parallel_design.html#citation-notice
@@ -5979,8 +5979,8 @@ sub citation_notice() {
 	     "If you use programs that use GNU Parallel to process data for an article in a",
 	     "scientific publication, please cite:",
 	     "",
-	     "  Tange, O. (2024, September 22). GNU Parallel 20240922 ('Gold Apollo AR924').",
-	     "  Zenodo. https://doi.org/10.5281/zenodo.13826092",
+	     "  Tange, O. (2024, October 22). GNU Parallel 20241022 ('Sinwar Nasrallah').",
+	     "  Zenodo. https://doi.org/10.5281/zenodo.13957646",
 	     "",
 	     # Before changing these line,   please read
 	     # https://www.gnu.org/software/parallel/parallel_design.html#citation-notice and
@@ -6106,20 +6106,20 @@ sub citation() {
 	"If you use programs that use GNU Parallel to process data for an article in a",
 	"scientific publication, please cite:",
 	"",
-	"\@software{tange_2024_13826092,",
+	"\@software{tange_2024_13957646,",
 	"      author       = {Tange, Ole},",
-	"      title        = {GNU Parallel 20240922 ('Gold Apollo AR924')},",
-	"      month        = Sep,",
+	"      title        = {GNU Parallel 20241022 ('Sinwar Nasrallah')},",
+	"      month        = Oct,",
 	"      year         = 2024,",
 	"      note         = {{GNU Parallel is a general parallelizer to run",
 	"                       multiple serial command line programs in parallel",
 	"                       without changing them.}},",
 	"      publisher    = {Zenodo},",
-	"      doi          = {10.5281/zenodo.13826092},",
-	"      url          = {https://doi.org/10.5281/zenodo.13826092}",
+	"      doi          = {10.5281/zenodo.13957646},",
+	"      url          = {https://doi.org/10.5281/zenodo.13957646}",
 	"}",
 	"",
-	"(Feel free to use \\nocite{tange_2024_13826092})",
+	"(Feel free to use \\nocite{tange_2024_13957646})",
 	"",
 	# Before changing these lines, please read
 	# https://www.gnu.org/software/parallel/parallel_design.html#citation-notice and

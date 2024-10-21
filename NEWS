@@ -2,11 +2,24 @@
 
 New in this release:
 
+* No new features. This is a candidate for a stable release.
+
 * Bug fixes and man page updates.
 
 News about GNU Parallel:
 
-* <<>>
+* Separate arguments with a custom separator in GNU Parallel
+  https://boxofcuriosities.co.uk/post/separate-arguments-with-a-custom-separator-in-gnu-parallel
+
+* GNU parallel is underrated
+  https://amontalenti.com/2021/11/10/parallel
+
+* Unlocking the Power of Supercomputers: My HPC Adventure with 2800
+  Cores and GNU Parallel
+  https://augalip.com/2024/03/10/unlocking-the-power-of-supercomputers-my-hpc-adventure-with-2800-cores-and-gnu-parallel/
+
+* Converting WebP Images to PNG Using parallel and dwebp
+  https://bytefreaks.net/gnulinux/bash/converting-webp-images-to-png-using-parallel-and-dwebp
 
 
 20240922

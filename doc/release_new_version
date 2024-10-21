@@ -195,6 +195,7 @@ git branch premaster
 
 Add tar.bz2 [Start upload] and [Publish].
 
+
 == Update documentation ==
 
 Update version number + 1
@@ -217,6 +218,7 @@ Modified => alpha
 
 make testurls
 
+
 == Check REUSE ==
 
 make reuse
@@ -226,7 +228,7 @@ https://api.reuse.software/status/git.savannah.gnu.org/git/parallel
 
 == Update Savannah ==
 
-file:///home/tange/privat/parallel/doc/release_new_version
+perl -ne '/^Subject:/..0 and print' < doc/release_new_version | clipboard
 
 Content from release mail:
 
@@ -236,10 +238,6 @@ Test URLs.
 
 https://savannah.gnu.org/news/approve.php?group=parallel
 
-== Update Freshmeat ==
-
-// FreeCode is dying
-http://freshmeat.net/projects/parallel/releases/new
 
 == Update Mastodon Twitter ==
 
@@ -251,6 +249,7 @@ See the intro videos pi.dk/1
 10 secs installation: pi.dk/3
 
 GNU Parallel - for people who live life in the parallel lane.
+
 
 == Send announce ==
 
@@ -268,25 +267,30 @@ from:tange@gnu.org
 to:parallel@gnu.org, bug-parallel@gnu.org
 stable-bcc: Jesse Alama <jessealama@fastmail.fm>
 
-Subject: GNU Parallel 20241022 ('yahya Sinwar Nasrallah/ILA strike') released
+Subject: GNU Parallel 20241022 ('Sinwar Nasrallah') released
 
 GNU Parallel 20241022 ('Sinwar Nasrallah') has been released. It is available for download at: lbry://@GnuParallel:4
 
 Quote of the month:
 
-  Recently executed a flawless live data migration of ~2.4pb using GNU parallel for scale and bash scripts.
-    -- @mechanicker@twitter Dhruva
+  GNU Parallel is one of the most helpful tools I've been using recently, and it's just something like: parallel -j4 'gzip {}' ::: folder/*.csv
+     -- Milton Pividori @miltondp@twitter
   
 New in this release:
 
-* --fast disables a lot of functionality to speed up running jobs.
+* No new features. This is a candidate for a stable release.
 
 * Bug fixes and man page updates.
 
 News about GNU Parallel:
 
-* Job requiring GNU Parallel knowledge
-  https://www.capgemini.com/ca-en/jobs/Id6D4pEBZ6aB2WPS2aAJ/systems-engineer/
+* Separate arguments with a custom separator in GNU Parallel https://boxofcuriosities.co.uk/post/separate-arguments-with-a-custom-separator-in-gnu-parallel
+
+* GNU parallel is underrated https://amontalenti.com/2021/11/10/parallel
+
+* Unlocking the Power of Supercomputers: My HPC Adventure with 2800 Cores and GNU Parallel https://augalip.com/2024/03/10/unlocking-the-power-of-supercomputers-my-hpc-adventure-with-2800-cores-and-gnu-parallel/
+
+* Converting WebP Images to PNG Using parallel and dwebp https://bytefreaks.net/gnulinux/bash/converting-webp-images-to-png-using-parallel-and-dwebp
 
 
 GNU Parallel - For people who live life in the parallel lane.
