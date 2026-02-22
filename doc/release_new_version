@@ -281,14 +281,14 @@ from:tange@gnu.org
 to:parallel@gnu.org, bug-parallel@gnu.org
 stable-bcc: Jesse Alama <jessealama@fastmail.fm>
 
-Subject: GNU Parallel 20251122 ('Mamdani') released [stable]
+Subject: GNU Parallel 20260222 ('Epstein files') released [stable]
 
-GNU Parallel 20251122 ('Mamdani') has been released. It is available for download at: lbry://@GnuParallel:4
+GNU Parallel 20260222 ('Epstein files') has been released. It is available for download at: lbry://@GnuParallel:4
 
 Quote of the month:
 
-  ainda não inventaram palavras capazes de expressar minha gratidão aos desenvolvedores do GNU Parallel
-    -- @nueidris.kawaii.social
+  Und die Tage jetzt hab ich GNU parallel für mich entdeckt, auch ne nette Geschichte, gerade wenn's irgendwelche remote APIs sind.
+    -- Vince @dd1des.bsky.social
 
 New in this release:
 

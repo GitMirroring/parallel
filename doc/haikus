@@ -7,9 +7,6 @@ Quote of the month:
   i rly love gnu parallel over xargs, it's basically the same but has lots of useful and well documented options. sry if u know already
     -- d@nny "disc@" mc² @hipsterelectron@circumstances.run
 
-  Und die Tage jetzt hab ich GNU parallel für mich entdeckt, auch ne nette Geschichte, gerade wenn's irgendwelche remote APIs sind.
-    -- Vince @dd1des.bsky.social
-
   gnu parallelすごい！！！
     -- たらたら@nosennyuu@twitter
 
@@ -232,6 +229,9 @@ https://negfeedback.blogspot.com/2020/05/indispensable-command-line-tools.html
     -- @alinajaf@twitter
 
 === Used ===
+
+  Und die Tage jetzt hab ich GNU parallel für mich entdeckt, auch ne nette Geschichte, gerade wenn's irgendwelche remote APIs sind.
+    -- Vince @dd1des.bsky.social
 
   64コアで、64並列でsimlationを回してtopコマンドで状況を見るのは心地よい。簡単に並列処理を実現できるGNU parallelコマンドは素晴らしい。
     -- Daisuke Iizuka @diizuka@twitter
