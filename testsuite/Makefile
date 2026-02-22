@@ -106,13 +106,9 @@ prereqlocal: installparallel startvm
 	${REQUIRE}
 	# Bug that causes systemd-logind to go into 100%
 	sudo modprobe -r ucsi_acpi
-	(parallel 'ssh -oStrictHostKeyChecking=accept-new vagrant@parallel-server{} mkdir -p bin; scp `which parallel` vagrant@parallel-server{}:bin/' ::: 1 2 3 4)&
 
 prereqremote: installparallel startvm
 	parallel -j0 --timeout 10 --tag ssh -oStrictHostKeyChecking=accept-new vagrant@parallel-server{} parallel --minversion 20121021 ::: 1 2 || (echo parallel on remote required for testsuite; /bin/true)
-
-ignore=bytes.of.data|ping.statistics|packets.transmitted|64.bytes.from|\
-  min/avg/max/mdev|default|known.hosts|Host.*found
 
 namedservers=centos3 centos8 centos9 freebsd13 freebsd14 openindiana rhel8
 
@@ -143,7 +139,7 @@ haltvm:
 snapshot:
 	# Make snapshots of the working, running vms
 	parallel -j0 ssh vagrant@{} echo {} ::: ${namedservers} | parallel --tagstring {1} --colsep ' ' bin/vm snapshot
-	sql oracle://SYSTEM:$$VM_ORACLE_PWD@/FREE "select 'Oracle is running' from dual;" | grep Oracle && bin/vm snapshot 23.7.0-Free
+	sql oracle://SYSTEM:$$VM_ORACLE_PWD@/FREE "select 'Oracle is running' from dual;" && bin/vm snapshot 23.7.0-Free
 
 snapshotclean:
 	# Keep 2 snapshots of the running vms

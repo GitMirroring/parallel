@@ -1,6 +1,3 @@
-par_--load_from_PARALLEL	### Test reading load from PARALLEL
-par_--load_from_PARALLEL	8a7095c1c23bfadc311fe6b16d950582  -
-par_--load_from_PARALLEL	8a7095c1c23bfadc311fe6b16d950582  -
 par_--match	Basic match
 par_--match	This works
 par_--match	This works, too
@@ -108,12 +105,6 @@ par_--match	url={url} filename={file} https://gnu.org/s/parallel,myfile
 par_--match	Non posistional replacement fields - not implemented
 par_--match	{.2} {.3} {.1} Gold,Heart_of
 par_--match	TODO Ignore case?
-par_--nice	Check that --nice works
-par_--nice	load_10
-par_--nice	bzip2            18
-par_--nice	bzip2            18
-par_--round-robin_blocks	bug #49664: --round-robin does not complete
-par_--round-robin_blocks	8
 par_--tee_too_many_args	### Fail if there are more arguments than --jobs
 par_--tee_too_many_args	1	1
 par_--tee_too_many_args	1	10
@@ -145,6 +136,13 @@ par_END	include this
 par_END	include this
 par_END	include this
 par_END	include this
+par__--load_from_PARALLEL	### Test reading load from PARALLEL
+par__--load_from_PARALLEL	8a7095c1c23bfadc311fe6b16d950582  -
+par__--load_from_PARALLEL	8a7095c1c23bfadc311fe6b16d950582  -
+par__--nice	Check that --nice works
+par__--nice	load_10
+par__--nice	bzip2            18
+par__--nice	bzip2            18
 par__pipepart_spawn	### bug #46214: Using --pipepart doesnt spawn multiple jobs in version 20150922
 par__pipepart_spawn	1:local / 2+ / 2+
 par__quote_special_results	### Test --results on file systems with limited UTF8 support
@@ -1458,3 +1456,5 @@ par_tmux_fg	bug #50107: --tmux --fg should also write how to access it
 par_tmux_fg	See output with: tmux -S /TMPtmpfile attach
 par_tmux_fg	open terminal failed: not a terminal
 par_totaljobs	OK
+par_z--round-robin_blocks	bug #49664: --round-robin does not complete
+par_z--round-robin_blocks	8

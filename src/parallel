@@ -4802,18 +4802,15 @@ sub toggle_progress() {
 	my $bar_text =
 	    sprintf("%d%% %d:%d=%s %s",
 		    $pctcomplete*100, $completed, $left, $eta_dhms, $arg);
-	my $terminal_width = terminal_columns();
-	my $s = sprintf("%-${terminal_width}s",
-			substr($bar_text." "x$terminal_width,
-			       0,$terminal_width));
-	my $width = int($terminal_width * $pctcomplete);
-	substr($s,$width,0) = $reset;
-	my $zenity = sprintf("%-${terminal_width}s",
-			     substr("#   $eta sec $arg",
-				    0,$terminal_width));
-	# Prefix with zenity header
-	$s = "\r" . $zenity . "\r" . $pctcomplete*100 .
-	    "\r" . $rev . $s . $reset;
+        my $terminal_width = terminal_columns();
+	my $s = ::mbtrunc($bar_text." "x$terminal_width,$terminal_width);
+	my $width = int(length($s) * $pctcomplete);
+	# End of bar (end of reverse output)
+        substr($s,$width,0) = $reset;
+	my $zenity = ::mbtrunc("#   $eta sec $arg", $terminal_width);
+        # Prefix with zenity header
+        $s = "\r" . $zenity . "\r" . $pctcomplete*100 .
+            "\r" . $rev . $s . $reset;
 	return $s;
     }
 }
@@ -4890,7 +4887,27 @@ sub untabify($) {
     return join "",@out;
 }
 
+sub mbtrunc($$) {
+    # Simple mbtrunc to avoid using Text::WideChar::Util
+    my $str = shift;
+    my $len = shift;
+    if(::mbswidth($str) == length($str)) {
+	$str = substr($str,0,$len);
+    } else {
+	# mb chars (ヌー平行) are wider than 1 char on screen
+	# We need at most $len chars - they may be wide
+	$str =~ s/(.{$len}).*/$1/;
+	my $rlen = int((::mbswidth($str) - $len)/2+0.5);
+	do {
+	    $str =~ s/.{$rlen}$//;
+	    $rlen = int((::mbswidth($str) - $len)/2+0.5);
+	} while($rlen >= 1);
+    }
+    return $str;
+}
+
 # Prototype forwarding
+
 sub get_job_with_sshlogin($);
 sub get_job_with_sshlogin($) {
     # Input:
@@ -12069,25 +12086,6 @@ sub print_files($) {
 	}
     }
 
-    sub mbtrunc($$) {
-	# Simple mbtrunc to avoid using Text::WideChar::Util
-	my $str = shift;
-	my $len = shift;
-	if(::mbswidth($str) == length($str)) {
-	    $str = substr($str,0,$len);
-	} else {
-	    # mb chars (ヌー平行) are wider than 1 char on screen
-	    # We need at most $len chars - they may be wide
-	    $str =~ s/(.{$len}).*/$1/;
-	    my $rlen = int((::mbswidth($str) - $len)/2+0.5);
-	    do {
-		$str =~ s/.{$rlen}$//;
-		$rlen = int((::mbswidth($str) - $len)/2+0.5);
-	    } while($rlen >= 1);
-	}
-	return $str;
-    }
-
     sub print_latest_line($) {
 	my $self = shift;
 	my $out_fh = shift;
@@ -12110,10 +12108,10 @@ sub print_files($) {
 	    ::untabify(::decode_utf8($self->{$out_fh,'latestline'}));
 	# -1 to make space for $truncated_str
 	my $maxtaglen = $termcol - 1;
-	$untabify_tag = mbtrunc($untabify_tag,$maxtaglen);
+	$untabify_tag = ::mbtrunc($untabify_tag,$maxtaglen);
 	my $taglen = ::mbswidth($untabify_tag);
 	my $maxstrlen = $termcol - $taglen - 1;
-	$untabify_str = mbtrunc($untabify_str,$maxstrlen);
+	$untabify_str = ::mbtrunc($untabify_str,$maxstrlen);
 	my $strlen = ::mbswidth($untabify_str);
 	my $truncated_tag = "";
 	my $truncated_str = "";

@@ -39,7 +39,7 @@ par__test_different_rsync_versions() {
 	# Test basic rsync
 	if stdout rsync "$tmp"/rsync sh@lo:rsync.$short >/dev/null ; then
 	   echo Basic use works: $2
-	   stdout parallel --trc {}.out -S sh@lo cp {} {}.out ::: 'a`b`c\<d\$e\{#\}g\"h\ i'$short
+	   stdout parallel -j50% --trc {}.out -S sh@lo cp {} {}.out ::: 'a`b`c\<d\$e\{#\}g\"h\ i'$short
 	   stdout rm 'a`b`c\<d\$e\{#\}g\"h\ i'$short 'a`b`c\<d\$e\{#\}g\"h\ i'$short.out
 	else
 	    echo Basic use failed - not tested: $short
@@ -81,7 +81,7 @@ par_warn_when_exporting_func() {
 	. <(printf 'myfunc() {\necho Function run: $1\n}')
 	export -f myfunc
 	echo "Run function in $1"
-	PARALLEL_SHELL=$1 parallel --env myfunc -S lo myfunc ::: OK
+	PARALLEL_SHELL=$1 parallel -j50% --env myfunc -S lo myfunc ::: OK
     }
     export -f myrun
     parallel -k --tag myrun ::: /bin/{sh,bash} /usr/bin/{csh,dash,ksh,tcsh,zsh}

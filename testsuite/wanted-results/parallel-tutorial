@@ -473,11 +473,11 @@ parallel: Warning: This job was killed because it timed out:
 parallel: Warning: sleep 7; echo 7
   parallel --eta sleep ::: 1 3 2 2 1 3 3 2 1
 Computers / CPU threads / Max jobs to run
-1:local / 9 / 9
+1:local / 12 / 12
 Computer:jobs running/jobs completed/%of started jobs/Average seconds to complete
   parallel --progress sleep ::: 1 3 2 2 1 3 3 2 1
 Computers / CPU threads / Max jobs to run
-1:local / 9 / 9
+1:local / 12 / 12
 Computer:jobs running/jobs completed/%of started jobs/Average seconds to complete
   seq 1000 | parallel -j10 --bar '(echo -n {};sleep 0.1)' \
     2> >(perl -pe 'BEGIN{$/="\r";$|=1};s/\r/\n/g' |
@@ -1165,7 +1165,7 @@ This helps funding further development; AND IT WON'T COST YOU A CENT.
 If you pay 10000 EUR you should feel free to use GNU Parallel without citing.
   parallel --version
 GNU parallel VERSION
-Copyright (C) 2007-2025 Ole Tange, http://ole.tange.dk and Free Software
+Copyright (C) 2007-2026 Ole Tange, http://ole.tange.dk and Free Software
 Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.

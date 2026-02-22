@@ -41,9 +41,9 @@ par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5X
 par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5XXXX) at input 0: fail_bigfunc_quote_remote
 par__sockets_cores_threads	### Test --number-of-sockets/cores/threads
 par__sockets_cores_threads	1
-par__sockets_cores_threads	2
-par__sockets_cores_threads	4
-par__sockets_cores_threads	2
+par__sockets_cores_threads	6
+par__sockets_cores_threads	12
+par__sockets_cores_threads	6
 par__sockets_cores_threads	### Test --use-sockets-instead-of-threads
 par__sockets_cores_threads	threads done
 par__sockets_cores_threads	sockets done
@@ -178,13 +178,13 @@ par_progress	Computer:jobs running/jobs completed/%of started jobs/Average secon
 par_progress	local:0/3/100%/9.9s [K
 par_progress	
 par_progress	Computers / CPU cores / Max jobs to run
-par_progress	1:local / 2 / 2
+par_progress	1:local / 6 / 6
 par_progress	
 par_progress	Computer:jobs running/jobs completed/%of started jobs/Average seconds to complete
 par_progress	local:0/3/100%/9.9s [K
 par_progress	
 par_progress	Computers / CPU threads / Max jobs to run
-par_progress	1:local / 4 / 4
+par_progress	1:local / 12 / 12
 par_progress	
 par_progress	Computer:jobs running/jobs completed/%of started jobs/Average seconds to complete
 par_progress	local:0/3/100%/9.9s [K

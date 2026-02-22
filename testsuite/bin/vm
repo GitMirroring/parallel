@@ -17,6 +17,8 @@ start() {
 	vagrant ssh -c "sudo /sbin/ifconfig eth1 172.27.27.3"
     }
     if pingsshok $vm ; then
+	ssh -oStrictHostKeyChecking=accept-new vagrant@$vm mkdir -p bin
+	scp `which parallel` vagrant@$vm:bin/
 	true
     else
 	# Server does not respond to ping or ssh: vagrant up

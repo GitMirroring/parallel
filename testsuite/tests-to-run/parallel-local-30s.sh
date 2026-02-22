@@ -652,7 +652,7 @@ par_max_length_len_128k() {
 
 par__plus_dyn_repl() {
     echo "Dynamic replacement strings defined by --plus"
-    pp="nice parallel --plus"
+    pp="nice parallel --plus -j1"
     
     unset myvar
     echo ${myvar:-myval}
@@ -777,7 +777,7 @@ par__test_ipv6_format() {
             # 9.9.9.9q22 => 9.9.9.9
             perl -pe 's/q.*//;'
     ) |
-	nice parallel -j200% --argsep , parallel -S {} true ::: 1 ||
+	nice parallel -j50% --argsep , parallel -S {} true ::: 1 ||
 	echo Failed
 }
 

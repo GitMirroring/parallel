@@ -422,7 +422,7 @@ _
 
 export -f $(compgen -A function | grep par_)
 compgen -A function | G "$@" par_ | LC_ALL=C sort |
-    parallel --timeout 1000% -j75% --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'
+    parallel --timeout 1000% -j50% --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'
 
 cd ..
 rm -rf tmp

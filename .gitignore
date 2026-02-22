@@ -20,3 +20,13 @@ src/*.7
 src/sphinx/source/*.rst
 src/sphinx/build/*
 **/.vagrant/
+# Backup / temporary files (common pattern)
+**/*.bak
+
+# Vagrant box files (especially downloaded / custom / packed boxes)
+**/*.box
+**/#*#
+**/*.log
+**/*-
+**/*.diff
+

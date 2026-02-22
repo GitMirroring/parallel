@@ -61,7 +61,7 @@ par_shard() {
     #seq 200000 | parallel --pipe --shard 1 wc |
     #	perl -pe 's/(.*\d{5,}){3}/OK/'
     # Combine with arguments (should compute -j10 given args)
-    seq 200000 | parallel --pipe --shard 1 echo {}\;wc ::: {1..5} ::: a b |
+    seq 200000 | parallel --pipe --shard 1 echo {}\;wc ::: {1..10} ::: a b |
 	perl -pe 's/(.*\d{5,}){3}/OK/'
 }
 
@@ -82,7 +82,7 @@ par_bin() {
 	parallel --pipe --colsep '\t' --bin 2 cat | sort
 }
 
-par_--round-robin_blocks() {
+par_z--round-robin_blocks() {
     echo "bug #49664: --round-robin does not complete"
     seq 20000000 | parallel -j8 --block 10M --round-robin --pipe wc -c | wc -l
 }
@@ -223,7 +223,7 @@ par_seqreplace_long_line() {
 	uniq -c
 }
 
-par_--load_from_PARALLEL() {
+par__--load_from_PARALLEL() {
     echo "### Test reading load from PARALLEL"
     export PARALLEL="$PARALLEL --load 400%"
     # Ignore stderr due to 'Starting processes took > 2 sec'
@@ -364,7 +364,7 @@ par_opt_arg_eaten() {
     printf '1\0002\0003\0004\0005\000' | stdout parallel -k -0 -i repl echo repl OK
 }
 
-par_--nice() {
+par__--nice() {
     echo 'Check that --nice works'
     # parallel-20160422 OK
     check_for_2_bzip2s() {
@@ -748,7 +748,7 @@ par_jobs_file() {
 
 export -f $(compgen -A function | grep par_)
 compgen -A function | G par_ "$@" | LC_ALL=C sort |
-    parallel --timeout 1000% -j10 --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1' |
+    parallel --timeout 1000% -j6 --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1' |
     perl -pe 's/,31,0/,15,0/' |
     # Replace $PWD with . even if given as ~/...
     perl -pe 's:~:'"$HOME"':g' |

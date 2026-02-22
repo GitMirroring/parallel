@@ -734,15 +734,15 @@ par__test_cpu_detection_lscpu_--all_--extended	1 24 32 24
 par__test_cpu_detection_lscpu_--all_--extended	1-2-4-2 Core i5-2410M laptop firewall
 par__test_cpu_detection_lscpu_--all_--extended	1 2 4 2
 par__test_cpu_detection_topology	4-64-64-64 Dell R815 4 CPU 64-core
-par__test_cpu_detection_topology	4 4 4 4
+par__test_cpu_detection_topology	4 12 12 12
 par__test_cpu_detection_topology	1-2-2-2 AMD Neo N36L Dual-Core Processor
 par__test_cpu_detection_topology	1 2 2 2
 par__test_cpu_detection_topology	1-4-8-4 Lenovo E540 i7-4712MQ (PROSA stud organizer)
-par__test_cpu_detection_topology	1 4 4 4
+par__test_cpu_detection_topology	1 4 8 4
 par__test_cpu_detection_topology	1-2-4-2 ThinkPad A475 AMD PRO A12-8830B R7 (64g)
 par__test_cpu_detection_topology	1 2 4 2
 par__test_cpu_detection_topology	1-16-24-16 8*2 thr + 8*1 thr Intel Core i7-13700HX (user submit - detected wrong)
-par__test_cpu_detection_topology	1 2 4 2
+par__test_cpu_detection_topology	1 6 12 6
 par_children_receive_sig	### Do children receive --termseq signals
 par_children_receive_sig	parallel: Warning: This job was killed because it timed out:
 par_children_receive_sig	parallel: Warning: show_signals ''
@@ -819,7 +819,7 @@ par_eta	16
 par_eta	### Test of --eta with no jobs
 par_eta	
 par_eta	Computers / CPU threads / Max jobs to run
-par_eta	1:local / 9 / 9
+par_eta	1:local / 12 / 12
 par_eta	
 par_eta	Computer:jobs running/jobs completed/%of started jobs/Average seconds to complete
 par_eta	par_eta	ETA: 0s Left: 0 AVG: 0.00s  local:0/0/0%/0.0s [K
@@ -1183,7 +1183,7 @@ par_progress	16
 par_progress	### Test of --progress with no jobs
 par_progress	
 par_progress	Computers / CPU threads / Max jobs to run
-par_progress	1:local / 9 / 9
+par_progress	1:local / 12 / 12
 par_progress	
 par_progress	Computer:jobs running/jobs completed/%of started jobs/Average seconds to complete
 par_progress	par_progress	local:0/0/0%/0.0s [K
