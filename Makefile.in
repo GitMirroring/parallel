@@ -968,7 +968,12 @@ pack_unpack_and_test_build:
 	cd /tmp && \
 	tar xjf parallel-$(YYYYMMDD).tar.bz2 && \
 	cd parallel-$(YYYYMMDD) && \
-	./configure && make -j && sudo make -j install
+	parallel --tag 'if [ -s {} ]; then neno qpdf --check {}; else echo "{} is 0 bytes"; false; fi' ::: src/*.pdf && \
+	rm src/*pdf && \
+	./configure && make -j && sudo make -j install && \
+	parallel --tag 'if [ -s {} ]; then neno qpdf --check {}; else echo "{} is 0 bytes"; false; fi' ::: src/*.pdf && \
+	parallel ::: true && \
+	sem true
 install-data-hook:
 	mkdir -p ${zshcompletiondir} ${bashcompletiondir}
 	$(DESTDIR)$(bindir)/parallel --shell-completion bash > ${bashcompletion}
