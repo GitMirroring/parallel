@@ -3508,7 +3508,7 @@ sub init_globals() {
     #   SSH / remote host data structures
     #   Job counters and state flags
     # Defaults:
-    $Global::version = 20260415;
+    $Global::version = 20260416;
     # Deliver perl bootstrap source via stdin pipe (ssh host -- exec perl).
     # Set to 0 to use an alternative delivery mechanism (future option).
     $Global::command_via_pipe = 1;
@@ -6742,6 +6742,8 @@ sub wait_and_exit($) {
 	# Make the shell script return $error
 	print "$Global::parset_endstring\nreturn $error";
     }
+    # Flush stdout before exit to avoid losing last lines when piped
+    STDOUT->flush();
     exit($error);
 }
 
@@ -12768,6 +12770,9 @@ sub should_be_retried($) {
 		# Job finished - look at the next
 		delete $print_later{$job_seq_to_print};
 		$job_seq_to_print++;
+		# Advance past skipped jobs before next iteration
+		for(;vec($Global::job_already_run,$job_seq_to_print,1);
+		    $job_seq_to_print++) {}
 		next;
 	    } else {
 		# Job not finished yet - look at it again next round
