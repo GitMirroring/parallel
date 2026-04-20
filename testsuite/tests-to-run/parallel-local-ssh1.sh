@@ -420,6 +420,37 @@ _
 )
 }
 
+par_pipewrap() {
+    echo '### pipewrap: hexwrap bootstrap delivery via ssh'
+    parallel --sshlogin lo echo ::: a b c | sort
+    parallel -k --sshlogin lo echo ::: 1 2 3
+    MYVAR=hello parallel --nonall --env MYVAR --sshlogin lo 'echo $MYVAR'
+    parallel --workdir /tmp --sshlogin lo pwd ::: dummy
+}
+
+par_pipe_ssh() {
+    echo '### --pipe -S lo,: basic pipe to remote'
+    seq 1000000 | parallel --pipe -k -S lo,: wc -l
+}
+
+par_pipe_tee_ssh() {
+    echo '### --pipe --tee -S lo: data must reach local and remote (not 0 bytes)'
+    seq 1000000 | parallel -j3 --pipe --tee -k -S lo,: 'wc {}' ::: -l -c -w
+}
+
+par_env_parallel_ssh() {
+    echo '### env_parallel -S lo: must produce output (not empty)'
+    . $(which env_parallel.bash)
+    env_parallel -k -S lo,: echo ::: a b c
+}
+
+par_env_parallel_func_ssh() {
+    echo '### env_parallel -S lo with function: function must transfer'
+    . $(which env_parallel.bash)
+    myfunc() { echo "func:$1"; }
+    env_parallel -k -S lo,: myfunc ::: x y
+}
+
 export -f $(compgen -A function | grep par_)
 compgen -A function | G "$@" par_ | LC_ALL=C sort |
     parallel --timeout 1000% -j50% --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'

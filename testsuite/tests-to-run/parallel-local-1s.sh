@@ -679,6 +679,37 @@ par_block_negative_prefix() {
     rm "$tmp"
 }
 
+par_bug45691() {
+    echo 'bug #45691: Accessing multiple arguments in {= =}'
+    # OK:
+    parallel echo {= '$arg[1] eq 2 and $job->skip()' =} ::: {1..5}
+    # Fails due to --keep-order because printing is looking for job 2
+    parallel --keep-order echo {= '$arg[1] eq 2 and $job->skip()' =} ::: {1..5}
+}
+
+par_filter_no_halt() {
+    echo '### --filter + --halt: filtered jobs must not trigger halt failure'
+    parallel --halt soon,fail=1 --filter '(-e "{}")' echo ::: /tmp/recent-noexist /tmp/recent-noexist2
+    echo "exit:$?"
+}
+
+par_filter_no_retries() {
+    echo '### --filter + --retries: filtered jobs must not trigger retries'
+    parallel -u --retries 3 --filter '{} % 2' 'echo ran {};false' ::: 1 2 3
+    echo "exit:$?"
+}
+
+par_skip_in_expr() {
+    echo '### skip() in {= =} with --keep-order: must print a c (not just a)'
+    parallel -k echo {= '$_ eq "b" and $job->skip()' =} ::: a b c
+}
+
+par_skip_no_halt() {
+    echo '### skip() must not count as failure for --halt'
+    parallel -k --halt soon,fail=1 echo '{= $job->skip() =}' ::: a b c
+    echo "exit:$?"
+}
+
 export -f $(compgen -A function | grep par_)
 compgen -A function | G par_ "$@" | LC_ALL=C sort |
     parallel --timeout 1000% -j6 --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1' |

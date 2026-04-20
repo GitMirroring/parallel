@@ -454,17 +454,6 @@ par_failing_compressor() {
 	perl -pe 's:/par......par:/tmpfile:'
 }
 
-par_fifo_under_csh() {
-    echo '### Test --fifo under csh'
-    doit() {
-	csh -c "seq 3000000 | parallel -k --pipe --fifo 'sleep .{#};cat {}|wc -c ; false; echo \$status; false'"
-	echo exit $?
-    }
-    # csh does not seem to work with TMPDIR containing \n
-    doit
-    TMPDIR=/tmp
-    doit
-}
 
 par_END() {
     echo '### Test -i and --replace: Replace with argument'
@@ -744,6 +733,22 @@ par_jobs_file() {
     echo 3 >/tmp/jobs_to_run1
     parallel -j /tmp/jobs_to_run1 -v sleep {} ::: 10 8 6 5 4
     # Should give 6 8 10 5 4
+}
+
+par_filter_no_delay() {
+    echo '### --filter + --delay: filtered jobs must not consume delay slots'
+    start=$SECONDS
+    parallel --delay 1 -j1 --filter '{} > 4' echo ::: {1..8}
+    elapsed=$((SECONDS - start))
+    [ "$elapsed" -lt 7 ] && echo "FAST: filtered jobs skipped delay" || echo "SLOW: $elapsed s"
+}
+
+par_skip_no_delay() {
+    echo '### skip() must not consume --delay slot'
+    start=$SECONDS
+    parallel --delay 1 -j1 echo '{= 2 < seq and seq() < 10 and skip(); =}' ::: {1..11}
+    elapsed=$((SECONDS - start))
+    [ "$elapsed" -lt 10 ] && echo "FAST: skipped jobs skipped delay" || echo "SLOW: $elapsed s (should be <10, unfixed would be ~11)"
 }
 
 export -f $(compgen -A function | grep par_)

@@ -16,29 +16,8 @@ sudoinstall:
 test:
 	cd testsuite; make 1
 
-#torall:
-#	make torsync
-#	make tortest
-#	make torresults
-#
-#tortest:
-#	torsocks ssh -t tortest 'export SSH_AUTH_SOCK=`cat ~/.ssh/SSH_AUTH_SOCK`;\
-#                                 export SSH_AGENT_PID=`cat ~/.ssh/SSH_AGENT_PID`;\
-#                                 cd privat/parallel/testsuite/ &&\
-#                                   make short && make long && make mem'
-#
 #torresults:
 #	torsocks rsync -Hazv --progress tortest:privat/parallel/testsuite/actual-results/ testsuite/actual-results/
-#
-#torpush:
-#	torsocks git push tortest:privat/parallel
-#
-#torpull:
-#	torsocks git pull tortest:privat/parallel
-#
-#torsync:
-#	torsocks rsync -Hazv --exclude='*.{pdf,gz,bz2,html,deb}' --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude '*hwdep*' --delete ./ tortest:privat/parallel/
-#	make tortest
 
 check-sshlogin:
 	@if [ -z "$(SSHLOGIN)" ]; then \
@@ -72,7 +51,7 @@ r-%: rsync
 torrsync: check-tor-sshlogin
 	torsocks rsync -Hazv --exclude="*.{pdf,gz,bz2,html,deb}" --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude "*hwdep*" --exclude="Makefile" --exclude="config.log" --exclude="config.status" --exclude="stamp-h1" --delete ./ '$(TOR_SSHLOGIN)':privat/parallel/
 
-# make r-tor-test-local
+# Can be called as: make r-tor-test-local
 tor-%: torrsync
 	torsocks ssh -t -o ServerAliveInterval=60 -o ServerAliveCountMax=60 $(TOR_SSHLOGIN) 'cd privat/parallel && (test -f Makefile || ./configure) && make $*'
 

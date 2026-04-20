@@ -91,6 +91,32 @@ par_tee_ssh() {
     parallel --pipepart -a /tmp/1000000 --tee -kS lo,csh@lo,tcsh@lo 'echo $SHELL' ::: A B ::: {1..4} | sort | uniq -c | field 1 | sort -n
 }
 
+par_csh_wd_trc() {
+    echo '### --wd ... --trc in csh: exitstatuswrapper must not produce ;;'
+    myscript=$(cat <<'_EOF'
+    echo OK > bug_64222
+    parallel --wd ... --sshlogin lo --trc {} cat ::: bug_64222
+    rm -f bug_64222
+_EOF
+    )
+    ssh csh@lo "$myscript"
+}
+
+par_pipepart_ssh() {
+    echo '### --pipepart -S lo: pipepart data reaches remote and local (sum must equal 100)'
+    seq 100 > /tmp/recent-pipepart
+    parallel --block -1 --pipepart -a /tmp/recent-pipepart -S :,lo wc -l |
+        awk '{s+=$1}END{print s}'
+    rm -f /tmp/recent-pipepart
+}
+
+par_pipepart_tee_ssh() {
+    echo '### --pipepart --tee -S lo: data reaches each tee copy'
+    seq 10 > /tmp/recent-ppteefile
+    parallel --pipepart -a /tmp/recent-ppteefile --tee -k -S :,lo --tag wc {} ::: -l -c -w
+    rm -f /tmp/recent-ppteefile
+}
+
 export -f $(compgen -A function | grep par_)
 #compgen -A function | grep par_ | sort | parallel --delay $D -j$P --tag -k '{} 2>&1'
 compgen -A function | grep par_ | sort |

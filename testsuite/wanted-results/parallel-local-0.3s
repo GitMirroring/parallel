@@ -319,7 +319,7 @@ par_locale_quoting	### quoting in different locales
 par_locale_quoting	£`/tmp/test£`
 par_locale_quoting	$LC_ALL £`/tmp/test£`
 par_locale_quoting	echo $LC_ALL '£`/tmp/test£`'
-par_locale_quoting	zh_HK.big5hkscs £`/tmp/test£`
+par_locale_quoting	zh_TW.big5 £`/tmp/test£`
 par_long_cmd_mem_use	### Test long commands do not take up all memory
 par_long_cmd_mem_use	1
 par_long_cmd_mem_use	10

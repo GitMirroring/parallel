@@ -175,6 +175,20 @@ par_bug57364() {
 #    parallel -j1 --timeout 100 --nice 11 doit ::: 1
 #}
 
+par_z_roundrobin_blocks() {
+    echo "bug #49664: --round-robin does not complete"
+    seq 20000000 | parallel -j8 --block 10M --round-robin --pipe wc -c | wc -l
+}
+
+par_groupby_compressed() {
+    echo '### --groupby --pipepart on plain and gzip files give same line counts'
+    seq 1 20 | awk '{print (NR%3), $1}' | sort -k1 > /tmp/test_groupby_plain.txt
+    gzip -c /tmp/test_groupby_plain.txt > /tmp/test_groupby_plain.gz
+    parallel --pipepart -a /tmp/test_groupby_plain.txt --groupby 1 -k 'wc -l' | sort
+    parallel --pipepart -a /tmp/test_groupby_plain.gz  --groupby 1 -k 'wc -l' | sort
+    rm /tmp/test_groupby_plain.txt /tmp/test_groupby_plain.gz
+}
+
 export -f $(compgen -A function | grep par_)
 compgen -A function | grep par_ | LC_ALL=C sort |
     parallel --timeout 1000% -j10 --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'

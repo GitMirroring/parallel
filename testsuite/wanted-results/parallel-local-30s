@@ -1,280 +1,280 @@
-par__dburl_parsing	csv:///mydir/tange	parallel: Error: 
-par__dburl_parsing	csv:///mydir/tange	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
-par__dburl_parsing	csv:///mydir/tange	`/tmp/trip`>/tmp/tripwire;
-par__dburl_parsing	csv:///mydir/tange		
-par__dburl_parsing	csv:///mydir/tange	"'@<?[]|~\/tmp/test/mydir/tange: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
-par__dburl_parsing	csv:///mydir/tange	 called from /usr/local/bin/parallel at 99999.
-par__dburl_parsing	csv:///mydir/tange	
-par__dburl_parsing	csv:///mydir/tange	
-par__dburl_parsing	csv:///./mydir/tange	parallel: Error: 
-par__dburl_parsing	csv:///./mydir/tange	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
-par__dburl_parsing	csv:///./mydir/tange	`/tmp/trip`>/tmp/tripwire;
-par__dburl_parsing	csv:///./mydir/tange		
-par__dburl_parsing	csv:///./mydir/tange	"'@<?[]|~\/tmp/test/mydir/tange: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
-par__dburl_parsing	csv:///./mydir/tange	 called from /usr/local/bin/parallel at 99999.
-par__dburl_parsing	csv:///./mydir/tange	
-par__dburl_parsing	csv:///./mydir/tange	
-par__dburl_parsing	csv:///.%2Fmydir/tange	parallel: Error: 
-par__dburl_parsing	csv:///.%2Fmydir/tange	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
-par__dburl_parsing	csv:///.%2Fmydir/tange	`/tmp/trip`>/tmp/tripwire;
-par__dburl_parsing	csv:///.%2Fmydir/tange		
-par__dburl_parsing	csv:///.%2Fmydir/tange	"'@<?[]|~\/tmp/test/mydir/tange: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
-par__dburl_parsing	csv:///.%2Fmydir/tange	 called from /usr/local/bin/parallel at 99999.
-par__dburl_parsing	csv:///.%2Fmydir/tange	
-par__dburl_parsing	csv:///.%2Fmydir/tange	
+par__dburl_parsing	csv:///mydir/username	parallel: Error: 
+par__dburl_parsing	csv:///mydir/username	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
+par__dburl_parsing	csv:///mydir/username	`/tmp/trip`>/tmp/tripwire;
+par__dburl_parsing	csv:///mydir/username		
+par__dburl_parsing	csv:///mydir/username	"'@<?[]|~\/tmp/test/mydir/username: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
+par__dburl_parsing	csv:///mydir/username	 called from /usr/local/bin/parallel at 99999.
+par__dburl_parsing	csv:///mydir/username	
+par__dburl_parsing	csv:///mydir/username	
+par__dburl_parsing	csv:///./mydir/username	parallel: Error: 
+par__dburl_parsing	csv:///./mydir/username	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
+par__dburl_parsing	csv:///./mydir/username	`/tmp/trip`>/tmp/tripwire;
+par__dburl_parsing	csv:///./mydir/username		
+par__dburl_parsing	csv:///./mydir/username	"'@<?[]|~\/tmp/test/mydir/username: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
+par__dburl_parsing	csv:///./mydir/username	 called from /usr/local/bin/parallel at 99999.
+par__dburl_parsing	csv:///./mydir/username	
+par__dburl_parsing	csv:///./mydir/username	
+par__dburl_parsing	csv:///.%2Fmydir/username	parallel: Error: 
+par__dburl_parsing	csv:///.%2Fmydir/username	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
+par__dburl_parsing	csv:///.%2Fmydir/username	`/tmp/trip`>/tmp/tripwire;
+par__dburl_parsing	csv:///.%2Fmydir/username		
+par__dburl_parsing	csv:///.%2Fmydir/username	"'@<?[]|~\/tmp/test/mydir/username: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
+par__dburl_parsing	csv:///.%2Fmydir/username	 called from /usr/local/bin/parallel at 99999.
+par__dburl_parsing	csv:///.%2Fmydir/username	
+par__dburl_parsing	csv:///.%2Fmydir/username	
 par__dburl_parsing	csv:////tmp/parallel-local-30s-tmp/	1
 par__dburl_parsing	csv:////tmp/parallel-local-30s-tmp/	2
 par__dburl_parsing	csv:////tmp/parallel-local-30s-tmp/	3
 par__dburl_parsing	`/tmp/trip`>/tmp/tripwire;	parallel: Error: `/tmp/trip`>/tmp/tripwire; is not a valid DBURL
 par__dburl_parsing		parallel: Error:  is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\/tmp/test/tange	parallel: Error: "'@<?[]|~\/tmp/test/tange is not a valid DBURL
-par__dburl_parsing	csv:///%2Ftmp%2Fparallel-local-30s-tmp%2F	parallel: Error: tange is not a directory.
+par__dburl_parsing	"'@<?[]|~\/tmp/test/username	parallel: Error: "'@<?[]|~\/tmp/test/username is not a valid DBURL
+par__dburl_parsing	csv:///%2Ftmp%2Fparallel-local-30s-tmp%2F	parallel: Error: username is not a directory.
 par__dburl_parsing	`%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;	parallel: Error: `%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire; is not a valid DBURL
 par__dburl_parsing		parallel: Error:  is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/tange	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/tange is not a valid DBURL
-par__dburl_parsing	csv:///./tange	parallel: Error: 
-par__dburl_parsing	csv:///./tange	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
-par__dburl_parsing	csv:///./tange	`/tmp/trip`>/tmp/tripwire;
-par__dburl_parsing	csv:///./tange		
-par__dburl_parsing	csv:///./tange	"'@<?[]|~\/tmp/test/tange: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
-par__dburl_parsing	csv:///./tange	 called from /usr/local/bin/parallel at 99999.
-par__dburl_parsing	csv:///./tange	
-par__dburl_parsing	csv:///./tange	
+par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/username	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/username is not a valid DBURL
+par__dburl_parsing	csv:///./username	parallel: Error: 
+par__dburl_parsing	csv:///./username	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
+par__dburl_parsing	csv:///./username	`/tmp/trip`>/tmp/tripwire;
+par__dburl_parsing	csv:///./username		
+par__dburl_parsing	csv:///./username	"'@<?[]|~\/tmp/test/username: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
+par__dburl_parsing	csv:///./username	 called from /usr/local/bin/parallel at 99999.
+par__dburl_parsing	csv:///./username	
+par__dburl_parsing	csv:///./username	
 par__dburl_parsing	csv:///./	parallel: Error: 
 par__dburl_parsing	csv:///./	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
 par__dburl_parsing	csv:///./	`/tmp/trip`>/tmp/tripwire;
 par__dburl_parsing	csv:///./		
-par__dburl_parsing	csv:///./	"'@<?[]|~\/tmp/test/tange: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
+par__dburl_parsing	csv:///./	"'@<?[]|~\/tmp/test/username: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
 par__dburl_parsing	csv:///./	 called from /usr/local/bin/parallel at 99999.
 par__dburl_parsing	csv:///./	
 par__dburl_parsing	csv:///./	
-par__dburl_parsing	csv:///tange/tange	parallel: Error: tange is not a directory.
-par__dburl_parsing	csv:////tange	parallel: Error: tange is not a directory.
-par__dburl_parsing	csv:///tange/	parallel: Error: tange is not a directory.
-par__dburl_parsing	csv:////	parallel: Error: tange is not a directory.
-par__dburl_parsing	csv:///	parallel: Error: tange is not a directory.
-par__dburl_parsing	sqlite3:///tange/tange	1
-par__dburl_parsing	sqlite3:///tange/tange	2
-par__dburl_parsing	sqlite3:///tange/tange	3
-par__dburl_parsing	sqlite3://mydir/tange/tange	1
-par__dburl_parsing	sqlite3://mydir/tange/tange	2
-par__dburl_parsing	sqlite3://mydir/tange/tange	3
-par__dburl_parsing	sqlite3:///mydir/tange/tange	1
-par__dburl_parsing	sqlite3:///mydir/tange/tange	2
-par__dburl_parsing	sqlite3:///mydir/tange/tange	3
-par__dburl_parsing	sqlite3:///mydir%2Ftange/tange	1
-par__dburl_parsing	sqlite3:///mydir%2Ftange/tange	2
-par__dburl_parsing	sqlite3:///mydir%2Ftange/tange	3
+par__dburl_parsing	csv:///username/username	parallel: Error: username is not a directory.
+par__dburl_parsing	csv:////username	parallel: Error: username is not a directory.
+par__dburl_parsing	csv:///username/	parallel: Error: username is not a directory.
+par__dburl_parsing	csv:////	parallel: Error: username is not a directory.
+par__dburl_parsing	csv:///	parallel: Error: username is not a directory.
+par__dburl_parsing	sqlite3:///username/username	1
+par__dburl_parsing	sqlite3:///username/username	2
+par__dburl_parsing	sqlite3:///username/username	3
+par__dburl_parsing	sqlite3://mydir/username/username	1
+par__dburl_parsing	sqlite3://mydir/username/username	2
+par__dburl_parsing	sqlite3://mydir/username/username	3
+par__dburl_parsing	sqlite3:///mydir/username/username	1
+par__dburl_parsing	sqlite3:///mydir/username/username	2
+par__dburl_parsing	sqlite3:///mydir/username/username	3
+par__dburl_parsing	sqlite3:///mydir%2Fusername/username	1
+par__dburl_parsing	sqlite3:///mydir%2Fusername/username	2
+par__dburl_parsing	sqlite3:///mydir%2Fusername/username	3
 par__dburl_parsing	sqlite3:////tmp/parallel-local-30s-tmp/	DBI connect('dbname=/tmp/parallel-local-30s-tmp','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	`/tmp/trip`>/tmp/tripwire;	parallel: Error: `/tmp/trip`>/tmp/tripwire; is not a valid DBURL
 par__dburl_parsing		parallel: Error:  is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\/tmp/test/tange/tange	parallel: Error: "'@<?[]|~\/tmp/test/tange/tange is not a valid DBURL
+par__dburl_parsing	"'@<?[]|~\/tmp/test/username/username	parallel: Error: "'@<?[]|~\/tmp/test/username/username is not a valid DBURL
 par__dburl_parsing	sqlite3:///%2Ftmp%2Fparallel-local-30s-tmp%2F	parallel: Error: The table name (/tmp/parallel-local-30s-tmp/) cannot contain /
 par__dburl_parsing	`%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;	parallel: Error: `%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire; is not a valid DBURL
 par__dburl_parsing		parallel: Error:  is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/tange/tange	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/tange/tange is not a valid DBURL
-par__dburl_parsing	sqlite3:///tange/	1
-par__dburl_parsing	sqlite3:///tange/	2
-par__dburl_parsing	sqlite3:///tange/	3
-par__dburl_parsing	sqlite3:///tange/tange	1
-par__dburl_parsing	sqlite3:///tange/tange	2
-par__dburl_parsing	sqlite3:///tange/tange	3
-par__dburl_parsing	sqlite3:////tange	1
-par__dburl_parsing	sqlite3:////tange	2
-par__dburl_parsing	sqlite3:////tange	3
-par__dburl_parsing	sqlite3:///tange/	1
-par__dburl_parsing	sqlite3:///tange/	2
-par__dburl_parsing	sqlite3:///tange/	3
+par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/username/username	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/username/username is not a valid DBURL
+par__dburl_parsing	sqlite3:///username/	1
+par__dburl_parsing	sqlite3:///username/	2
+par__dburl_parsing	sqlite3:///username/	3
+par__dburl_parsing	sqlite3:///username/username	1
+par__dburl_parsing	sqlite3:///username/username	2
+par__dburl_parsing	sqlite3:///username/username	3
+par__dburl_parsing	sqlite3:////username	1
+par__dburl_parsing	sqlite3:////username	2
+par__dburl_parsing	sqlite3:////username	3
+par__dburl_parsing	sqlite3:///username/	1
+par__dburl_parsing	sqlite3:///username/	2
+par__dburl_parsing	sqlite3:///username/	3
 par__dburl_parsing	sqlite3:////	1
 par__dburl_parsing	sqlite3:////	2
 par__dburl_parsing	sqlite3:////	3
 par__dburl_parsing	sqlite3:///	1
 par__dburl_parsing	sqlite3:///	2
 par__dburl_parsing	sqlite3:///	3
-par__dburl_parsing	sqlite:///tange/tange	1
-par__dburl_parsing	sqlite:///tange/tange	2
-par__dburl_parsing	sqlite:///tange/tange	3
-par__dburl_parsing	sqlite://mydir/tange/tange	1
-par__dburl_parsing	sqlite://mydir/tange/tange	2
-par__dburl_parsing	sqlite://mydir/tange/tange	3
-par__dburl_parsing	sqlite:///mydir/tange/tange	1
-par__dburl_parsing	sqlite:///mydir/tange/tange	2
-par__dburl_parsing	sqlite:///mydir/tange/tange	3
-par__dburl_parsing	sqlite:///mydir%2Ftange/tange	1
-par__dburl_parsing	sqlite:///mydir%2Ftange/tange	2
-par__dburl_parsing	sqlite:///mydir%2Ftange/tange	3
+par__dburl_parsing	sqlite:///username/username	1
+par__dburl_parsing	sqlite:///username/username	2
+par__dburl_parsing	sqlite:///username/username	3
+par__dburl_parsing	sqlite://mydir/username/username	1
+par__dburl_parsing	sqlite://mydir/username/username	2
+par__dburl_parsing	sqlite://mydir/username/username	3
+par__dburl_parsing	sqlite:///mydir/username/username	1
+par__dburl_parsing	sqlite:///mydir/username/username	2
+par__dburl_parsing	sqlite:///mydir/username/username	3
+par__dburl_parsing	sqlite:///mydir%2Fusername/username	1
+par__dburl_parsing	sqlite:///mydir%2Fusername/username	2
+par__dburl_parsing	sqlite:///mydir%2Fusername/username	3
 par__dburl_parsing	sqlite:////tmp/parallel-local-30s-tmp/	DBI connect('dbname=/tmp/parallel-local-30s-tmp','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	`/tmp/trip`>/tmp/tripwire;	parallel: Error: `/tmp/trip`>/tmp/tripwire; is not a valid DBURL
 par__dburl_parsing		parallel: Error:  is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\/tmp/test/tange/tange	parallel: Error: "'@<?[]|~\/tmp/test/tange/tange is not a valid DBURL
+par__dburl_parsing	"'@<?[]|~\/tmp/test/username/username	parallel: Error: "'@<?[]|~\/tmp/test/username/username is not a valid DBURL
 par__dburl_parsing	sqlite:///%2Ftmp%2Fparallel-local-30s-tmp%2F	parallel: Error: The table name (/tmp/parallel-local-30s-tmp/) cannot contain /
 par__dburl_parsing	`%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;	parallel: Error: `%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire; is not a valid DBURL
 par__dburl_parsing		parallel: Error:  is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/tange/tange	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/tange/tange is not a valid DBURL
-par__dburl_parsing	sqlite:///tange/	1
-par__dburl_parsing	sqlite:///tange/	2
-par__dburl_parsing	sqlite:///tange/	3
-par__dburl_parsing	sqlite:///tange/tange	1
-par__dburl_parsing	sqlite:///tange/tange	2
-par__dburl_parsing	sqlite:///tange/tange	3
-par__dburl_parsing	sqlite:////tange	1
-par__dburl_parsing	sqlite:////tange	2
-par__dburl_parsing	sqlite:////tange	3
-par__dburl_parsing	sqlite:///tange/	1
-par__dburl_parsing	sqlite:///tange/	2
-par__dburl_parsing	sqlite:///tange/	3
+par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/username/username	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/username/username is not a valid DBURL
+par__dburl_parsing	sqlite:///username/	1
+par__dburl_parsing	sqlite:///username/	2
+par__dburl_parsing	sqlite:///username/	3
+par__dburl_parsing	sqlite:///username/username	1
+par__dburl_parsing	sqlite:///username/username	2
+par__dburl_parsing	sqlite:///username/username	3
+par__dburl_parsing	sqlite:////username	1
+par__dburl_parsing	sqlite:////username	2
+par__dburl_parsing	sqlite:////username	3
+par__dburl_parsing	sqlite:///username/	1
+par__dburl_parsing	sqlite:///username/	2
+par__dburl_parsing	sqlite:///username/	3
 par__dburl_parsing	sqlite:////	1
 par__dburl_parsing	sqlite:////	2
 par__dburl_parsing	sqlite:////	3
 par__dburl_parsing	sqlite:///	1
 par__dburl_parsing	sqlite:///	2
 par__dburl_parsing	sqlite:///	3
-par__dburl_parsing	mysql://tange@/tange/tange	1
-par__dburl_parsing	mysql://tange@/tange/tange	2
-par__dburl_parsing	mysql://tange@/tange/tange	3
-par__dburl_parsing	mysql://tange@/tange/	1
-par__dburl_parsing	mysql://tange@/tange/	2
-par__dburl_parsing	mysql://tange@/tange/	3
-par__dburl_parsing	mysql://tange@//	1
-par__dburl_parsing	mysql://tange@//	2
-par__dburl_parsing	mysql://tange@//	3
-par__dburl_parsing	mysql:///tange/tange	1
-par__dburl_parsing	mysql:///tange/tange	2
-par__dburl_parsing	mysql:///tange/tange	3
-par__dburl_parsing	mysql:////tange	1
-par__dburl_parsing	mysql:////tange	2
-par__dburl_parsing	mysql:////tange	3
-par__dburl_parsing	mysql:///tange/	1
-par__dburl_parsing	mysql:///tange/	2
-par__dburl_parsing	mysql:///tange/	3
+par__dburl_parsing	mysql://username@/username/username	1
+par__dburl_parsing	mysql://username@/username/username	2
+par__dburl_parsing	mysql://username@/username/username	3
+par__dburl_parsing	mysql://username@/username/	1
+par__dburl_parsing	mysql://username@/username/	2
+par__dburl_parsing	mysql://username@/username/	3
+par__dburl_parsing	mysql://username@//	1
+par__dburl_parsing	mysql://username@//	2
+par__dburl_parsing	mysql://username@//	3
+par__dburl_parsing	mysql:///username/username	1
+par__dburl_parsing	mysql:///username/username	2
+par__dburl_parsing	mysql:///username/username	3
+par__dburl_parsing	mysql:////username	1
+par__dburl_parsing	mysql:////username	2
+par__dburl_parsing	mysql:////username	3
+par__dburl_parsing	mysql:///username/	1
+par__dburl_parsing	mysql:///username/	2
+par__dburl_parsing	mysql:///username/	3
 par__dburl_parsing	mysql:////	1
 par__dburl_parsing	mysql:////	2
 par__dburl_parsing	mysql:////	3
 par__dburl_parsing	mysql:///	1
 par__dburl_parsing	mysql:///	2
 par__dburl_parsing	mysql:///	3
-par__dburl_parsing	pg://tange@/tange/tange	1
-par__dburl_parsing	pg://tange@/tange/tange	2
-par__dburl_parsing	pg://tange@/tange/tange	3
-par__dburl_parsing	pg://tange@/tange/	1
-par__dburl_parsing	pg://tange@/tange/	2
-par__dburl_parsing	pg://tange@/tange/	3
-par__dburl_parsing	pg://tange@//	1
-par__dburl_parsing	pg://tange@//	2
-par__dburl_parsing	pg://tange@//	3
-par__dburl_parsing	pg:///tange/tange	1
-par__dburl_parsing	pg:///tange/tange	2
-par__dburl_parsing	pg:///tange/tange	3
-par__dburl_parsing	pg:////tange	1
-par__dburl_parsing	pg:////tange	2
-par__dburl_parsing	pg:////tange	3
-par__dburl_parsing	pg:///tange/	1
-par__dburl_parsing	pg:///tange/	2
-par__dburl_parsing	pg:///tange/	3
+par__dburl_parsing	pg://username@/username/username	1
+par__dburl_parsing	pg://username@/username/username	2
+par__dburl_parsing	pg://username@/username/username	3
+par__dburl_parsing	pg://username@/username/	1
+par__dburl_parsing	pg://username@/username/	2
+par__dburl_parsing	pg://username@/username/	3
+par__dburl_parsing	pg://username@//	1
+par__dburl_parsing	pg://username@//	2
+par__dburl_parsing	pg://username@//	3
+par__dburl_parsing	pg:///username/username	1
+par__dburl_parsing	pg:///username/username	2
+par__dburl_parsing	pg:///username/username	3
+par__dburl_parsing	pg:////username	1
+par__dburl_parsing	pg:////username	2
+par__dburl_parsing	pg:////username	3
+par__dburl_parsing	pg:///username/	1
+par__dburl_parsing	pg:///username/	2
+par__dburl_parsing	pg:///username/	3
 par__dburl_parsing	pg:////	1
 par__dburl_parsing	pg:////	2
 par__dburl_parsing	pg:////	3
 par__dburl_parsing	pg:///	1
 par__dburl_parsing	pg:///	2
 par__dburl_parsing	pg:///	3
-par__dburl_parsing	csv:///mydir/tange	parallel: Error: mydir/tange is not a directory.
-par__dburl_parsing	csv:///./mydir/tange	parallel: Error: ./mydir/tange is not a directory.
-par__dburl_parsing	csv:///.%2Fmydir/tange	parallel: Error: ./mydir/tange is not a directory.
+par__dburl_parsing	csv:///mydir/username	parallel: Error: mydir/username is not a directory.
+par__dburl_parsing	csv:///./mydir/username	parallel: Error: ./mydir/username is not a directory.
+par__dburl_parsing	csv:///.%2Fmydir/username	parallel: Error: ./mydir/username is not a directory.
 par__dburl_parsing	csv:////tmp/parallel-local-30s-tmp/	1
 par__dburl_parsing	csv:////tmp/parallel-local-30s-tmp/	2
 par__dburl_parsing	csv:////tmp/parallel-local-30s-tmp/	3
 par__dburl_parsing	`/tmp/trip`>/tmp/tripwire;	parallel: Error: `/tmp/trip`>/tmp/tripwire;/ is not a valid DBURL
 par__dburl_parsing		parallel: Error: / is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\/tmp/test/tange	parallel: Error: "'@<?[]|~\/tmp/test/tange/ is not a valid DBURL
+par__dburl_parsing	"'@<?[]|~\/tmp/test/username	parallel: Error: "'@<?[]|~\/tmp/test/username/ is not a valid DBURL
 par__dburl_parsing	csv:///%2Ftmp%2Fparallel-local-30s-tmp%2F	1
 par__dburl_parsing	csv:///%2Ftmp%2Fparallel-local-30s-tmp%2F	2
 par__dburl_parsing	csv:///%2Ftmp%2Fparallel-local-30s-tmp%2F	3
 par__dburl_parsing	`%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;	parallel: Error: `%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;/ is not a valid DBURL
 par__dburl_parsing		parallel: Error: / is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/tange	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/tange/ is not a valid DBURL
-par__dburl_parsing	csv:///./tange	parallel: Error: ./tange is not a directory.
+par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/username	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/username/ is not a valid DBURL
+par__dburl_parsing	csv:///./username	parallel: Error: ./username is not a directory.
 par__dburl_parsing	csv:///./	parallel: Error: 
 par__dburl_parsing	csv:///./	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
 par__dburl_parsing	csv:///./	`/tmp/trip`>/tmp/tripwire;
 par__dburl_parsing	csv:///./		
-par__dburl_parsing	csv:///./	"'@<?[]|~\/tmp/test/tange: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
+par__dburl_parsing	csv:///./	"'@<?[]|~\/tmp/test/username: No such file or directory (2) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
 par__dburl_parsing	csv:///./	 called from /usr/local/bin/parallel at 99999.
 par__dburl_parsing	csv:///./	
 par__dburl_parsing	csv:///./	
-par__dburl_parsing	csv:///tange/tange	parallel: Error: tange/tange is not a directory.
-par__dburl_parsing	csv:////tange	parallel: Error: /tange is not a directory.
-par__dburl_parsing	csv:///tange/	parallel: Error: tange/ is not a directory.
+par__dburl_parsing	csv:///username/username	parallel: Error: username/username is not a directory.
+par__dburl_parsing	csv:////username	parallel: Error: /username is not a directory.
+par__dburl_parsing	csv:///username/	parallel: Error: username/ is not a directory.
 par__dburl_parsing	csv:////	parallel: Error: 
-par__dburl_parsing	csv:////	Execution ERROR: Cannot open /tange for writing: Permission denied (13) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
+par__dburl_parsing	csv:////	Execution ERROR: Cannot open /username for writing: Permission denied (13) at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1624.
 par__dburl_parsing	csv:////	 called from /usr/local/bin/parallel at 99999.
 par__dburl_parsing	csv:////	
 par__dburl_parsing	csv:////	 at /usr/lib/x86_64-linux-gnu/perl5/5.38/DBI/DBD/SqlEngine.pm line 1271.
 par__dburl_parsing	csv:////	
-par__dburl_parsing	csv:///	parallel: Error: tange is not a directory.
-par__dburl_parsing	sqlite3:///tange/tange	DBI connect('dbname=tange/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite3://mydir/tange/tange	DBI connect('dbname=tange/tange;host=mydir','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite3:///mydir/tange/tange	DBI connect('dbname=mydir/tange/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite3:///mydir%2Ftange/tange	DBI connect('dbname=mydir/tange/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	csv:///	parallel: Error: username is not a directory.
+par__dburl_parsing	sqlite3:///username/username	DBI connect('dbname=username/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite3://mydir/username/username	DBI connect('dbname=username/username;host=mydir','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite3:///mydir/username/username	DBI connect('dbname=mydir/username/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite3:///mydir%2Fusername/username	DBI connect('dbname=mydir/username/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	sqlite3:////tmp/parallel-local-30s-tmp/	DBI connect('dbname=/tmp/parallel-local-30s-tmp/','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	`/tmp/trip`>/tmp/tripwire;	parallel: Error: `/tmp/trip`>/tmp/tripwire;/ is not a valid DBURL
 par__dburl_parsing		parallel: Error: / is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\/tmp/test/tange/tange	parallel: Error: "'@<?[]|~\/tmp/test/tange/tange/ is not a valid DBURL
+par__dburl_parsing	"'@<?[]|~\/tmp/test/username/username	parallel: Error: "'@<?[]|~\/tmp/test/username/username/ is not a valid DBURL
 par__dburl_parsing	sqlite3:///%2Ftmp%2Fparallel-local-30s-tmp%2F	DBI connect('dbname=/tmp/parallel-local-30s-tmp/','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	`%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;	parallel: Error: `%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;/ is not a valid DBURL
 par__dburl_parsing		parallel: Error: / is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/tange/tange	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/tange/tange/ is not a valid DBURL
-par__dburl_parsing	sqlite3:///tange/	1
-par__dburl_parsing	sqlite3:///tange/	2
-par__dburl_parsing	sqlite3:///tange/	3
-par__dburl_parsing	sqlite3:///tange/tange	DBI connect('dbname=tange/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite3:////tange	DBI connect('dbname=/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite3:///tange/	1
-par__dburl_parsing	sqlite3:///tange/	2
-par__dburl_parsing	sqlite3:///tange/	3
+par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/username/username	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/username/username/ is not a valid DBURL
+par__dburl_parsing	sqlite3:///username/	1
+par__dburl_parsing	sqlite3:///username/	2
+par__dburl_parsing	sqlite3:///username/	3
+par__dburl_parsing	sqlite3:///username/username	DBI connect('dbname=username/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite3:////username	DBI connect('dbname=/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite3:///username/	1
+par__dburl_parsing	sqlite3:///username/	2
+par__dburl_parsing	sqlite3:///username/	3
 par__dburl_parsing	sqlite3:////	DBI connect('dbname=/','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	sqlite3:///	1
 par__dburl_parsing	sqlite3:///	2
 par__dburl_parsing	sqlite3:///	3
-par__dburl_parsing	sqlite:///tange/tange	DBI connect('dbname=tange/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite://mydir/tange/tange	DBI connect('dbname=tange/tange;host=mydir','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite:///mydir/tange/tange	DBI connect('dbname=mydir/tange/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite:///mydir%2Ftange/tange	DBI connect('dbname=mydir/tange/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite:///username/username	DBI connect('dbname=username/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite://mydir/username/username	DBI connect('dbname=username/username;host=mydir','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite:///mydir/username/username	DBI connect('dbname=mydir/username/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite:///mydir%2Fusername/username	DBI connect('dbname=mydir/username/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	sqlite:////tmp/parallel-local-30s-tmp/	DBI connect('dbname=/tmp/parallel-local-30s-tmp/','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	`/tmp/trip`>/tmp/tripwire;	parallel: Error: `/tmp/trip`>/tmp/tripwire;/ is not a valid DBURL
 par__dburl_parsing		parallel: Error: / is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\/tmp/test/tange/tange	parallel: Error: "'@<?[]|~\/tmp/test/tange/tange/ is not a valid DBURL
+par__dburl_parsing	"'@<?[]|~\/tmp/test/username/username	parallel: Error: "'@<?[]|~\/tmp/test/username/username/ is not a valid DBURL
 par__dburl_parsing	sqlite:///%2Ftmp%2Fparallel-local-30s-tmp%2F	DBI connect('dbname=/tmp/parallel-local-30s-tmp/','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	`%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;	parallel: Error: `%2Ftmp%2Ftrip`>%2Ftmp%2Ftripwire;/ is not a valid DBURL
 par__dburl_parsing		parallel: Error: / is not a valid DBURL
-par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/tange/tange	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/tange/tange/ is not a valid DBURL
-par__dburl_parsing	sqlite:///tange/	1
-par__dburl_parsing	sqlite:///tange/	2
-par__dburl_parsing	sqlite:///tange/	3
-par__dburl_parsing	sqlite:///tange/tange	DBI connect('dbname=tange/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite:////tange	DBI connect('dbname=/tange','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	sqlite:///tange/	1
-par__dburl_parsing	sqlite:///tange/	2
-par__dburl_parsing	sqlite:///tange/	3
+par__dburl_parsing	"'@<?[]|~\%2Ftmp%2Ftest/username/username	parallel: Error: "'@<?[]|~\%2Ftmp%2Ftest/username/username/ is not a valid DBURL
+par__dburl_parsing	sqlite:///username/	1
+par__dburl_parsing	sqlite:///username/	2
+par__dburl_parsing	sqlite:///username/	3
+par__dburl_parsing	sqlite:///username/username	DBI connect('dbname=username/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite:////username	DBI connect('dbname=/username','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	sqlite:///username/	1
+par__dburl_parsing	sqlite:///username/	2
+par__dburl_parsing	sqlite:///username/	3
 par__dburl_parsing	sqlite:////	DBI connect('dbname=/','',...) failed: unable to open database file at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	sqlite:///	1
 par__dburl_parsing	sqlite:///	2
 par__dburl_parsing	sqlite:///	3
-par__dburl_parsing	mysql://tange@/tange/tange	DBI connect('dbname=tange/tange','tange',...) failed: Access denied for user 'tange'@'localhost' to database 'tange/tange' at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	mysql://tange@/tange/	DBI connect('dbname=tange/','tange',...) failed: Access denied for user 'tange'@'localhost' to database 'tange/' at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	mysql://tange@//	DBI connect('dbname=/','tange',...) failed: Access denied for user 'tange'@'localhost' to database '/' at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	mysql:///tange/tange	DBI connect('dbname=tange/tange','',...) failed: Access denied for user 'tange'@'localhost' to database 'tange/tange' at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	mysql:////tange	DBI connect('dbname=/tange','',...) failed: Access denied for user 'tange'@'localhost' to database '/tange' at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	mysql:///tange/	DBI connect('dbname=tange/','',...) failed: Access denied for user 'tange'@'localhost' to database 'tange/' at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	mysql:////	DBI connect('dbname=/','',...) failed: Access denied for user 'tange'@'localhost' to database '/' at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	mysql://username@/username/username	DBI connect('dbname=username/username','username',...) failed: Access denied for user 'username'@'localhost' to database 'username/username' at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	mysql://username@/username/	DBI connect('dbname=username/','username',...) failed: Access denied for user 'username'@'localhost' to database 'username/' at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	mysql://username@//	DBI connect('dbname=/','username',...) failed: Access denied for user 'username'@'localhost' to database '/' at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	mysql:///username/username	DBI connect('dbname=username/username','',...) failed: Access denied for user 'username'@'localhost' to database 'username/username' at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	mysql:////username	DBI connect('dbname=/username','',...) failed: Access denied for user 'username'@'localhost' to database '/username' at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	mysql:///username/	DBI connect('dbname=username/','',...) failed: Access denied for user 'username'@'localhost' to database 'username/' at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	mysql:////	DBI connect('dbname=/','',...) failed: Access denied for user 'username'@'localhost' to database '/' at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	mysql:///	1
 par__dburl_parsing	mysql:///	2
 par__dburl_parsing	mysql:///	3
-par__dburl_parsing	pg://tange@/tange/tange	DBI connect('dbname=tange/tange','tange',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "tange/tange" does not exist at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	pg://tange@/tange/	DBI connect('dbname=tange/','tange',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "tange/" does not exist at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	pg://tange@//	DBI connect('dbname=/','tange',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "/" does not exist at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	pg:///tange/tange	DBI connect('dbname=tange/tange','',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "tange/tange" does not exist at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	pg:////tange	DBI connect('dbname=/tange','',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "/tange" does not exist at /usr/local/bin/parallel line 99999.
-par__dburl_parsing	pg:///tange/	DBI connect('dbname=tange/','',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "tange/" does not exist at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	pg://username@/username/username	DBI connect('dbname=username/username','username',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "username/username" does not exist at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	pg://username@/username/	DBI connect('dbname=username/','username',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "username/" does not exist at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	pg://username@//	DBI connect('dbname=/','username',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "/" does not exist at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	pg:///username/username	DBI connect('dbname=username/username','',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "username/username" does not exist at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	pg:////username	DBI connect('dbname=/username','',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "/username" does not exist at /usr/local/bin/parallel line 99999.
+par__dburl_parsing	pg:///username/	DBI connect('dbname=username/','',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "username/" does not exist at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	pg:////	DBI connect('dbname=/','',...) failed: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  database "/" does not exist at /usr/local/bin/parallel line 99999.
 par__dburl_parsing	pg:///	1
 par__dburl_parsing	pg:///	2
@@ -3273,132 +3273,224 @@ par_slow_total_jobs	2
 par_slow_total_jobs	parallel: Warning: Reading X arguments took longer than XX seconds.
 par_sshlogin_parsing	### Generate sshlogins to test parsing
 par_sshlogin_parsing	lo	22
-par_sshlogin_parsing	lo	tange
+par_sshlogin_parsing	lo	username
 par_sshlogin_parsing	lo:22222	22222
-par_sshlogin_parsing	lo:22222	tange
+par_sshlogin_parsing	lo:22222	username
 par_sshlogin_parsing	parallel@lo	22
 par_sshlogin_parsing	parallel@lo	parallel
 par_sshlogin_parsing	parallel@lo:22222	22222
 par_sshlogin_parsing	parallel@lo:22222	parallel
 par_sshlogin_parsing	/usr/bin/ssh lo	22
-par_sshlogin_parsing	/usr/bin/ssh lo	tange
+par_sshlogin_parsing	/usr/bin/ssh lo	username
 par_sshlogin_parsing	/usr/bin/ssh lo:22222	22222
-par_sshlogin_parsing	/usr/bin/ssh lo:22222	tange
+par_sshlogin_parsing	/usr/bin/ssh lo:22222	username
 par_sshlogin_parsing	/usr/bin/ssh parallel@lo	22
 par_sshlogin_parsing	/usr/bin/ssh parallel@lo	parallel
 par_sshlogin_parsing	/usr/bin/ssh parallel@lo:22222	22222
 par_sshlogin_parsing	/usr/bin/ssh parallel@lo:22222	parallel
 par_sshlogin_parsing	4/lo	22
-par_sshlogin_parsing	4/lo	tange
+par_sshlogin_parsing	4/lo	username
 par_sshlogin_parsing	4/lo:22222	22222
-par_sshlogin_parsing	4/lo:22222	tange
+par_sshlogin_parsing	4/lo:22222	username
 par_sshlogin_parsing	4/parallel@lo	22
 par_sshlogin_parsing	4/parallel@lo	parallel
 par_sshlogin_parsing	4/parallel@lo:22222	22222
 par_sshlogin_parsing	4/parallel@lo:22222	parallel
 par_sshlogin_parsing	4//usr/bin/ssh lo	22
-par_sshlogin_parsing	4//usr/bin/ssh lo	tange
+par_sshlogin_parsing	4//usr/bin/ssh lo	username
 par_sshlogin_parsing	4//usr/bin/ssh lo:22222	22222
-par_sshlogin_parsing	4//usr/bin/ssh lo:22222	tange
+par_sshlogin_parsing	4//usr/bin/ssh lo:22222	username
 par_sshlogin_parsing	4//usr/bin/ssh parallel@lo	22
 par_sshlogin_parsing	4//usr/bin/ssh parallel@lo	parallel
 par_sshlogin_parsing	4//usr/bin/ssh parallel@lo:22222	22222
 par_sshlogin_parsing	4//usr/bin/ssh parallel@lo:22222	parallel
 par_sshlogin_parsing	@grp1+grp2/lo	22
-par_sshlogin_parsing	@grp1+grp2/lo	tange
+par_sshlogin_parsing	@grp1+grp2/lo	username
 par_sshlogin_parsing	@grp1+grp2/lo:22222	22222
-par_sshlogin_parsing	@grp1+grp2/lo:22222	tange
+par_sshlogin_parsing	@grp1+grp2/lo:22222	username
 par_sshlogin_parsing	@grp1+grp2/parallel@lo	22
 par_sshlogin_parsing	@grp1+grp2/parallel@lo	parallel
 par_sshlogin_parsing	@grp1+grp2/parallel@lo:22222	22222
 par_sshlogin_parsing	@grp1+grp2/parallel@lo:22222	parallel
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh lo	22
-par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh lo	tange
+par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh lo	username
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh lo:22222	22222
-par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh lo:22222	tange
+par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh lo:22222	username
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh parallel@lo	22
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh parallel@lo	parallel
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh parallel@lo:22222	22222
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh parallel@lo:22222	parallel
 par_sshlogin_parsing	@grp1+grp2/4/lo	22
-par_sshlogin_parsing	@grp1+grp2/4/lo	tange
+par_sshlogin_parsing	@grp1+grp2/4/lo	username
 par_sshlogin_parsing	@grp1+grp2/4/lo:22222	22222
-par_sshlogin_parsing	@grp1+grp2/4/lo:22222	tange
+par_sshlogin_parsing	@grp1+grp2/4/lo:22222	username
 par_sshlogin_parsing	@grp1+grp2/4/parallel@lo	22
 par_sshlogin_parsing	@grp1+grp2/4/parallel@lo	parallel
 par_sshlogin_parsing	@grp1+grp2/4/parallel@lo:22222	22222
 par_sshlogin_parsing	@grp1+grp2/4/parallel@lo:22222	parallel
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh lo	22
-par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh lo	tange
+par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh lo	username
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh lo:22222	22222
-par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh lo:22222	tange
+par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh lo:22222	username
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh parallel@lo	22
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh parallel@lo	parallel
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh parallel@lo:22222	22222
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh parallel@lo:22222	parallel
 par_sshlogin_parsing	::;`echo>/tmp/trap`;)(|<*&"'@lo	22
-par_sshlogin_parsing	::;`echo>/tmp/trap`;)(|<*&"'@lo	tange
+par_sshlogin_parsing	::;`echo>/tmp/trap`;)(|<*&"'@lo	username
 par_sshlogin_parsing	::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
-par_sshlogin_parsing	::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	tange
+par_sshlogin_parsing	::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	username
 par_sshlogin_parsing	withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	22
 par_sshlogin_parsing	withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	withpassword
 par_sshlogin_parsing	withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
 par_sshlogin_parsing	withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_sshlogin_parsing	/usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	22
-par_sshlogin_parsing	/usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	tange
+par_sshlogin_parsing	/usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	username
 par_sshlogin_parsing	/usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
-par_sshlogin_parsing	/usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	tange
+par_sshlogin_parsing	/usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	username
 par_sshlogin_parsing	/usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	22
 par_sshlogin_parsing	/usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	withpassword
 par_sshlogin_parsing	/usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
 par_sshlogin_parsing	/usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_sshlogin_parsing	4/::;`echo>/tmp/trap`;)(|<*&"'@lo	22
-par_sshlogin_parsing	4/::;`echo>/tmp/trap`;)(|<*&"'@lo	tange
+par_sshlogin_parsing	4/::;`echo>/tmp/trap`;)(|<*&"'@lo	username
 par_sshlogin_parsing	4/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
-par_sshlogin_parsing	4/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	tange
+par_sshlogin_parsing	4/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	username
 par_sshlogin_parsing	4/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	22
 par_sshlogin_parsing	4/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	withpassword
 par_sshlogin_parsing	4/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
 par_sshlogin_parsing	4/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_sshlogin_parsing	4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	22
-par_sshlogin_parsing	4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	tange
+par_sshlogin_parsing	4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	username
 par_sshlogin_parsing	4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
-par_sshlogin_parsing	4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	tange
+par_sshlogin_parsing	4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	username
 par_sshlogin_parsing	4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	22
 par_sshlogin_parsing	4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	withpassword
 par_sshlogin_parsing	4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
 par_sshlogin_parsing	4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_sshlogin_parsing	@grp1+grp2/::;`echo>/tmp/trap`;)(|<*&"'@lo	22
-par_sshlogin_parsing	@grp1+grp2/::;`echo>/tmp/trap`;)(|<*&"'@lo	tange
+par_sshlogin_parsing	@grp1+grp2/::;`echo>/tmp/trap`;)(|<*&"'@lo	username
 par_sshlogin_parsing	@grp1+grp2/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
-par_sshlogin_parsing	@grp1+grp2/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	tange
+par_sshlogin_parsing	@grp1+grp2/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	username
 par_sshlogin_parsing	@grp1+grp2/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	22
 par_sshlogin_parsing	@grp1+grp2/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	withpassword
 par_sshlogin_parsing	@grp1+grp2/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
 par_sshlogin_parsing	@grp1+grp2/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	22
-par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	tange
+par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	username
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
-par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	tange
+par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	username
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	22
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	withpassword
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
 par_sshlogin_parsing	@grp1+grp2//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_sshlogin_parsing	@grp1+grp2/4/::;`echo>/tmp/trap`;)(|<*&"'@lo	22
-par_sshlogin_parsing	@grp1+grp2/4/::;`echo>/tmp/trap`;)(|<*&"'@lo	tange
+par_sshlogin_parsing	@grp1+grp2/4/::;`echo>/tmp/trap`;)(|<*&"'@lo	username
 par_sshlogin_parsing	@grp1+grp2/4/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
-par_sshlogin_parsing	@grp1+grp2/4/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	tange
+par_sshlogin_parsing	@grp1+grp2/4/::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	username
 par_sshlogin_parsing	@grp1+grp2/4/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	22
 par_sshlogin_parsing	@grp1+grp2/4/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	withpassword
 par_sshlogin_parsing	@grp1+grp2/4/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
 par_sshlogin_parsing	@grp1+grp2/4/withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	22
-par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	tange
+par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo	username
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
-par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	tange
+par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh ::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	username
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	22
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo	withpassword
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	22222
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_test_diff_roundrobin_k	### test there is difference on -k
 par_test_diff_roundrobin_k	OK
+par_fifo_under_csh	### Test --fifo under csh
+par_fifo_under_csh	parallel: Warning: --cat/--fifo fails under csh if $TMPDIR contains newline.
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	Unmatched '"'.
+par_fifo_under_csh	Broken pipe
+par_fifo_under_csh	exit 22
+par_fifo_under_csh	1048571
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048569
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	868832
+par_fifo_under_csh	1
+par_fifo_under_csh	exit 22

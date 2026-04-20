@@ -497,8 +497,9 @@ par_disk_full() {
     ) >/dev/null 2>/dev/null
 
     cat /dev/zero >$SMALLDISK/out
-    stdout parallel --tmpdir $SMALLDISK echo ::: OK |
-	grep -v 'Warning: unable to close filehandle.* No space left on device'
+    stdout parallel --tmpdir $SMALLDISK seq ::: 1000000 |
+	grep -v 'Warning: unable to close filehandle.* No space left on device' |
+	tail
     rm $SMALLDISK/out
 
     sudo umount -l /tmp/smalldisk.img
@@ -962,12 +963,12 @@ par_locale_quoting() {
     echo "### quoting in different locales"
     printf '\243`/tmp/test\243`\n'
     printf '\243`/tmp/test\243`\n' |
-	LC_ALL=zh_HK.big5hkscs xargs echo '$LC_ALL'
-    # LC_ALL should be zh_HK.big5hkscs, but that makes quoting hard.
+	LC_ALL=zh_TW.big5 xargs echo '$LC_ALL'
+    # LC_ALL should be zh_TW.big5, but that makes quoting hard.
     (
 	printf '\243`/tmp/test\243`\n' |
-	    LC_ALL=zh_HK.big5hkscs parallel -v echo '$LC_ALL' 2>&1
-	# Locale 'zh_HK.big5hkscs' is unsupported, and may crash the interpreter.
+	    LC_ALL=zh_TW.big5 parallel -v echo '$LC_ALL' 2>&1
+	# Locale 'zh_TW.big5' is unsupported, and may crash the interpreter.
     ) | G -av is.unsupported,.and.may.crash.the.interpreter.
 }
 
@@ -1157,6 +1158,11 @@ par_hash_and_time_functions() {
 	perl -pe 's/\d/9/g'
     parallel echo '{= $_=hash($_) =}' ::: 1 |
 	perl -pe 's/[a-f0-9]+/X/g'
+}
+
+par_minimal() {
+    echo '### parallel runs basic jobs'
+    parallel -k echo ::: It works
 }
 
 export -f $(compgen -A function | grep par_)

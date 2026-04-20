@@ -241,6 +241,28 @@ _EOF
 	perl -pe 's/^[ ~^]+$//g'
 }
 
+par_fish_wd_trc() {
+    echo '### --wd ... --trc in fish: no bare < /dev/null redirection error'
+    myscript=$(cat <<'_EOF'
+    echo OK > bug_64222
+    parallel --wd ... --sshlogin lo --trc {} cat ::: bug_64222
+    rm -f bug_64222
+_EOF
+    )
+    ssh fish@lo "$myscript"
+}
+
+par_fish_wd_transfer() {
+    echo '### --wd ... --transfer --return in fish: exitstatuswrapper separator'
+    myscript=$(cat <<'_EOF'
+    echo OK > bug_64222
+    parallel --wd ... --transfer -S lo cat ::: bug_64222
+    rm -f bug_64222
+_EOF
+    )
+    ssh fish@lo "$myscript"
+}
+
 export -f $(compgen -A function | grep par_)
 
 clean_output() {
