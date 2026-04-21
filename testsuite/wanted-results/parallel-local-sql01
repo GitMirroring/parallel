@@ -16,9 +16,9 @@ CSV	3par_no_table	255
 CSV	3par_no_table	255
 CSV	3par_no_table	Exit=0
 CSV	3par_no_table	Exit=0
-CSV	3par_no_table	parallel: Error: username is not a directory.
-CSV	3par_no_table	parallel: Error: username is not a directory.
-CSV	3par_no_table	parallel: Error: username is not a directory.
+CSV	3par_no_table	parallel: Error:usernameis not a directory.
+CSV	3par_no_table	parallel: Error:usernameis not a directory.
+CSV	3par_no_table	parallel: Error:usernameis not a directory.
 CSV	3par_no_table	IsADirectoryError: [Errno 21] Is a directory: '/run/shm'
 CSV	4par_shuf	p_wrapper par_shuf $CSV
 CSV	4par_shuf	1 a

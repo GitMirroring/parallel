@@ -18,6 +18,8 @@ par_csh_newline_var	### bug #42725: csh with \n in variables
 par_csh_newline_var	CSH/TCSH DO NOT SUPPORT newlines IN VARIABLES/FUNCTIONS. Unset not_csh
 par_csh_newline_var	CSH/TCSH DO NOT SUPPORT newlines IN VARIABLES/FUNCTIONS. Unset not_csh
 par_csh_newline_var	This is not csh/tcsh
+par_csh_wd_trc	### --wd ... --trc in csh: exitstatuswrapper must not produce ;;
+par_csh_wd_trc	OK
 par_env_parallel_fifo	### bug #50386: --fifo does not export function, --cat does
 par_env_parallel_fifo	data from stdin
 par_env_parallel_fifo	transferred non-exported func
@@ -51,6 +53,12 @@ par_pipepart_remote	11 11 33 /tmp/parXXXXX
 par_pipepart_remote	11 11 33 /tmp/parXXXXX
 par_pipepart_remote	11 11 33 /tmp/parXXXXX
 par_pipepart_remote	 9  9 28 /tmp/parXXXXX
+par_pipepart_ssh	### --pipepart -S lo: pipepart data reaches remote and local (sum must equal 100)
+par_pipepart_ssh	100
+par_pipepart_tee_ssh	### --pipepart --tee -S lo: data reaches each tee copy
+par_pipepart_tee_ssh	-l	10
+par_pipepart_tee_ssh	-c	21
+par_pipepart_tee_ssh	-w	10
 par_tee_ssh	A 1	A 1
 par_tee_ssh	A 1	1000000 1000000 6888896
 par_tee_ssh	A 2	A 2

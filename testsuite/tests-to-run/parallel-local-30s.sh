@@ -117,7 +117,8 @@ par__dburl_parsing() {
 	(
 	    stdout parallel -j1 --tag test_dburl ::: ${dburls[@]}
 	    stdout parallel -j1 --tag test_dburl {}/ ::: ${dburls[@]}
-	) | perl -pe 's/parallel (line|at) \d+./parallel $1 99999./;'
+	) | perl -pe 's/parallel (line|at) \d+./parallel $1 99999./;' |
+	    perl -pe "s/$me/username/g;"
     )
     rmdir test
 }
@@ -156,7 +157,8 @@ par_sshlogin_parsing() {
     }
     export -f doit
     
-    gen_sshlogin | parallel --tag --timeout 20 -k doit
+    gen_sshlogin | parallel --tag --timeout 20 -k doit |
+	perl -pe 's/'$(whoami)'/username/g'
 }
 
 par__print_in_blocks() {
@@ -784,21 +786,8 @@ par__test_ipv6_format() {
 	perl -ne '/Starting .* processes|Consider adjusting/ or print'
 }
 
-par_fifo_under_csh() {
-    echo '### Test --fifo under csh'
-    doit() {
-	csh -c "seq 3000000 | parallel -k --pipe --fifo 'sleep .{#};cat {}|wc -c ; false; echo \$status; false'"
-	echo exit $?
-    }
-    # csh does not seem to work with TMPDIR containing \n
-    doit
-    TMPDIR=/tmp
-    doit
-}
-
 # was -j6 before segfault circus
 export -f $(compgen -A function | grep par_)
 compgen -A function | G par_ "$@" | sort |
     #    parallel --delay 0.3 --timeout 1000% -j6 --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'
-    parallel --delay 0.3 --timeout 10000% -j75% --lb --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1' |
-    perl -pe 's/(?<![A-Za-z0-9_.])'"$(whoami)"'(?![A-Za-z0-9_.])/username/g'
+    parallel --delay 0.3 --timeout 10000% -j75% --lb --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'

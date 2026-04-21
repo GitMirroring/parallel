@@ -99,6 +99,10 @@ par_env_parallel_fish	data from stdin
 par_env_parallel_fish	OK: 1==1
 par_env_parallel_fish	data from stdin
 par_env_parallel_fish	OK: 1==1
+par_fish_wd_transfer	### --wd ... --transfer --return in fish: exitstatuswrapper separator
+par_fish_wd_transfer	OK
+par_fish_wd_trc	### --wd ... --trc in fish: no bare < /dev/null redirection error
+par_fish_wd_trc	OK
 par_funky_fish	env_parallel: Warning: ASCII value 1 in variables is not supported
 par_funky_fish	3 arg alias_works
 par_funky_fish	env_parallel: Warning: ASCII value 1 in variables is not supported

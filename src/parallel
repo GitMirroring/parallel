@@ -314,7 +314,7 @@ sub zextract_uncompressed_size($) {
     # zextract output format: "<bytes>\t<filename>\n"
     # Also builds the compression index (.zex) if it is missing or stale.
     my ($file) = @_;
-    my $out = qx{zextract --size \Q$file\E};
+    my $out = qx{zextract --size @{[ ::Q($file) ]}};
     my ($bytes) = split(/\t/, $out);
     return int($bytes || 0);
 }
@@ -11713,7 +11713,7 @@ sub sshlogin_wrap($) {
 			    '$termseq = "'.$opt::termseq.'";'.
 			    # }
 			    q{
-		{
+		if(!defined$_use_stdin_payload||$_use_stdin_payload){
 		    my($buf,$rd)=("","");
 		    sysread(STDIN,$rd,128)||die("EOF\040in\040padding");
 		    $buf.=$rd;
@@ -11982,8 +11982,10 @@ sub sshlogin_wrap($) {
 		# We need to save the exit status of the job
 		$post = exitstatuswrapper($post);
 	    }
-	    if($Global::command_via_pipe) {
+	    if($Global::command_via_pipe and not $opt::tmux) {
 		# Deliver perlcode via stdin pipe ('ssh host -- exec perl').
+		# Not used with --tmux: tmux windows have no stdin connection
+		# to parallel's pipe, so perl would hang waiting for source.
 		$self->{'sshlogin_pipe_payload'} =
 		    $sshlogin->pipewrap($perl_source) .
 		    SSHLogin::generate_padding();
@@ -11999,10 +12001,13 @@ sub sshlogin_wrap($) {
 			($pre . $sshlogin->ssh_perl_cmd() . ";" . $post);
 		}
 	    } else {
-		# Alternative delivery (future: perlfile, hexwrap, etc.)
+		# --tmux (or future alternative): encode perl source as hex on
+		# the command line so no stdin pipe is needed.  Signal the
+		# remote script not to read stdin padding (stdin is /dev/null).
+		my $remote_command = $sshlogin->hexwrap('$_use_stdin_payload=0;'.$perl_source);
 		$self->{'sshlogin_wrap'}{$command} =
 		    ($pre
-		     . $sshlogin->ssh_perl_cmd()
+		     . $sshlogin->wrap($remote_command)
 		     . ";"
 		     . $post);
 	    }

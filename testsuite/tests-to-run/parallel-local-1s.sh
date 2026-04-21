@@ -689,13 +689,13 @@ par_bug45691() {
 
 par_filter_no_halt() {
     echo '### --filter + --halt: filtered jobs must not trigger halt failure'
-    parallel --halt soon,fail=1 --filter '(-e "{}")' echo ::: /tmp/recent-noexist /tmp/recent-noexist2
+    parallel --halt soon,fail=1 --filter '(-e "{}")' echo ::: /noexist /noexist2
     echo "exit:$?"
 }
 
 par_filter_no_retries() {
     echo '### --filter + --retries: filtered jobs must not trigger retries'
-    parallel -u --retries 3 --filter '{} % 2' 'echo ran {};false' ::: 1 2 3
+    parallel -u --retries 3 --filter '{} % 2' 'echo ran {};false' ::: 1 2 3 | sort
     echo "exit:$?"
 }
 
@@ -707,6 +707,8 @@ par_skip_in_expr() {
 par_skip_no_halt() {
     echo '### skip() must not count as failure for --halt'
     parallel -k --halt soon,fail=1 echo '{= $job->skip() =}' ::: a b c
+    echo "exit:$?"
+    parallel -k --halt soon,fail=1 exit '{= $job->skip() =}' ::: 1 2 3
     echo "exit:$?"
 }
 

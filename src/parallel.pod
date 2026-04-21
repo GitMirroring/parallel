@@ -2188,6 +2188,19 @@ Ignore any B<--profile>, $PARALLEL, and ~/.parallel/config to get full
 control on the command line (used by GNU B<parallel> internally when
 called with B<--sshlogin>).
 
+B<Security note:> The $PARALLEL environment variable is parsed as
+additional command-line options, including options whose values are
+evaluated as expressions (e.g. B<--blocksize>, B<--timeout>,
+B<--delay>).  In privileged contexts — setuid wrappers, sudo scripts,
+or any situation where $PARALLEL may be set by a less-trusted party —
+pass B<--plain> to prevent $PARALLEL (and user profiles) from
+influencing the invocation.
+
+Example wrapper script running as root:
+
+  #!/bin/sh
+  exec parallel --plain "$@"
+
 See also: B<--profile>
 
 

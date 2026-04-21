@@ -6,7 +6,17 @@
 
 # These fail regularly
 
-
+par_fifo_under_csh() {
+    echo '### Test --fifo under csh'
+    doit() {
+	csh -c "seq 3000000 | parallel -k --pipe --fifo 'sleep .{#};cat {}|wc -c ; false; echo \$status; false'"
+	echo exit $?
+    }
+    # csh does not seem to work with TMPDIR containing \n
+    doit
+    TMPDIR=/tmp
+    doit
+}
 
 par_totaljob_repl() {
     echo '{##} bug #45841: Replacement string for total no of jobs'

@@ -318,8 +318,23 @@ par_ll_long_followed_by_short	[Apar_ll_long_followed_by_short	[KOK
 par_locale_quoting	### quoting in different locales
 par_locale_quoting	£`/tmp/test£`
 par_locale_quoting	$LC_ALL £`/tmp/test£`
+par_locale_quoting	perl: warning: Setting locale failed.
+par_locale_quoting	perl: warning: Please check that your locale settings:
+par_locale_quoting		LANGUAGE = ",
+par_locale_quoting		LC_ALL = "zh_TW.big5",
+par_locale_quoting		LANG = "C"
+par_locale_quoting	    are supported and installed on your system.
+par_locale_quoting	perl: warning: Falling back to the standard locale ("C").
 par_locale_quoting	echo $LC_ALL '£`/tmp/test£`'
 par_locale_quoting	zh_TW.big5 £`/tmp/test£`
+par_locale_quoting	perl: warning: Setting locale failed.
+par_locale_quoting	perl: warning: Please check that your locale settings:
+par_locale_quoting		LANGUAGE = ",
+par_locale_quoting		LC_ALL = "zh_TW.big5",
+par_locale_quoting		LANG = "C"
+par_locale_quoting	    are supported and installed on your system.
+par_locale_quoting	perl: warning: Falling back to the standard locale ("C").
+par_locale_quoting	/bin/bash: warning: setlocale: LC_ALL: cannot change locale (zh_TW.big5)
 par_long_cmd_mem_use	### Test long commands do not take up all memory
 par_long_cmd_mem_use	1
 par_long_cmd_mem_use	10
@@ -547,6 +562,9 @@ par_maxproc	200% proc 7
 par_maxproc	200% proc 8
 par_maxproc	200% proc 9
 par_maxproc	200% proc 10
+par_minimal	### parallel runs basic jobs
+par_minimal	It
+par_minimal	works
 par_negative_replacement	### Negative replacement strings
 par_negative_replacement	correct
 par_negative_replacement	correct

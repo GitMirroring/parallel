@@ -287,14 +287,18 @@ GNU Parallel 20260222 ('Epstein files') has been released. It is available for d
 
 Quote of the month:
 
-  Und die Tage jetzt hab ich GNU parallel für mich entdeckt, auch ne nette Geschichte, gerade wenn's irgendwelche remote APIs sind.
-    -- Vince @dd1des.bsky.social
+  It is a fantastic tool for decades!
+    -- Ops_Mechanic@reddit
 
 New in this release:
 
-* No new features.
+* Remote jobs are spawned via pipe to perl, so environment can be bigger. This is a major rewrite.
 
-* Bug fixes.
+* --pipe-part -a supports .gz, .bz2, .zst-files if zextract is installed.
+
+* Comments in code is redone.
+
+* Bug fixes and man page updates.
 
 
 GNU Parallel - For people who live life in the parallel lane.

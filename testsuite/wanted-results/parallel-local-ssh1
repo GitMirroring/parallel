@@ -135,6 +135,13 @@ par_csh_variable_newline	### Can csh propagate a variable containing \n
 par_csh_variable_newline	1
 par_csh_variable_newline	2
 par_csh_variable_newline	3
+par_env_parallel_func_ssh	### env_parallel -S lo with function: function must transfer
+par_env_parallel_func_ssh	func:x
+par_env_parallel_func_ssh	func:y
+par_env_parallel_ssh	### env_parallel -S lo: must produce output (not empty)
+par_env_parallel_ssh	a
+par_env_parallel_ssh	b
+par_env_parallel_ssh	c
 par_filename_colon	### test filename :
 par_filename_colon	remote-:.:
 par_filename_colon	content-of-:
@@ -147,6 +154,18 @@ par_hgrp_agrp_comma	parallel: Warning: Adding hostgroups: csh@lo tcsh@lo
 par_hgrp_agrp_comma	tcsh
 par_joblog_nonall	### bug #40001: --joblog and --nonall seem not to work together:
 par_joblog_nonall	3
+par_pipe_ssh	### --pipe -S lo,: basic pipe to remote
+par_pipe_ssh	165668
+par_pipe_ssh	149796
+par_pipe_ssh	149796
+par_pipe_ssh	149796
+par_pipe_ssh	149796
+par_pipe_ssh	149796
+par_pipe_ssh	85352
+par_pipe_tee_ssh	### --pipe --tee -S lo: data must reach local and remote (not 0 bytes)
+par_pipe_tee_ssh	1000000
+par_pipe_tee_ssh	6888896
+par_pipe_tee_ssh	1000000
 par_pipe_unneeded_spawn	### Test bug #34241: --pipe should not spawn unneeded processes
 par_pipe_unneeded_spawn	1
 par_pipe_unneeded_spawn	2
@@ -156,6 +175,15 @@ par_pipe_unneeded_spawn	4
 par_pipe_unneeded_spawn	Block_end
 par_pipe_unneeded_spawn	5
 par_pipe_unneeded_spawn	Block_end
+par_pipewrap	### pipewrap: hexwrap bootstrap delivery via ssh
+par_pipewrap	a
+par_pipewrap	b
+par_pipewrap	c
+par_pipewrap	1
+par_pipewrap	2
+par_pipewrap	3
+par_pipewrap	hello
+par_pipewrap	/tmp
 par_remote_nice	### Test --nice remote
 par_remote_nice	NI
 par_remote_nice	5

@@ -238,6 +238,15 @@ par_bug37042	a	tag_with_a
 par_bug37042	a	-J bug_37042_profile print_-J_bug_37042_profile
 par_bug37042	### Bug introduce by fixing bug #37042
 par_bug37042	abc
+par_bug45691	bug #45691: Accessing multiple arguments in {= =}
+par_bug45691	1
+par_bug45691	3
+par_bug45691	4
+par_bug45691	5
+par_bug45691	1
+par_bug45691	3
+par_bug45691	4
+par_bug45691	5
 par_citation_no_config_dir	### bug #64329: parallel --citation will loop forever unless the config dir exists
 par_citation_no_config_dir	This should only ask once
 par_citation_no_config_dir	Type: 'will cite' and press enter.
@@ -301,6 +310,16 @@ par_file_rpl	1
 par_file_rpl	# Conflict: both {filename} and {=expr=}
 par_file_rpl	=chop
 par_file_rpl	=chop
+par_filter_no_halt	### --filter + --halt: filtered jobs must not trigger halt failure
+par_filter_no_halt	exit:0
+par_filter_no_retries	### --filter + --retries: filtered jobs must not trigger retries
+par_filter_no_retries	ran 1
+par_filter_no_retries	ran 3
+par_filter_no_retries	ran 1
+par_filter_no_retries	ran 3
+par_filter_no_retries	ran 3
+par_filter_no_retries	ran 1
+par_filter_no_retries	exit:2
 par_header	### Test --header with -N
 par_header	Start
 par_header	h1
@@ -900,6 +919,11 @@ par_skip_first_line	7
 par_skip_first_line	8
 par_skip_first_line	9
 par_skip_first_line	10
+par_skip_in_expr	### skip() in {= =} with --keep-order: must print a c (not just a)
+par_skip_in_expr	a
+par_skip_in_expr	c
+par_skip_no_halt	### skip() must not count as failure for --halt
+par_skip_no_halt	exit:0
 par_sqlandworker_uninstalled_dbd	### bug #56096: dbi-csv no such column
 par_sqlandworker_uninstalled_dbd	parallel: Error: CSV not supported. Are you missing a perl DBD::CSV module?
 par_sqlandworker_uninstalled_dbd	works

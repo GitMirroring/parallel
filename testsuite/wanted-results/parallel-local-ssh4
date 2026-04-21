@@ -188,9 +188,6 @@ par__--tmux_length	parallel: Warning: Use '--unsafe' to ignore this.
 par__--tmux_length	parallel: Warning: $OLDPWD can only contain [-\p{L}\p{N}\p{M}_+,.%@:/=() ].
 par__--tmux_length	parallel: Warning: Use '--unsafe' to ignore this.
 par__--tmux_length	See output with: tmux -S /TMP/tmsXXXXX attach
-par__--tmux_length	parallel: Warning: This job was killed because it timed out:
-par__--tmux_length	parallel: Warning: echo '\\\"\\\"\;@'
-par__--tmux_length	server exited unexpectedly
 par__--tmux_length	parallel: Warning: $PWD can only contain [-\p{L}\p{N}\p{M}_+,.%@:/=() ].
 par__--tmux_length	parallel: Warning: Use '--unsafe' to ignore this.
 par__--tmux_length	parallel: Warning: $OLDPWD can only contain [-\p{L}\p{N}\p{M}_+,.%@:/=() ].
