@@ -78,6 +78,7 @@ env_underscore() {
     echo WHY DOES THIS FAIL?
     echo '### --env _'
     echo ignored_var >> ~/.parallel/ignored_vars
+    cat ~/.parallel/ignored_vars
     unset $(compgen -A function | grep par_)
     ignored_var="ERROR IF COPIED"
     export ignored_var
