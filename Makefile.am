@@ -4,6 +4,10 @@
 
 AUTOMAKE_OPTIONS = -Wno-portability
 SUBDIRS = src
+SHELL = /bin/bash
+
+SSHLOGIN ?= $(shell [ -f .env ] && . ./.env 2>/dev/null && printf '%s' "$$SSHLOGIN")
+TOR_SSHLOGIN ?= $(shell [ -f .env ] && . ./.env 2>/dev/null && printf '%s' "$$TOR_SSHLOGIN")
 
 sudoinstall:
 	make
@@ -12,78 +16,68 @@ sudoinstall:
 test:
 	cd testsuite; make 1
 
-torall:
-	make torsync
-	make tortest
-	make torresults
+#torall:
+#	make torsync
+#	make tortest
+#	make torresults
+#
+#tortest:
+#	torsocks ssh -t tortest 'export SSH_AUTH_SOCK=`cat ~/.ssh/SSH_AUTH_SOCK`;\
+#                                 export SSH_AGENT_PID=`cat ~/.ssh/SSH_AGENT_PID`;\
+#                                 cd privat/parallel/testsuite/ &&\
+#                                   make short && make long && make mem'
+#
+#torresults:
+#	torsocks rsync -Hazv --progress tortest:privat/parallel/testsuite/actual-results/ testsuite/actual-results/
+#
+#torpush:
+#	torsocks git push tortest:privat/parallel
+#
+#torpull:
+#	torsocks git pull tortest:privat/parallel
+#
+#torsync:
+#	torsocks rsync -Hazv --exclude='*.{pdf,gz,bz2,html,deb}' --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude '*hwdep*' --delete ./ tortest:privat/parallel/
+#	make tortest
 
-tortest:
-	torsocks ssh -t tortest 'export SSH_AUTH_SOCK=`cat ~/.ssh/SSH_AUTH_SOCK`;\
-                                 export SSH_AGENT_PID=`cat ~/.ssh/SSH_AGENT_PID`;\
-                                 cd privat/parallel/testsuite/ &&\
-                                   make short && make long && make mem'
+check-sshlogin:
+	@if [ -z "$(SSHLOGIN)" ]; then \
+	    if [ -e .env ]; then \
+	        . ./.env && \
+	        if [ -n "$$SSHLOGIN" ]; then \
+	            exec $(MAKE) $(MAKECMDGOALS) SSHLOGIN=$$SSHLOGIN; \
+	        fi; \
+	    fi; \
+	    echo "Error: SSHLOGIN is not set. Run: make SSHLOGIN=[user@]<host> <target>"; exit 1; \
+	fi
 
-torresults:
-	torsocks rsync -Hazv --progress tortest:privat/parallel/testsuite/actual-results/ testsuite/actual-results/
+check-tor-sshlogin:
+	@if [ -z "$(TOR_SSHLOGIN)" ]; then \
+	    if [ -e .env ]; then \
+	        . ./.env && \
+	        if [ -n "$$TOR_SSHLOGIN" ]; then \
+	            exec $(MAKE) $(MAKECMDGOALS) TOR_SSHLOGIN=$$TOR_SSHLOGIN; \
+	        fi; \
+	    fi; \
+	    echo "Error: TOR_SSHLOGIN is not set. Run: make TOR_SSHLOGIN=[user@]<host> <target>"; exit 1; \
+	fi
 
-torpush:
-	torsocks git push tortest:privat/parallel
+rsync: check-sshlogin
+	rsync -Hazv --exclude='*.{pdf,gz,bz2,html,deb}' --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude '*hwdep*' --exclude=Makefile --exclude=config.log --exclude=config.status --exclude=stamp-h1 --delete ./ $(SSHLOGIN):privat/parallel/
+	rsync -Haz --no-times --exclude='*.{pdf,gz,bz2,html,deb}' testsuite/tests-to-run/ $(SSHLOGIN):privat/parallel/testsuite/tests-to-run/
 
-torpull:
-	torsocks git pull tortest:privat/parallel
+r-%: rsync
+	ssh -t $(SSHLOGIN) 'cd privat/parallel && make $*'
 
-torsync:
-	torsocks rsync -Hazv --exclude='*.{pdf,gz,bz2,html,deb}' --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude '*hwdep*' --delete ./ tortest:privat/parallel/
-	make tortest
+torrsync: check-tor-sshlogin
+	torsocks rsync -Hazv --exclude="*.{pdf,gz,bz2,html,deb}" --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude "*hwdep*" --exclude="Makefile" --exclude="config.log" --exclude="config.status" --exclude="stamp-h1" --delete ./ '$(TOR_SSHLOGIN)':privat/parallel/
 
-rsync:
-	rsync -Hazv --exclude='*.{pdf,gz,bz2,html,deb}' --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude '*hwdep*' --delete ./ $(BUILD_SERVER):privat/parallel/
+# make r-tor-test-local
+tor-%: torrsync
+	torsocks ssh -t -o ServerAliveInterval=60 -o ServerAliveCountMax=60 $(TOR_SSHLOGIN) 'cd privat/parallel && (test -f Makefile || ./configure) && make $*'
 
 test-%:
 	cd testsuite && make $*
-
-r-%: rsync
-	ssh -t $(BUILD_SERVER) 'cd privat/parallel && make $*'
-
-rsync64: rsync
-	ssh $(BUILD_SERVER) 'torsocks rsync -Hazv --exclude="*.{pdf,gz,bz2,html,deb}" --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude "*hwdep*" --exclude="Makefile" --exclude="config.log" --exclude="config.status" --exclude="stamp-h1" --delete privat/parallel/ tange@h5k6xzcednnws4tsi6zr5w2txd3ashqwiul2wknr2lnpyvvxsamxjzad.onion:privat/parallel/'
-
-64-%:
-	torsocks ssh -t 'tange@h5k6xzcednnws4tsi6zr5w2txd3ashqwiul2wknr2lnpyvvxsamxjzad.onion' 'cd privat/parallel && (test -f Makefile || ./configure) && make $*'
-
-r64-%: rsync64
-	ssh -t $(BUILD_SERVER) 'cd privat/parallel && make 64-$*'
-
-test-filter-delay:
-	@echo "=== filter+delay: expect ~2s ==="
-	touch 1 2
-	bash -c 'time src/parallel --delay 1 --retries 3 -uj1 --halt soon,fail=5 --filter '"'"'not -e "{}"'"'"' echo ::: {1..5}'
-	rm -f 1 2
-
-test-minimal:
-	src/parallel -k echo ::: It works
-
-test-zextract:
-	seq 10000000 | gzip -1 > /tmp/big.gz
-	src/parallel --pipepart -a /tmp/big.gz wc
-
-# Test that the pipewrap (piped stdin delivery) remote execution path works.
-# Requires SSH access to $(BUILD_SERVER) with parallel installed.
-# Tests: basic remote echo, --pipe, --env, --workdir
-test-pipewrap:
-	@echo "=== pipewrap test 1: basic remote echo ==="
-	src/parallel --sshlogin $(BUILD_SERVER) echo ::: a b c | sort | diff - <(printf 'a\nb\nc\n') && echo PASS || echo FAIL
-	@echo "=== pipewrap test 2: multiple args ==="
-	src/parallel -k --sshlogin $(BUILD_SERVER) echo ::: 1 2 3 | diff - <(printf '1\n2\n3\n') && echo PASS || echo FAIL
-	@echo "=== pipewrap test 3: --pipe ==="
-	seq 10 | src/parallel --pipe --sshlogin $(BUILD_SERVER) 'wc -l' | awk '{s+=$$1}END{print s}' | diff - <(echo 10) && echo PASS || echo FAIL
-	@echo "=== pipewrap test 4: --env ==="
-	MYVAR=hello src/parallel --nonall --env MYVAR --sshlogin $(BUILD_SERVER) 'echo $$MYVAR' | diff - <(echo hello) && echo PASS || echo FAIL
-	@echo "=== pipewrap test 5: --workdir ==="
-	src/parallel --workdir /tmp --sshlogin $(BUILD_SERVER) pwd ::: dummy | diff - <(echo /tmp) && echo PASS || echo FAIL
-	@echo "=== All pipewrap tests done ==="
-
-
 
 web:
 	cd src; make web

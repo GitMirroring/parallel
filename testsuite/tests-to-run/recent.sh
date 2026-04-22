@@ -469,6 +469,31 @@ _EOS
 # OK: /bin:/usr/bin:/tmp
 #
 
+par_minimal() {
+    echo '### parallel runs basic jobs'
+    parallel -k echo ::: It works
+}
+# Expected output:
+# ### parallel runs basic jobs
+# It works
+
+par_pipewrap() {
+    echo '### pipewrap: hexwrap bootstrap delivery via ssh'
+    parallel --sshlogin lo echo ::: a b c | sort
+    parallel -k --sshlogin lo echo ::: 1 2 3
+    MYVAR=hello parallel --nonall --env MYVAR --sshlogin lo 'echo $MYVAR'
+    parallel --workdir /tmp --sshlogin lo pwd ::: dummy
+}
+# Expected output:
+# ### pipewrap: hexwrap bootstrap delivery via ssh
+# a
+# b
+# c
+# 1
+# 2
+# 3
+# hello
+# /tmp
 
 export -f $(compgen -A function | grep par_)
 
