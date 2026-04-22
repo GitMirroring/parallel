@@ -1,3 +1,12 @@
+20260422
+
+New in this release:
+
+* Remote jobs are spawned via pipe to perl, so environment can be bigger.
+
+* --pipe-part -a supports .gz, .bz2, .zst-files if zextract is installed.
+
+
 20260322
 
 New in this release:

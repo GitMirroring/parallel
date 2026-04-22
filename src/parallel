@@ -309,10 +309,12 @@ sub pipepart_setup() {
     if($opt::tee) {
 	# Prepend each command with
 	#   < file
-	my $cat_string = "< ".Q($opt::a[0]);
+	my $qfile = Q($opt::a[0]);
+	my $cat_string = "< $qfile";
 	for(1..$Global::JobQueue->total_jobs()) {
 	    push @Global::cat_appends, $cat_string;
 	    push @Global::cat_prepends, "";
+	    push @Global::cat_ssh_pipe_cmds, "(cat - $qfile)";
 	}
     } else {
 	if(not $opt::blocksize) {
@@ -348,10 +350,11 @@ sub pipepart_setup() {
 		int($size / max_jobs_running() /
 		    -multiply_binary_prefix($opt::blocksize));
 	}
-	@Global::cat_prepends = (map { pipe_part_files($_) }
-				 # ::: are put into files and given a filehandle
-				 # ignore these and only keep the filenames.
-				 grep { ! fileno $_ } @opt::a);
+	for my $file (grep { ! fileno $_ } @opt::a) {
+	    my ($prepends, $ssh_cmds) = pipe_part_files($file);
+	    push @Global::cat_prepends, @$prepends;
+	    push @Global::cat_ssh_pipe_cmds, @$ssh_cmds;
+	}
 	# Unget the empty arg as many times as there are parts
 	$Global::JobQueue->{'commandlinequeue'}{'arg_queue'}->unget(
 	    map { [Arg->new("\0noarg")] } @Global::cat_prepends
@@ -372,7 +375,9 @@ sub pipe_tee_setup() {
 	push @fifos, tmpfifo();
     }
     # cat foo | tee fifo1 fifo2 fifo3 fifo4 fifo5 > /dev/null
-    if(not fork()){
+    my $tee_pid = fork();
+    defined($tee_pid) or ::die_bug("fork failed in pipe_tee_setup: $!");
+    if(not $tee_pid){
 	# Test if tee supports --output-error=warn-nopipe
 	`echo | tee --output-error=warn-nopipe /dev/null >/dev/null 2>/dev/null`;
 	my $opt = $? ? "" : "--output-error=warn-nopipe";
@@ -400,6 +405,8 @@ sub pipe_tee_setup() {
     # Remove the tmpfifo as soon as it is open
     @Global::cat_prepends = map { "(rm $_;" } shell_quote(@fifos);
     @Global::cat_appends = map { ") < $_" } shell_quote(@fifos);
+    @Global::cat_ssh_pipe_cmds =
+	map { "(cat -; (rm $_; cat) < $_)" } shell_quote(@fifos);
 }
 
 
@@ -740,6 +747,9 @@ sub pipe_shard_setup() {
     @Global::cat_prepends =
 	map { "perl -e $parcat ".
 		  join(" ",shell_quote(@$_))." | "} @parcatfifos;
+    @Global::cat_ssh_pipe_cmds =
+	map { "(cat -; perl -e $parcat ".
+		  join(" ",shell_quote(@$_)).")"} @parcatfifos;
 }
 
 sub pipe_part_files(@) {
@@ -774,18 +784,26 @@ sub pipe_part_files(@) {
     # find positions
     my @pos = find_split_positions($file,int($Global::blocksize),
 				   $header,$firstlinelen);
-    # Make @cat_prepends
-    my @cat_prepends = ();
-    for(my $i=0; $i<$#pos; $i++) {
-	push(@cat_prepends,
-	     is_compressed_file($file)
-	     ? cat_partial_compressed($file,
-		   $firstlinelen, $firstlinelen+length($header),
-		   $pos[$i], $pos[$i+1])
-	     : cat_partial($file, $firstlinelen, $firstlinelen+length($header),
-			   $pos[$i], $pos[$i+1]));
+    my (@cat_prepends, @ssh_pipe_cmds);
+    if(is_compressed_file($file)) {
+	for(my $i=0; $i<$#pos; $i++) {
+	    my $cmd = cat_partial_compressed($file,
+					     $firstlinelen, $firstlinelen+length($header),
+					     $pos[$i], $pos[$i+1]);
+	    push @cat_prepends, $cmd;
+	    (my $data_cmd = $cmd) =~ s/\s*\|\s*\z//;
+	    push @ssh_pipe_cmds, "(cat -; $data_cmd)";
+	}
+    } else {
+	for(my $i=0; $i<$#pos; $i++) {
+	    my $cmd = cat_partial($file, $firstlinelen, $firstlinelen+length($header),
+				  $pos[$i], $pos[$i+1]);
+	    push @cat_prepends, $cmd;
+	    (my $data_cmd = $cmd) =~ s/\s*\|\s*\z//;
+	    push @ssh_pipe_cmds, "(cat -; $data_cmd)";
+	}
     }
-    return @cat_prepends;
+    return (\@cat_prepends, \@ssh_pipe_cmds);
 }
 
 sub find_header($$) {
@@ -2968,6 +2986,10 @@ sub check_invalid_option_combinations() {
 	::error("--retries cannot be combined with --roundrobin.");
 	::wait_and_exit(255);
     }
+    if(defined $opt::retries and defined $opt::tee) {
+	::error("--retries cannot be combined with --tee.");
+	::wait_and_exit(255);
+    }
     if(defined $opt::pipepart and
        (defined $opt::L or defined $opt::max_lines
 	or defined $opt::max_replace_args)) {
@@ -3085,6 +3107,9 @@ sub test_safe_env_vars {
 sub init_globals() {
     # Defaults:
     $Global::version = 20260322;
+    # Deliver perl bootstrap source via stdin pipe (ssh host -- exec perl).
+    # Set to 0 to use an alternative delivery mechanism (future option).
+    $Global::command_via_pipe = 1;
     $Global::progname = 'parallel';
     $::name = "GNU Parallel";
     $Global::infinity = 2**31;
@@ -5597,14 +5622,22 @@ sub parallelized_host_filtering() {
 	# Return $default_value if command fails
 	my $sshlogin = shift;
 	my $command = shift;
-	# wrapper that returns output "0\n" if the command fails
+	# If --env PATH is requested, propagate it so the remote finds
+	# the correct parallel (e.g. when parallel is in a non-default dir).
+	my @env_vars = map { split /,/ } @opt::env;
+	my $path_set = (grep { $_ eq "PATH" } @env_vars)
+	    ? '$ENV{PATH}="'.::perl_quote_scalar($ENV{PATH}).'";'
+	    : '';
+	# Perl source: run $command via backticks; print "0\n" if it fails.
 	# E.g. parallel not installed => "0\n"
-	my $wcmd = q(perl -e '$a=`).$command.q(`; print $? ? "0".v010 : $a');
-	my $commandline = CommandLine->new(1,[$wcmd],{},0,0,[],[],[],[],{},{});
-	my $job = Job->new($commandline);
-	$job->set_sshlogin($sshlogin);
-	$job->wrapped();
-	return($job->{'wrapped'});
+	my $perl_source = $path_set.'$a=`'.$command.'`; print $? ? "0".v010 : $a';
+	# Use hexwrap+wrap: hexwrap() encodes the Perl source as a hex
+	# literal on the command line so no pipe payload is needed.
+	# The new pipe-payload mechanism stores its source in the Job object
+	# and writes it in start(); sshwrapped() discards the Job, so the
+	# payload would be lost and remote perl would get EOF => exit 0 =>
+	# produce no output.
+	return $sshlogin->wrap($sshlogin->hexwrap($perl_source));
     }
 
     my(@sockets, @cores, @threads, @maxline, @echo);
@@ -6548,7 +6581,7 @@ sub pack_combined_executable {
     # Read the source of GNU Parallel and the executable
     my $parallel = slurp_or_exit($0);
     # Remove possibly __END__ from GNU Parallel
-    $parallel =~ s/^__END__.*//s;
+    $parallel =~ s/^__END__.*//sm;
     if(-t $Global::original_stderr) {
 	::status(
 	      "Please be aware that combining GNU Parallel and '$execname'",
@@ -7899,14 +7932,50 @@ sub sshcmd($) {
 }
 
 sub wrap($@) {
+    # Run command through ssh. Do not read from stdin ( </dev/null )
     # Input:
     #	@cmd = shell command to run on remote
     # Returns:
-    #	$sshwrapped = ssh remote @cmd
+    #	$sshwrapped = ssh remote "@cmd" < /dev/null
     my $self = shift;
     my @remote = @_;
     return(join " ",
-	   $self->sshcmd(), $self->{'host'}, "--", "exec", @remote);
+	   $self->sshcmd(), $self->{'host'}, "--", "exec", @remote, "< /dev/null");
+}
+
+sub ssh_perl_cmd($) {
+    # Returns SSH command that invokes "perl" reading its source from stdin.
+    # Input:
+    #	(none beyond $self)
+    # Returns:
+    #	$cmd = "ssh [opts] host -- exec perl"
+    my $self = shift;
+    return(join " ",
+           $self->sshcmd(), $self->{'host'}, "--",
+	   "exec", "perl", "-", '$PARALLEL_SEQ');
+}
+
+sub generate_padding() {
+    # Generate self-describing countdown padding for piped stdin delivery.
+    # Each line is 64 bytes: 63 decimal digits + "\n".
+    # Total size 16K bytes (256 lines x 64).
+    # Returns:
+    #	$padding = 16K-byte self-describing countdown string
+    my $total_lines = 256;   # first line value = 256*64 = 16384
+    return join("", map { sprintf("%063d\n", ($total_lines-1-$_)*64) }
+		0..$total_lines-1);
+}
+
+sub pipewrap($) {
+    # Wrap Perl source for piped stdin delivery to "perl".
+    # Appends "\n__END__\n" so perl stops parsing source there.
+    # Input:
+    #	$perl_source = Perl program text
+    # Returns:
+    #	$pipe_source = $perl_source . "\n__END__\n"
+    my $self = shift;
+    my $perl_source = shift;
+    return $perl_source . "\n__END__\n";
 }
 
 sub hexwrap($@) {
@@ -10232,10 +10301,17 @@ sub write_block($) {
 	# If writing is to a closed pipe:
 	#   Do not call signal handler, but let nothing be written
 	local $SIG{PIPE} = undef;
-
-	for my $part (
-	    grep { defined $_ }
-	    $self->{'header'},$self->{'block'}) {
+	my @parts = grep { defined $_ } $self->{'header'},$self->{'block'};
+	my $has_data = grep { length($$_) > 0 } @parts;
+	if($has_data and my $payload = delete $self->{'deferred_payload'}) {
+	    # SSH --pipe non-tee: write bootstrap payload only when actual
+	    # data follows so empty_input_wrapper exits 0 on empty slots.
+	    while(length $payload) {
+		my $n = syswrite($stdin_fh, $payload) or last;
+		substr($payload, 0, $n) = "";
+	    }
+	}
+	for my $part (@parts) {
 	    # syswrite may not write all in one go,
 	    # so make sure everything is written.
 	    my $written;
@@ -10700,24 +10776,21 @@ sub wrapped($) {
 	# Wrap with ssh + tranferring of files
 	$command = $self->sshlogin_wrap($command);
 	if(@Global::cat_prepends) {
-	    # --pipepart: prepend:
-	    # < /tmp/foo perl -e 'while(@ARGV) {
-	    #	sysseek(STDIN,shift,0) || die; $left = shift;
-	    #	while($read = sysread(STDIN,$buf, ($left > 60800 ? 60800 : $left))){
-	    #	  $left -= $read; syswrite(STDOUT,$buf);
-	    #	}
-	    # }'  0 0 0 11 |
-	    #
-	    # --pipepart --tee: prepend:
-	    #	< dash-a-file
-	    #
-	    # --pipe --tee: wrap:
-	    #	(rm fifo; ... ) < fifo
-	    #
-	    # --pipe --shard X:
-	    #	(rm fifo; ... ) < fifo
-	    $command = (shift @Global::cat_prepends). "($command)".
-		(shift @Global::cat_appends);
+	    my $prepend = shift @Global::cat_prepends;
+	    my $append  = shift @Global::cat_appends;
+	    if($self->{'sshlogin_pipe_payload'}) {
+		# SSH pipe job: deliver perlcode via 'cat -' reading from stdin,
+		# then job data from data_source. All piped to 'ssh perl'.
+		# pipe_cmd was pre-computed when cat_prepends was populated.
+		my $pre  = delete $self->{'tee_pre'};
+		my $post = delete $self->{'tee_post'};
+		my $pipe_cmd = shift @Global::cat_ssh_pipe_cmds;
+		$command = $pre . "$pipe_cmd | $command" . ($post ? ";$post" : "");
+		$self->{'pipe_payload_only'} = 1;
+	    } else {
+		shift @Global::cat_ssh_pipe_cmds;
+		$command = $prepend . "($command)" . $append;
+	    }
 	} elsif($opt::pipe and not $opt::roundrobin) {
 	    # Wrap with EOF-detector to avoid starting $command if EOF.
 	    $command = empty_input_wrapper($command);
@@ -10747,6 +10820,10 @@ sub set_sshlogin($$) {
     $self->{'sshlogin'} = $sshlogin;
     delete $self->{'sshlogin_wrap'}; # If sshlogin is changed the wrap is wrong
     delete $self->{'wrapped'};
+    delete $self->{'sshlogin_pipe_payload'};
+    delete $self->{'pipe_payload_only'};
+    delete $self->{'tee_pre'};
+    delete $self->{'tee_post'};
 
     if($opt::sqlworker) {
 	# Identify worker as --sqlworker often runs on different machines
@@ -10903,6 +10980,19 @@ sub sshlogin_wrap($) {
 			    '$termseq = "'.$opt::termseq.'";'.
 			    # }
 			    q{
+		{
+		    my($buf,$rd)=("","");
+		    sysread(STDIN,$rd,128)||die("EOF\040in\040padding");
+		    $buf.=$rd;
+		    $buf=~/(\d{63})\n/||die("No\040padding\040line");
+		    my$skip=$1+0;
+		    $buf=substr($buf,$-[0]+64);
+		    $skip-=length($buf);
+		    while($skip>0){
+			my$n=sysread(STDIN,$rd,$skip);
+			$n||last;$skip-=$n;
+		    }
+		}
 		# Check that $tmpdir is writable
 		-w $tmpdir ||
 		    die("$tmpdir\040is\040not\040writable.".
@@ -10920,10 +11010,19 @@ sub sshlogin_wrap($) {
 		# Create a script from the hex code
 		# that removes itself and runs the commands
 		open($fh,">",$script) || die;
+		my $qscript = $script;
+		$qscript =~ s/'+/'"$&"'/g;
 		# \040 = space - but we remove spaces in the script
 		# ' needed due to rc-shell
-		print($fh("rm\040\'$script\'\n",$bashfunc.$cmd));
+		print($fh("rm\040\'$qscript\'\n",$bashfunc.$cmd));
 		close $fh;
+		if($ENV{PARALLEL_SSHHOST}eq':'){
+		    # Local job: exec directly into script.
+		    # No new process group: CTRL-Z suspends job with master.
+		    # No sshd to monitor.
+		    exec($shell,$script);
+		    die("exec\040failed:$!");
+		}
 		my $parent = getppid;
 		my $done = 0;
 		$SIG{CHLD} = sub { $done = 1; };
@@ -11084,7 +11183,25 @@ sub sshlogin_wrap($) {
 		$command = "cd ".::Q($wd)." || exit 255; " .
 		    $command . $post;;
 	    }
-	    if(@opt::env) {
+	    if($opt::pipe and not @Global::cat_prepends) {
+		# Use Perl pipe for local --pipe so sshlogin_pipe_payload is always
+		# refreshed on SSH->local retry.  monitor_parent_sshd_script() will
+		# exec the script directly for local jobs (no fork, no new process
+		# group, so CTRL-Z propagates correctly).
+		# Skip when @Global::cat_prepends is set (--tee or --pipepart):
+		# those cases redirect job stdin via shell '<' which overrides the
+		# pipe payload delivery, so fall through to --env or plain command.
+		my ($csh_friendly,$envset,$bashfuncset) = env_as_eval();
+		my $cmd = $command;
+		$cmd =~ s/\\/\\\\/g;
+		my $perl_source =
+		    $envset.$bashfuncset.'$cmd='."q\0".$cmd."\0;".
+		    monitor_parent_sshd_script();
+		my $pipe_payload =
+		    $sshlogin->pipewrap($perl_source) . SSHLogin::generate_padding();
+		$self->{'sshlogin_pipe_payload'} = $pipe_payload;
+		$self->{'sshlogin_wrap'}{$command} = 'perl - $PARALLEL_SEQ';
+	    } elsif(@opt::env) {
 		# Prepend with environment setter, which sets functions in zsh
 		my ($csh_friendly,$envset,$bashfuncset) = env_as_eval();
 		my $perl_code = $envset.$bashfuncset.
@@ -11118,9 +11235,9 @@ sub sshlogin_wrap($) {
 	    # q// does not quote \, so we must do that
 	    $cmd =~ s/\\/\\\\/g;
 
-	    my $remote_command = $sshlogin->hexwrap
-		($pwd.$envset.$bashfuncset.'$cmd='."q\0".$cmd."\0;".
-		 monitor_parent_sshd_script());
+	    my $perl_source =
+		$pwd.$envset.$bashfuncset.'$cmd='."q\0".$cmd."\0;".
+		monitor_parent_sshd_script();
 	    my ($pre,$post,$cleanup)=("","","");
 	    # --transfer
 	    $pre .= $self->sshtransfer();
@@ -11132,11 +11249,30 @@ sub sshlogin_wrap($) {
 		# We need to save the exit status of the job
 		$post = exitstatuswrapper($post);
 	    }
-	    $self->{'sshlogin_wrap'}{$command} =
-		($pre
-		 . $sshlogin->wrap($remote_command)
-		 . ";"
-		 . $post);
+	    if($Global::command_via_pipe) {
+		# Deliver perlcode via stdin pipe ('ssh host -- exec perl').
+		$self->{'sshlogin_pipe_payload'} =
+		    $sshlogin->pipewrap($perl_source) .
+		    SSHLogin::generate_padding();
+		if(@Global::cat_prepends) {
+		    # --pipe --tee / --pipepart: wrapped() builds
+		    # (cat -; data_source) | ssh perl around this command.
+		    # Store pre/post so wrapped() can apply them outside.
+		    $self->{'tee_pre'}  = $pre;
+		    $self->{'tee_post'} = $post;
+		    $self->{'sshlogin_wrap'}{$command} = $sshlogin->ssh_perl_cmd();
+		} else {
+		    $self->{'sshlogin_wrap'}{$command} =
+			($pre . $sshlogin->ssh_perl_cmd() . ";" . $post);
+		}
+	    } else {
+		# Alternative delivery (future: perlfile, hexwrap, etc.)
+		$self->{'sshlogin_wrap'}{$command} =
+		    ($pre
+		     . $sshlogin->ssh_perl_cmd()
+		     . ";"
+		     . $post);
+	    }
 	}
     }
     return $self->{'sshlogin_wrap'}{$command};
@@ -11315,7 +11451,7 @@ sub sshcleanup($) {
 	$cleancmd .= $sshlogin->cleanup_cmd($file,$workdir).";";
     }
     if(defined $opt::workdir and $opt::workdir eq "...") {
-	$cleancmd .= $sshlogin->wrap("rm -rf " . ::Q($workdir).';');
+	$cleancmd .= $sshlogin->wrap("rm -rf " . ::Q($workdir)) . ";";
     }
     return $cleancmd;
 }
@@ -11582,9 +11718,34 @@ sub start($) {
     if($opt::pipe) {
 	my ($stdin_fh) = ::gensym();
 	$pid = open3_setpgrp($stdin_fh,$stdout_fh,$stderr_fh,$command);
-	if($opt::roundrobin and not $opt::keeporder) {
-	    # --keep-order will make sure the order will be reproducible
-	    ::set_fh_non_blocking($stdin_fh);
+	if (my $payload = $job->{'sshlogin_pipe_payload'}) {
+	    if($job->{'pipe_payload_only'}) {
+		# --pipe --tee / --pipepart SSH: data comes from the fifo/file
+		# redirect in the command, not from $stdin_fh.  Write payload
+		# synchronously (fits in 64K pipe buffer) then close so the
+		# leading 'cat -' in the wrapped command gets EOF.
+		local $SIG{PIPE} = undef;
+		while (length $payload) {
+		    my $n = syswrite($stdin_fh, $payload) or last;
+		    substr($payload, 0, $n) = "";
+		}
+		close($stdin_fh);
+	    } elsif($opt::roundrobin) {
+		# Round-robin: all running slots receive data, so no empty slots.
+		# Write payload synchronously now (fits in 64K pipe buffer).
+		# Then make fd non-blocking for data writes.
+		local $SIG{PIPE} = undef;
+		while (length $payload) {
+		    my $n = syswrite($stdin_fh, $payload) or last;
+		    substr($payload, 0, $n) = "";
+		}
+		::set_fh_non_blocking($stdin_fh) unless $opt::keeporder;
+	    } else {
+		# --pipe (no --tee) SSH job: defer payload to write_block() so
+		# that empty_input_wrapper sees empty stdin for slots that get
+		# no data and exits 0 without starting the remote command.
+		$job->{'deferred_payload'} = $payload;
+	    }
 	}
 	$job->set_fh(0,"w",$stdin_fh);
 	if($opt::tee or $opt::shard or $opt::bin) { $job->set_virgin(0); }
@@ -11612,7 +11773,23 @@ sub start($) {
 	$pid = open3_setpgrp("<&STDIN",$stdout_fh,$stderr_fh,$command);
 	$job->set_virgin(0);
     } else {
-	$pid = open3_setpgrp(::gensym(),$stdout_fh,$stderr_fh,$command);
+	if (my $payload = $job->{'sshlogin_pipe_payload'}) {
+	    # Remote pipe-delivery job: write program source + padding, then close stdin
+	    my ($stdin_fh) = ::gensym();
+	    $pid = open3_setpgrp($stdin_fh,$stdout_fh,$stderr_fh,$command);
+	    if (fork() == 0) {
+		local $SIG{PIPE} = undef;
+		while (length $payload) {
+		    my $n = syswrite($stdin_fh, $payload) or last;
+		    substr($payload, 0, $n) = "";
+		}
+		close $stdin_fh;
+		exit 0;
+	    }
+	    close $stdin_fh;
+	} else {
+	    $pid = open3_setpgrp(::gensym(),$stdout_fh,$stderr_fh,$command);
+	}
 	$job->set_virgin(0);
     }
     if($pid) {
@@ -13473,8 +13650,10 @@ sub len($) {
 	}
     }
     if(defined $Global::parallel_env) {
-	# If we are using --env, add the prefix for that, too.
-	$len += length $Global::parallel_env;
+	# For remote SSH, PARALLEL_ENV is delivered via the Perl pipe and
+	# never appears on the command line; don't count it against ARG_MAX.
+	my $remote_only = @opt::sshlogin && !grep { $_ eq ':' } @opt::sshlogin;
+	$len += length $Global::parallel_env unless $remote_only;
     }
     if($Global::quoting) {
 	# Pessimistic length if -q is set
@@ -14235,7 +14414,8 @@ sub get($) {
 	$cmd_line->populate();
 	::debug("run","cmd_line->number_of_args ",
 		$cmd_line->number_of_args(), "\n");
-	if(not $Global::no_more_input and ($opt::pipe or $opt::pipepart)) {
+	if(not $Global::no_more_input and ($opt::pipe or $opt::pipepart)
+	   and not $opt::tee) {
 	    if($cmd_line->replaced() eq "") {
 		# Empty command - pipe requires a command
 		::error("--pipe/--pipepart must have a command to pipe into ".
@@ -14392,7 +14572,9 @@ sub binary_find_max($$$) {
 	my $len = shift;
 	my $string = shift;
 	if($Global::parallel_env) {
-	    $len += length $Global::parallel_env;
+	    # Pipe-delivered env does not consume command-line space on remote SSH.
+	    my $remote_only = @opt::sshlogin && !grep { $_ eq ':' } @opt::sshlogin;
+	    $len += length $Global::parallel_env unless $remote_only;
 	}
 	# Force using non-built-in command
 	$prg ||= ::which("echo");
@@ -16199,8 +16381,13 @@ sub main() {
 	    ::wait_and_exit(255);
 	}
     } elsif($opt::pipe and not $opt::pipepart and not $opt::semaphore) {
-	# Fill all jobslots
-	while(start_more_jobs()) {}
+	# Fill all jobslots, but not when -r: with --no-run-if-empty
+	# stdin may be entirely empty, and pre-starting jobs would
+	# cause them to run with empty stdin.  write_record_to_pipe()
+	# starts jobs on demand when actual data arrives.
+	if(not $Global::ignore_empty) {
+	    while(start_more_jobs()) {}
+	}
 	spreadstdin();
     } elsif($opt::fast) {
 	fast();
