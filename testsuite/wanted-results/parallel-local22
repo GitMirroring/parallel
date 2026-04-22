@@ -51,14 +51,6 @@ echo '### bug #42363: --pipepart and --fifo/--cat does not work'
      11      11      33
      11      11      33
       9       9      28
-echo '### bug #42055: --pipepart -a bigfile should not require sequential reading of bigfile'
-### bug #42055: --pipepart -a bigfile should not require sequential reading of bigfile
-  parallel --pipepart -a /etc/passwd -L 1 should not be run
-parallel: Error: --pipepart is incompatible with --max-replace-args, --max-lines, and -L.
-  parallel --pipepart -a /etc/passwd -N 1 should not be run
-parallel: Error: --pipepart is incompatible with --max-replace-args, --max-lines, and -L.
-  parallel --pipepart -a /etc/passwd -l 1 should not be run
-parallel: Error: --pipepart is incompatible with --max-replace-args, --max-lines, and -L.
 echo '### bug #42893: --block should not cause decimals in cat_partial'
 ### bug #42893: --block should not cause decimals in cat_partial
   seq 100000 >/tmp/parallel-decimal;   parallel --dry-run -kvv --pipepart --block 0.12345M -a /tmp/parallel-decimal true;   rm /tmp/parallel-decimal

@@ -4,6 +4,8 @@ New in this release:
 
 * Remote jobs are spawned via pipe to perl, so environment can be bigger.
 
+* --pipe-part -a supports -L/-N if zextract is installed.
+
 * --pipe-part -a supports .gz, .bz2, .zst-files if zextract is installed.
 
 * Comments in code is redone.

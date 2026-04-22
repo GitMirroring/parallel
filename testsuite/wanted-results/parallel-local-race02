@@ -30,6 +30,52 @@ par__compress_prg_fails	--line-buffer --tag --files	1
 par__compress_prg_fails	--line-buffer --tag --files	parallel: Warning: Use --files0 when $TMPDIR contains newline.
 par__compress_prg_fails	--line-buffer --tag --files	parallel: Error: false failed.
 par__compress_prg_fails	--line-buffer --tag --files	parallel: Error: false failed.
+par_fifo_under_csh	### Test --fifo under csh
+par_fifo_under_csh	1048571
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048572
+par_fifo_under_csh	1
+par_fifo_under_csh	1048569
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	1048576
+par_fifo_under_csh	1
+par_fifo_under_csh	868832
+par_fifo_under_csh	1
+par_fifo_under_csh	exit 22
 par_kill_hup	### Are children killed if GNU Parallel receives HUP? There should be no sleep at the end
 par_kill_hup	bash-+-perl---2*[bash---sleep]
 par_kill_hup	     `-pstree

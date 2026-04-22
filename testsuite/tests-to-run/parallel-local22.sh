@@ -35,11 +35,6 @@ echo '### bug #42363: --pipepart and --fifo/--cat does not work'
   parallel --pipepart --block 31 -a /tmp/bug42363 -k --cat  'cat {} | wc'; 
   rm /tmp/bug42363
 
-echo '### bug #42055: --pipepart -a bigfile should not require sequential reading of bigfile'
-  parallel --pipepart -a /etc/passwd -L 1 should not be run
-  parallel --pipepart -a /etc/passwd -N 1 should not be run
-  parallel --pipepart -a /etc/passwd -l 1 should not be run
-
 echo '### bug #42893: --block should not cause decimals in cat_partial'
   seq 100000 >/tmp/parallel-decimal; 
   parallel --dry-run -kvv --pipepart --block 0.12345M -a /tmp/parallel-decimal true; 

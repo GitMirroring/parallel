@@ -1,3 +1,9 @@
+par__--load_from_PARALLEL	### Test reading load from PARALLEL
+par__--load_from_PARALLEL	8a7095c1c23bfadc311fe6b16d950582  -
+par__--load_from_PARALLEL	8a7095c1c23bfadc311fe6b16d950582  -
+par__--nice	Check that --nice works
+par__--nice	bzip2            18
+par__--nice	bzip2            18
 par__dburl_parsing	csv:///mydir/username	parallel: Error: 
 par__dburl_parsing	csv:///mydir/username	Execution ERROR: Cannot open /tmp/parallel-local-30s-tmp/
 par__dburl_parsing	csv:///mydir/username	`/tmp/trip`>/tmp/tripwire;
@@ -3402,3 +3408,147 @@ par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)
 par_sshlogin_parsing	@grp1+grp2/4//usr/bin/ssh withpassword::;`echo>/tmp/trap`;)(|<*&"'@lo:22222	withpassword
 par_test_diff_roundrobin_k	### test there is difference on -k
 par_test_diff_roundrobin_k	OK
+par_zextract	/tmp/zextract.bz2-	 261905  261905 1722230
+par_zextract	/tmp/zextract.bz2-	 246033  246033 1722231
+par_zextract	/tmp/zextract.bz2-	 246033  246033 1722231
+par_zextract	/tmp/zextract.bz2-	 246029  246029 1722204
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  588895
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2--L100000	 100000  100000  700001
+par_zextract	/tmp/zextract.bz2--L100000 -N3	 300000  300000 1988895
+par_zextract	/tmp/zextract.bz2--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.bz2--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.bz2--L100000 -N3	 100000  100000  700001
+par_zextract	/tmp/zextract.bz2.bin-	 261905  261905 1722230
+par_zextract	/tmp/zextract.bz2.bin-	 246033  246033 1722231
+par_zextract	/tmp/zextract.bz2.bin-	 246033  246033 1722231
+par_zextract	/tmp/zextract.bz2.bin-	 246029  246029 1722204
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  588895
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.bz2.bin--L100000	 100000  100000  700001
+par_zextract	/tmp/zextract.bz2.bin--L100000 -N3	 300000  300000 1988895
+par_zextract	/tmp/zextract.bz2.bin--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.bz2.bin--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.bz2.bin--L100000 -N3	 100000  100000  700001
+par_zextract	/tmp/zextract.gz-	 261905  261905 1722230
+par_zextract	/tmp/zextract.gz-	 246033  246033 1722231
+par_zextract	/tmp/zextract.gz-	 246033  246033 1722231
+par_zextract	/tmp/zextract.gz-	 246029  246029 1722204
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  588895
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz--L100000	 100000  100000  700001
+par_zextract	/tmp/zextract.gz--L100000 -N3	 300000  300000 1988895
+par_zextract	/tmp/zextract.gz--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.gz--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.gz--L100000 -N3	 100000  100000  700001
+par_zextract	/tmp/zextract.gz.bin-	 261905  261905 1722230
+par_zextract	/tmp/zextract.gz.bin-	 246033  246033 1722231
+par_zextract	/tmp/zextract.gz.bin-	 246033  246033 1722231
+par_zextract	/tmp/zextract.gz.bin-	 246029  246029 1722204
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  588895
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.gz.bin--L100000	 100000  100000  700001
+par_zextract	/tmp/zextract.gz.bin--L100000 -N3	 300000  300000 1988895
+par_zextract	/tmp/zextract.gz.bin--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.gz.bin--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.gz.bin--L100000 -N3	 100000  100000  700001
+par_zextract	/tmp/zextract.zst-	 261905  261905 1722230
+par_zextract	/tmp/zextract.zst-	 246033  246033 1722231
+par_zextract	/tmp/zextract.zst-	 246033  246033 1722231
+par_zextract	/tmp/zextract.zst-	 246029  246029 1722204
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  588895
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst--L100000	 100000  100000  700001
+par_zextract	/tmp/zextract.zst--L100000 -N3	 300000  300000 1988895
+par_zextract	/tmp/zextract.zst--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.zst--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.zst--L100000 -N3	 100000  100000  700001
+par_zextract	/tmp/zextract.zst.bin-	 261905  261905 1722230
+par_zextract	/tmp/zextract.zst.bin-	 246033  246033 1722231
+par_zextract	/tmp/zextract.zst.bin-	 246033  246033 1722231
+par_zextract	/tmp/zextract.zst.bin-	 246029  246029 1722204
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  588895
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.zst.bin--L100000	 100000  100000  700001
+par_zextract	/tmp/zextract.zst.bin--L100000 -N3	 300000  300000 1988895
+par_zextract	/tmp/zextract.zst.bin--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.zst.bin--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.zst.bin--L100000 -N3	 100000  100000  700001
+par_zextract	/tmp/zextract.raw-	 261905  261905 1722230
+par_zextract	/tmp/zextract.raw-	 246033  246033 1722231
+par_zextract	/tmp/zextract.raw-	 246033  246033 1722231
+par_zextract	/tmp/zextract.raw-	 246029  246029 1722204
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  588895
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw--L100000	 100000  100000  700001
+par_zextract	/tmp/zextract.raw--L100000 -N3	 300000  300000 1988895
+par_zextract	/tmp/zextract.raw--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.raw--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.raw--L100000 -N3	 100000  100000  700001
+par_zextract	/tmp/zextract.raw.bin-	 261905  261905 1722230
+par_zextract	/tmp/zextract.raw.bin-	 246033  246033 1722231
+par_zextract	/tmp/zextract.raw.bin-	 246033  246033 1722231
+par_zextract	/tmp/zextract.raw.bin-	 246029  246029 1722204
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  588895
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700000
+par_zextract	/tmp/zextract.raw.bin--L100000	 100000  100000  700001
+par_zextract	/tmp/zextract.raw.bin--L100000 -N3	 300000  300000 1988895
+par_zextract	/tmp/zextract.raw.bin--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.raw.bin--L100000 -N3	 300000  300000 2100000
+par_zextract	/tmp/zextract.raw.bin--L100000 -N3	 100000  100000  700001

@@ -314,12 +314,12 @@ par_filter_no_halt	### --filter + --halt: filtered jobs must not trigger halt fa
 par_filter_no_halt	exit:0
 par_filter_no_retries	### --filter + --retries: filtered jobs must not trigger retries
 par_filter_no_retries	ran 1
-par_filter_no_retries	ran 3
+par_filter_no_retries	ran 1
 par_filter_no_retries	ran 1
 par_filter_no_retries	ran 3
 par_filter_no_retries	ran 3
-par_filter_no_retries	ran 1
-par_filter_no_retries	exit:2
+par_filter_no_retries	ran 3
+par_filter_no_retries	exit:0
 par_header	### Test --header with -N
 par_header	Start
 par_header	h1
@@ -923,6 +923,7 @@ par_skip_in_expr	### skip() in {= =} with --keep-order: must print a c (not just
 par_skip_in_expr	a
 par_skip_in_expr	c
 par_skip_no_halt	### skip() must not count as failure for --halt
+par_skip_no_halt	exit:0
 par_skip_no_halt	exit:0
 par_sqlandworker_uninstalled_dbd	### bug #56096: dbi-csv no such column
 par_sqlandworker_uninstalled_dbd	parallel: Error: CSV not supported. Are you missing a perl DBD::CSV module?

@@ -13,8 +13,7 @@ par_fifo_under_csh() {
 	echo exit $?
     }
     # csh does not seem to work with TMPDIR containing \n
-    doit
-    TMPDIR=/tmp
+    export TMPDIR=/tmp
     doit
 }
 

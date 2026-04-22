@@ -1,110 +1,5 @@
-par_--match	Basic match
-par_--match	This works
-par_--match	This works, too
-par_--match	Simple CSV-parsing
-par_--match	url=https://gnu.org/s/parallel filename=myfile
-par_--match	Dummy --match for input source 1, real --match for input source 2
-par_--match	This works
-par_--match	Reuse --match
-par_--match	ALL OK
-par_--match	With --header :
-par_--match	ALL OK
-par_--match	Failure to match/Partial match
-par_--match	parallel: Warning: 'FAILS' did not match '([a-z]+)'
-par_--match	matches
-par_--match	1
-par_--match	partly
-par_--match	Test error: missing --match
-par_--match	parallel: Error: {2.1} requires corresponding --match
-par_--match	Test error: \001 in match
-par_--match	parallel: Error: \001 is not supported in --match
-par_--match	From man parallel_examples
-par_--match	mkdir -p a && mv afile a
-par_--match	mkdir -p b && mv bfile b
-par_--match	mkdir -p a && mv adir a
-par_--match	A. Dent
-par_--match	F. Prefect
-par_--match	T. McMillan
-par_--match	Z. Beeblebrox
-par_--match	1969-12-31
-par_--match	2038-01-19
-par_--match	2002-06-01
-par_--match	Domain: example.com Path: dir/page
-par_--match	Domain: gnu.org Path: s/parallel
-par_--match	Second: Babel fish, First: Arthur
-par_--match	Second: Betelgeuse, First: Adams
-par_--match	Second: Bistro, First: Arcturan
-par_--match	Pan Galactic
-par_--match	Gargle Blaster
-par_--match	From DK/Denmark to DK/Denmark dial 00-45
-par_--match	From DK/Denmark to US/United States dial 00-1
-par_--match	From DK/Denmark to JP/Japan dial 00-81
-par_--match	From DK/Denmark to AU/Australia dial 00-61
-par_--match	From DK/Denmark to CA/Canada dial 00-1
-par_--match	From DK/Denmark to RU/Russia dial 00-7
-par_--match	From DK/Denmark to TH/Thailand dial 00-66
-par_--match	From DK/Denmark to TW/Taiwan dial 00-886
-par_--match	From US/United States to DK/Denmark dial 011-45
-par_--match	From US/United States to US/United States dial 011-1
-par_--match	From US/United States to JP/Japan dial 011-81
-par_--match	From US/United States to AU/Australia dial 011-61
-par_--match	From US/United States to CA/Canada dial 011-1
-par_--match	From US/United States to RU/Russia dial 011-7
-par_--match	From US/United States to TH/Thailand dial 011-66
-par_--match	From US/United States to TW/Taiwan dial 011-886
-par_--match	From JP/Japan to DK/Denmark dial 010-45
-par_--match	From JP/Japan to US/United States dial 010-1
-par_--match	From JP/Japan to JP/Japan dial 010-81
-par_--match	From JP/Japan to AU/Australia dial 010-61
-par_--match	From JP/Japan to CA/Canada dial 010-1
-par_--match	From JP/Japan to RU/Russia dial 010-7
-par_--match	From JP/Japan to TH/Thailand dial 010-66
-par_--match	From JP/Japan to TW/Taiwan dial 010-886
-par_--match	From AU/Australia to DK/Denmark dial 0011-45
-par_--match	From AU/Australia to US/United States dial 0011-1
-par_--match	From AU/Australia to JP/Japan dial 0011-81
-par_--match	From AU/Australia to AU/Australia dial 0011-61
-par_--match	From AU/Australia to CA/Canada dial 0011-1
-par_--match	From AU/Australia to RU/Russia dial 0011-7
-par_--match	From AU/Australia to TH/Thailand dial 0011-66
-par_--match	From AU/Australia to TW/Taiwan dial 0011-886
-par_--match	From CA/Canada to DK/Denmark dial 011-45
-par_--match	From CA/Canada to US/United States dial 011-1
-par_--match	From CA/Canada to JP/Japan dial 011-81
-par_--match	From CA/Canada to AU/Australia dial 011-61
-par_--match	From CA/Canada to CA/Canada dial 011-1
-par_--match	From CA/Canada to RU/Russia dial 011-7
-par_--match	From CA/Canada to TH/Thailand dial 011-66
-par_--match	From CA/Canada to TW/Taiwan dial 011-886
-par_--match	From RU/Russia to DK/Denmark dial 810-45
-par_--match	From RU/Russia to US/United States dial 810-1
-par_--match	From RU/Russia to JP/Japan dial 810-81
-par_--match	From RU/Russia to AU/Australia dial 810-61
-par_--match	From RU/Russia to CA/Canada dial 810-1
-par_--match	From RU/Russia to RU/Russia dial 810-7
-par_--match	From RU/Russia to TH/Thailand dial 810-66
-par_--match	From RU/Russia to TW/Taiwan dial 810-886
-par_--match	From TH/Thailand to DK/Denmark dial 001-45
-par_--match	From TH/Thailand to US/United States dial 001-1
-par_--match	From TH/Thailand to JP/Japan dial 001-81
-par_--match	From TH/Thailand to AU/Australia dial 001-61
-par_--match	From TH/Thailand to CA/Canada dial 001-1
-par_--match	From TH/Thailand to RU/Russia dial 001-7
-par_--match	From TH/Thailand to TH/Thailand dial 001-66
-par_--match	From TH/Thailand to TW/Taiwan dial 001-886
-par_--match	From TW/Taiwan to DK/Denmark dial 002-45
-par_--match	From TW/Taiwan to US/United States dial 002-1
-par_--match	From TW/Taiwan to JP/Japan dial 002-81
-par_--match	From TW/Taiwan to AU/Australia dial 002-61
-par_--match	From TW/Taiwan to CA/Canada dial 002-1
-par_--match	From TW/Taiwan to RU/Russia dial 002-7
-par_--match	From TW/Taiwan to TH/Thailand dial 002-66
-par_--match	From TW/Taiwan to TW/Taiwan dial 002-886
-par_--match	Capture groups CSV-parsing - not implemented
-par_--match	url={url} filename={file} https://gnu.org/s/parallel,myfile
-par_--match	Non posistional replacement fields - not implemented
-par_--match	{.2} {.3} {.1} Gold,Heart_of
-par_--match	TODO Ignore case?
+par_--round-robin_blocks	bug #49664: --round-robin does not complete
+par_--round-robin_blocks	8
 par_--tee_too_many_args	### Fail if there are more arguments than --jobs
 par_--tee_too_many_args	1	1
 par_--tee_too_many_args	1	10
@@ -118,31 +13,6 @@ par_--tee_too_many_args	parallel: Warning: or increasing 'ulimit -n' (try: ulimi
 par_--tee_too_many_args	parallel: Warning: or increasing 'nofile' in /etc/security/limits.conf
 par_--tee_too_many_args	parallel: Warning: or increasing /proc/sys/fs/file-max
 par_--tee_too_many_args	parallel: Error: --tee requires --jobs to be higher. Try --jobs 999.
-par_END	### Test -i and --replace: Replace with argument
-par_END	replace
-par_END	replace
-par_END	replace
-par_END	replace
-par_END	replace
-par_END	replace
-par_END	replace
-par_END	replace
-par_END	replace
-par_END	### Test -E: Artificial end-of-file
-par_END	include this
-par_END	include this
-par_END	### Test -e and --eof: Artificial end-of-file
-par_END	include this
-par_END	include this
-par_END	include this
-par_END	include this
-par__--load_from_PARALLEL	### Test reading load from PARALLEL
-par__--load_from_PARALLEL	8a7095c1c23bfadc311fe6b16d950582  -
-par__--load_from_PARALLEL	8a7095c1c23bfadc311fe6b16d950582  -
-par__--nice	Check that --nice works
-par__--nice	load_10
-par__--nice	bzip2            18
-par__--nice	bzip2            18
 par__pipepart_spawn	### bug #46214: Using --pipepart doesnt spawn multiple jobs in version 20150922
 par__pipepart_spawn	1:local / 2+ / 2+
 par__quote_special_results	### Test --results on file systems with limited UTF8 support
@@ -1376,5 +1246,128 @@ par_tmux_fg	bug #50107: --tmux --fg should also write how to access it
 par_tmux_fg	See output with: tmux -S /TMPtmpfile attach
 par_tmux_fg	open terminal failed: not a terminal
 par_totaljobs	OK
-par_z--round-robin_blocks	bug #49664: --round-robin does not complete
-par_z--round-robin_blocks	8
+par_z_--match	Basic match
+par_z_--match	This works
+par_z_--match	This works, too
+par_z_--match	Simple CSV-parsing
+par_z_--match	url=https://gnu.org/s/parallel filename=myfile
+par_z_--match	Dummy --match for input source 1, real --match for input source 2
+par_z_--match	This works
+par_z_--match	Reuse --match
+par_z_--match	ALL OK
+par_z_--match	With --header :
+par_z_--match	ALL OK
+par_z_--match	Failure to match/Partial match
+par_z_--match	parallel: Warning: 'FAILS' did not match '([a-z]+)'
+par_z_--match	matches
+par_z_--match	1
+par_z_--match	partly
+par_z_--match	Test error: missing --match
+par_z_--match	parallel: Error: {2.1} requires corresponding --match
+par_z_--match	Test error: \001 in match
+par_z_--match	parallel: Error: \001 is not supported in --match
+par_z_--match	From man parallel_examples
+par_z_--match	mkdir -p a && mv afile a
+par_z_--match	mkdir -p b && mv bfile b
+par_z_--match	mkdir -p a && mv adir a
+par_z_--match	A. Dent
+par_z_--match	F. Prefect
+par_z_--match	T. McMillan
+par_z_--match	Z. Beeblebrox
+par_z_--match	1969-12-31
+par_z_--match	2038-01-19
+par_z_--match	2002-06-01
+par_z_--match	Domain: example.com Path: dir/page
+par_z_--match	Domain: gnu.org Path: s/parallel
+par_z_--match	Second: Babel fish, First: Arthur
+par_z_--match	Second: Betelgeuse, First: Adams
+par_z_--match	Second: Bistro, First: Arcturan
+par_z_--match	Pan Galactic
+par_z_--match	Gargle Blaster
+par_z_--match	From DK/Denmark to DK/Denmark dial 00-45
+par_z_--match	From DK/Denmark to US/United States dial 00-1
+par_z_--match	From DK/Denmark to JP/Japan dial 00-81
+par_z_--match	From DK/Denmark to AU/Australia dial 00-61
+par_z_--match	From DK/Denmark to CA/Canada dial 00-1
+par_z_--match	From DK/Denmark to RU/Russia dial 00-7
+par_z_--match	From DK/Denmark to TH/Thailand dial 00-66
+par_z_--match	From DK/Denmark to TW/Taiwan dial 00-886
+par_z_--match	From US/United States to DK/Denmark dial 011-45
+par_z_--match	From US/United States to US/United States dial 011-1
+par_z_--match	From US/United States to JP/Japan dial 011-81
+par_z_--match	From US/United States to AU/Australia dial 011-61
+par_z_--match	From US/United States to CA/Canada dial 011-1
+par_z_--match	From US/United States to RU/Russia dial 011-7
+par_z_--match	From US/United States to TH/Thailand dial 011-66
+par_z_--match	From US/United States to TW/Taiwan dial 011-886
+par_z_--match	From JP/Japan to DK/Denmark dial 010-45
+par_z_--match	From JP/Japan to US/United States dial 010-1
+par_z_--match	From JP/Japan to JP/Japan dial 010-81
+par_z_--match	From JP/Japan to AU/Australia dial 010-61
+par_z_--match	From JP/Japan to CA/Canada dial 010-1
+par_z_--match	From JP/Japan to RU/Russia dial 010-7
+par_z_--match	From JP/Japan to TH/Thailand dial 010-66
+par_z_--match	From JP/Japan to TW/Taiwan dial 010-886
+par_z_--match	From AU/Australia to DK/Denmark dial 0011-45
+par_z_--match	From AU/Australia to US/United States dial 0011-1
+par_z_--match	From AU/Australia to JP/Japan dial 0011-81
+par_z_--match	From AU/Australia to AU/Australia dial 0011-61
+par_z_--match	From AU/Australia to CA/Canada dial 0011-1
+par_z_--match	From AU/Australia to RU/Russia dial 0011-7
+par_z_--match	From AU/Australia to TH/Thailand dial 0011-66
+par_z_--match	From AU/Australia to TW/Taiwan dial 0011-886
+par_z_--match	From CA/Canada to DK/Denmark dial 011-45
+par_z_--match	From CA/Canada to US/United States dial 011-1
+par_z_--match	From CA/Canada to JP/Japan dial 011-81
+par_z_--match	From CA/Canada to AU/Australia dial 011-61
+par_z_--match	From CA/Canada to CA/Canada dial 011-1
+par_z_--match	From CA/Canada to RU/Russia dial 011-7
+par_z_--match	From CA/Canada to TH/Thailand dial 011-66
+par_z_--match	From CA/Canada to TW/Taiwan dial 011-886
+par_z_--match	From RU/Russia to DK/Denmark dial 810-45
+par_z_--match	From RU/Russia to US/United States dial 810-1
+par_z_--match	From RU/Russia to JP/Japan dial 810-81
+par_z_--match	From RU/Russia to AU/Australia dial 810-61
+par_z_--match	From RU/Russia to CA/Canada dial 810-1
+par_z_--match	From RU/Russia to RU/Russia dial 810-7
+par_z_--match	From RU/Russia to TH/Thailand dial 810-66
+par_z_--match	From RU/Russia to TW/Taiwan dial 810-886
+par_z_--match	From TH/Thailand to DK/Denmark dial 001-45
+par_z_--match	From TH/Thailand to US/United States dial 001-1
+par_z_--match	From TH/Thailand to JP/Japan dial 001-81
+par_z_--match	From TH/Thailand to AU/Australia dial 001-61
+par_z_--match	From TH/Thailand to CA/Canada dial 001-1
+par_z_--match	From TH/Thailand to RU/Russia dial 001-7
+par_z_--match	From TH/Thailand to TH/Thailand dial 001-66
+par_z_--match	From TH/Thailand to TW/Taiwan dial 001-886
+par_z_--match	From TW/Taiwan to DK/Denmark dial 002-45
+par_z_--match	From TW/Taiwan to US/United States dial 002-1
+par_z_--match	From TW/Taiwan to JP/Japan dial 002-81
+par_z_--match	From TW/Taiwan to AU/Australia dial 002-61
+par_z_--match	From TW/Taiwan to CA/Canada dial 002-1
+par_z_--match	From TW/Taiwan to RU/Russia dial 002-7
+par_z_--match	From TW/Taiwan to TH/Thailand dial 002-66
+par_z_--match	From TW/Taiwan to TW/Taiwan dial 002-886
+par_z_--match	Capture groups CSV-parsing - not implemented
+par_z_--match	url={url} filename={file} https://gnu.org/s/parallel,myfile
+par_z_--match	Non posistional replacement fields - not implemented
+par_z_--match	{.2} {.3} {.1} Gold,Heart_of
+par_z_--match	TODO Ignore case?
+par_z_END	### Test -i and --replace: Replace with argument
+par_z_END	replace
+par_z_END	replace
+par_z_END	replace
+par_z_END	replace
+par_z_END	replace
+par_z_END	replace
+par_z_END	replace
+par_z_END	replace
+par_z_END	replace
+par_z_END	### Test -E: Artificial end-of-file
+par_z_END	include this
+par_z_END	include this
+par_z_END	### Test -e and --eof: Artificial end-of-file
+par_z_END	include this
+par_z_END	include this
+par_z_END	include this
+par_z_END	include this

@@ -319,6 +319,16 @@ sub zextract_uncompressed_size($) {
     return int($bytes || 0);
 }
 
+sub zextract_line_count($) {
+    # Run `zextract --lines --size $file` and return the line count.
+    # Works for both compressed and uncompressed files.
+    # Also builds the line index (.zexl) if it is missing or stale.
+    my ($file) = @_;
+    my $out = qx{zextract --lines --size @{[ ::Q($file) ]}};
+    my ($lines) = split(/\t/, $out);
+    return int($lines || 0);
+}
+
 sub open_compressed_at($$$) {
     # Return an open read filehandle streaming decompressed $file from
     # $position onwards, using zextract for random access.
@@ -873,6 +883,32 @@ sub pipe_shard_setup() {
 		  join(" ",shell_quote(@$_)).")"} @parcatfifos;
 }
 
+sub pipe_part_files_by_lines($) {
+    # Like pipe_part_files() but splits at line boundaries instead of byte
+    # boundaries, for use when --pipepart is combined with -L or -N.
+    # Uses `zextract --lines --range START-END` which works for both
+    # compressed and uncompressed files.
+    my ($file) = @_;
+    # Use the explicit options directly: $Global::max_number_of_args may have
+    # been auto-set from max_lines (for non-pipe mode), so we read $opt:: vars.
+    my $n = (defined $opt::max_replace_args) ? $opt::max_replace_args : 1;
+    my $l = (defined $opt::L)         ? $opt::L
+          : (defined $opt::max_lines) ? $opt::max_lines
+          : 1;
+    my $lines_per_job = $n * $l;
+    my $total = zextract_line_count($file);
+    my (@cat_prepends, @ssh_pipe_cmds);
+    for(my $start = 1; $start <= $total; $start += $lines_per_job) {
+        my $end = $start + $lines_per_job - 1;
+        $end = $total if $end > $total;
+        my $cmd = "zextract --lines --range ${start}-${end} " . Q($file) . " |";
+        push @cat_prepends, $cmd;
+        (my $data_cmd = $cmd) =~ s/\s*\|\s*\z//;
+        push @ssh_pipe_cmds, "(cat -; $data_cmd)";
+    }
+    return (\@cat_prepends, \@ssh_pipe_cmds);
+}
+
 sub pipe_part_files(@) {
     # Build the list of shell commands needed to stream each block of a file
     # to a worker when using --pipepart.
@@ -888,6 +924,9 @@ sub pipe_part_files(@) {
     # Returns:
     #   @commands  shell strings, each of which streams one block to stdout
     my ($file) = @_;
+    if(defined $opt::L or defined $opt::max_lines or defined $opt::max_replace_args) {
+        return pipe_part_files_by_lines($file);
+    }
     my $buf = "";
     if(not -f $file and not -b $file) {
 	::error("--pipepart only works on seekable files, not streams/pipes.",
@@ -3381,13 +3420,6 @@ sub check_invalid_option_combinations() {
     if(defined $opt::retries and defined $opt::tee) {
 	::error("--retries cannot be combined with --tee.");
 	::wait_and_exit(255);
-    }
-    if(defined $opt::pipepart and
-       (defined $opt::L or defined $opt::max_lines
-	or defined $opt::max_replace_args)) {
-	::error("--pipepart is incompatible with --max-replace-args, ".
-		"--max-lines, and -L.");
-	wait_and_exit(255);
     }
     if(defined $opt::group and defined $opt::ungroup) {
 	::error("--group cannot be combined with --ungroup.");
@@ -17127,7 +17159,12 @@ sub main() {
     parse_options();
     ::debug("init", "Open file descriptors: ", join(" ",keys %Global::fh), "\n");
     my $number_of_args;
-    if($Global::max_number_of_args) {
+    if($opt::pipepart and (defined $opt::L or defined $opt::max_lines
+			      or defined $opt::max_replace_args)) {
+	# Line-based pipepart (-L/-N): pipe_part_files_by_lines already computed
+	# the chunk sizes; each queue entry maps to exactly one job invocation.
+	$number_of_args = 1;
+    } elsif($Global::max_number_of_args) {
 	$number_of_args = $Global::max_number_of_args;
     } elsif ($opt::X or $opt::m or $opt::xargs) {
 	$number_of_args = undef;

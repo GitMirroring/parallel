@@ -30,9 +30,9 @@ timeoutpidtree() {
     }
     pids=$(_pidtree $2)
     sleep $1
-    echo $pids | xargs kill
+    echo $pids | xargs kill 2>/dev/null
     sleep 1
-    echo $pids | xargs kill -9
+    echo $pids | xargs kill -9 2>/dev/null
 }
 # Start timeout if this script gets stuck
 timeoutpidtree 200 $$ &

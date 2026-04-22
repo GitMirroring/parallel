@@ -8,6 +8,60 @@
 # Each should be taking 30-100s and be possible to run in parallel
 # I.e.: No race conditions, no logins
 
+par__--load_from_PARALLEL() {
+    echo "### Test reading load from PARALLEL"
+    export PARALLEL="$PARALLEL --load 400%"
+    # Ignore stderr due to 'Starting processes took > 2 sec'
+    seq 1 1000000 |
+	parallel -kj200 --recend "\n" --spreadstdin gzip -1 2>/dev/null |
+	zcat | sort -n | md5sum
+    seq 1 1000000 |
+	parallel -kj20 --recend "\n" --spreadstdin gzip -1 |
+	zcat | sort -n | md5sum
+}
+
+par__--nice() {
+    echo 'Check that --nice works'
+    # parallel-20160422 OK
+    check_for_2_bzip2s() {
+	perl -e '
+	for(1..5) {
+	       # Try 5 times if the machine is slow starting bzip2
+	       sleep(1);
+	       @out = qx{ps -eo "%c %n" | grep 18 | grep bzip2};
+	       if($#out == 1) {
+		     # Should find 2 lines
+		     print @out;
+		     exit 0;
+	       }
+           }
+	   print "failed\n@out";
+	   '
+    }
+    # wait for load < 8 (why?)
+    # parallel --load 8 echo ::: load_10
+    parallel -j0 --timeout 10 --nice 18 bzip2 '<' ::: /dev/zero /dev/zero &
+    pid=$!
+    check_for_2_bzip2s
+    parallel --retries 10 '! kill -TERM' ::: $pid 2>/dev/null
+}
+
+par_zextract() {
+    # Generate /tmp/zextract.{bz2,gz,zst,raw}
+    seq 1000000 |
+	parallel -j0 --pipe --tee '{1} > /tmp/zextract.{2}' \
+		 ::: 'bzip2 -1' 'gzip -1' 'zstd -1' cat :::+ bz2 gz zst raw
+    # Here with wrong extension to test 4CC detection
+    parallel cp {} {}.bin ::: /tmp/zextract.{bz2,gz,zst,raw}
+    doit() {
+	parallel -k --block -1 --tagstring "$1-$2" $2 -j4 --pipepart -a $1 wc
+    }
+    export -f doit
+    # TODO support -L (which fails now) with zextract --lines 
+    stdout parallel -j 25% -k doit ::: /tmp/zextract.{bz2,gz,zst,raw}{,.bin} \
+	   ::: '' -L100000 "-L100000 -N3"
+}
+
 par__milestone() {
     echo '### Test --milestone'
     echo '# 1..5 cannot mix with a..f'
@@ -790,4 +844,4 @@ par__test_ipv6_format() {
 export -f $(compgen -A function | grep par_)
 compgen -A function | G par_ "$@" | sort |
     #    parallel --delay 0.3 --timeout 1000% -j6 --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'
-    parallel --delay 0.3 --timeout 10000% -j75% --lb --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'
+    parallel --delay 0.3 --timeout 300 -j50% --lb --tag -k --joblog /tmp/jl-`basename $0` '{} 2>&1'

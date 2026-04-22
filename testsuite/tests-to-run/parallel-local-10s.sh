@@ -82,7 +82,7 @@ par_bin() {
 	parallel --pipe --colsep '\t' --bin 2 cat | sort
 }
 
-par_z--round-robin_blocks() {
+par_--round-robin_blocks() {
     echo "bug #49664: --round-robin does not complete"
     seq 20000000 | parallel -j8 --block 10M --round-robin --pipe wc -c | wc -l
 }
@@ -126,7 +126,7 @@ par_retries_lb_jl() {
     rm "$tmp"
 }
 
-par_--match() {
+par_z_--match() {
     export PARALLEL="$PARALLEL -k"
     echo Basic match
     parallel --match '(.*)/([a-zA-Z]+)' echo {1.2} {1.1} \
@@ -223,17 +223,6 @@ par_seqreplace_long_line() {
 	uniq -c
 }
 
-par__--load_from_PARALLEL() {
-    echo "### Test reading load from PARALLEL"
-    export PARALLEL="$PARALLEL --load 400%"
-    # Ignore stderr due to 'Starting processes took > 2 sec'
-    seq 1 1000000 |
-	parallel -kj200 --recend "\n" --spreadstdin gzip -1 2>/dev/null |
-	zcat | sort -n | md5sum
-    seq 1 1000000 |
-	parallel -kj20 --recend "\n" --spreadstdin gzip -1 |
-	zcat | sort -n | md5sum
-}
 
 par__quote_special_results() {
     echo "### Test --results on file systems with limited UTF8 support"
@@ -364,31 +353,6 @@ par_opt_arg_eaten() {
     printf '1\0002\0003\0004\0005\000' | stdout parallel -k -0 -i repl echo repl OK
 }
 
-par__--nice() {
-    echo 'Check that --nice works'
-    # parallel-20160422 OK
-    check_for_2_bzip2s() {
-	perl -e '
-	for(1..5) {
-	       # Try 5 times if the machine is slow starting bzip2
-	       sleep(1);
-	       @out = qx{ps -eo "%c %n" | grep 18 | grep bzip2};
-	       if($#out == 1) {
-		     # Should find 2 lines
-		     print @out;
-		     exit 0;
-	       }
-           }
-	   print "failed\n@out";
-	   '
-    }
-    # wait for load < 8
-    parallel --load 8 echo ::: load_10
-    parallel -j0 --timeout 10 --nice 18 bzip2 '<' ::: /dev/zero /dev/zero &
-    pid=$!
-    check_for_2_bzip2s
-    parallel --retries 10 '! kill -TERM' ::: $pid 2>/dev/null
-}
 
 par_colsep() {
     echo '### Test of --colsep'
@@ -455,7 +419,7 @@ par_failing_compressor() {
 }
 
 
-par_END() {
+par_z_END() {
     echo '### Test -i and --replace: Replace with argument'
     (echo a; echo END; echo b) | parallel -k -i -eEND echo repl{}ce
     (echo a; echo END; echo b) | parallel -k --replace -eEND echo repl{}ce
