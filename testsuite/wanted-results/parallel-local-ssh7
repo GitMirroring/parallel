@@ -1451,13 +1451,13 @@ par_environment_too_big_bash	OK_bigfunc_quote
 par_environment_too_big_bash	OK_bigfunc_quote_remote
 par_environment_too_big_bash	Rest should fail
 par_environment_too_big_bash	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar
-par_environment_too_big_bash	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_remote
+par_environment_too_big_bash	fail_bigvar_remote
 par_environment_too_big_bash	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_quote
-par_environment_too_big_bash	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_quote_remote
+par_environment_too_big_bash	fail_bigvar_quote_remote
 par_environment_too_big_bash	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc
-par_environment_too_big_bash	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_remote
+par_environment_too_big_bash	fail_bigfunc_remote
 par_environment_too_big_bash	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_quote
-par_environment_too_big_bash	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_quote_remote
+par_environment_too_big_bash	fail_bigfunc_quote_remote
 par_environment_too_big_csh	Not implemented
 par_environment_too_big_dash	moved to hwdep1.sh
 par_environment_too_big_ksh	bug #50815: env_parallel should warn if the environment is too big
@@ -1471,13 +1471,13 @@ par_environment_too_big_ksh	OK_bigfunc_quote
 par_environment_too_big_ksh	OK_bigfunc_quote_remote
 par_environment_too_big_ksh	Rest should fail
 par_environment_too_big_ksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar
-par_environment_too_big_ksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_remote
+par_environment_too_big_ksh	fail_bigvar_remote
 par_environment_too_big_ksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_quote
-par_environment_too_big_ksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_quote_remote
+par_environment_too_big_ksh	fail_bigvar_quote_remote
 par_environment_too_big_ksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc
-par_environment_too_big_ksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_remote
+par_environment_too_big_ksh	fail_bigfunc_remote
 par_environment_too_big_ksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_quote
-par_environment_too_big_ksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_quote_remote
+par_environment_too_big_ksh	fail_bigfunc_quote_remote
 par_environment_too_big_mksh	bug #50815: env_parallel should warn if the environment is too big
 par_environment_too_big_mksh	OK_bigvar
 par_environment_too_big_mksh	OK_bigvar_remote
@@ -1489,13 +1489,13 @@ par_environment_too_big_mksh	OK_bigfunc_quote
 par_environment_too_big_mksh	OK_bigfunc_quote_remote
 par_environment_too_big_mksh	Rest should fail
 par_environment_too_big_mksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar
-par_environment_too_big_mksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_remote
+par_environment_too_big_mksh	fail_bigvar_remote
 par_environment_too_big_mksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_quote
-par_environment_too_big_mksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_quote_remote
+par_environment_too_big_mksh	fail_bigvar_quote_remote
 par_environment_too_big_mksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc
-par_environment_too_big_mksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_remote
+par_environment_too_big_mksh	fail_bigfunc_remote
 par_environment_too_big_mksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_quote
-par_environment_too_big_mksh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigfunc_quote_remote
+par_environment_too_big_mksh	fail_bigfunc_quote_remote
 par_environment_too_big_sh	bug #50815: env_parallel should warn if the environment is too big
 par_environment_too_big_sh	OK_bigvar
 par_environment_too_big_sh	OK_bigvar_remote
@@ -1507,9 +1507,9 @@ par_environment_too_big_sh	OK_bigfunc_quote
 par_environment_too_big_sh	OK_bigfunc_quote_remote
 par_environment_too_big_sh	Rest should fail - functions not supported in sh
 par_environment_too_big_sh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar
-par_environment_too_big_sh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_remote
+par_environment_too_big_sh	fail_bigvar_remote
 par_environment_too_big_sh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_quote
-par_environment_too_big_sh	parallel: Error: Command line too long (999 >= 999) at input 0: fail_bigvar_quote_remote
+par_environment_too_big_sh	fail_bigvar_quote_remote
 par_environment_too_big_sh	fail_bigfunc-not-supported
 par_environment_too_big_sh	fail_bigfunc_remote-not-supported
 par_environment_too_big_sh	fail_bigfunc_quote-not-supported

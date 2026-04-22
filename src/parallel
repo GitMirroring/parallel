@@ -243,6 +243,61 @@ sub fast() {
 
 sub __PIPE_MODE__() {}
 
+{
+    my %is_compressed;
+    sub is_compressed_file($) {
+	# Returns the extension (gz/bz2/zst) if $file is a supported compressed
+	# format that zextract can handle; 0 otherwise.
+	my ($file) = @_;
+	if(defined($is_compressed{$file})) {
+	    return $is_compressed{$file};
+	}
+	$is_compressed{$file} = 0;
+	if($file =~ /\.(gz|bz2|zst)$/i) {
+	    $is_compressed{$file} = $1;
+	}
+	# FOURCC magic-byte test
+	if(!$is_compressed{$file} && -f $file) {
+	    if(open(my $fh, "<:raw", $file)) {
+		my $header;
+		read($fh, $header, 4);
+		close($fh);
+		if(defined $header) {
+		    if   ($header =~ /^\x1f\x8b/)         { $is_compressed{$file} = 'gz'  }
+		    elsif($header =~ /^BZh/)               { $is_compressed{$file} = 'bz2' }
+		    elsif($header =~ /^\x28\xb5\x2f\xfd/) { $is_compressed{$file} = 'zst' }
+		}
+	    }
+	}
+	return $is_compressed{$file}
+    }
+}
+
+sub zextract_uncompressed_size($) {
+    # Run `zextract --size $file` and return the uncompressed byte count.
+    # zextract output format: "<bytes>\t<filename>\n"
+    # Also builds the compression index (.zex) if it is missing or stale.
+    my ($file) = @_;
+    my $out = qx{zextract --size \Q$file\E};
+    my ($bytes) = split(/\t/, $out);
+    return int($bytes || 0);
+}
+
+sub open_compressed_at($$$) {
+    # Return an open read filehandle streaming decompressed $file from
+    # $position onwards, using zextract for random access.
+    #   $mode = "bytes"  =>  zextract --range $position- $file  (0-based)
+    #   $mode = "lines"  =>  zextract --lines --range $position- $file (1-based)
+    # zextract auto-builds (.zex/.zexl) indexes when missing or stale.
+    my ($file, $mode, $position) = @_;
+    my $fh;
+    my @cmd = ("zextract");
+    push @cmd, "--lines" if $mode eq "lines";
+    push @cmd, "--range", "${position}-", $file;
+    open($fh, "-|", @cmd)
+        or ::die_bug("open_compressed_at failed for $file at $position: $!");
+    return $fh;
+}
 
 sub pipepart_setup() {
     # Compute the blocksize
@@ -272,7 +327,9 @@ sub pipepart_setup() {
 	    my $size = 0;
 	    # Compute size of -a
 	    for(@opt::a) {
-		if(-f $_) {
+		if(is_compressed_file($_) and -f $_) {
+		    $size += zextract_uncompressed_size($_);
+		} elsif(-f $_) {
 		    $size += -s $_;
 		} elsif(-b $_) {
 		    $size += size_of_block_dev($_);
@@ -701,7 +758,9 @@ sub pipe_part_files(@) {
 	::wait_and_exit(255);
     }
 
-    my $fh = open_or_exit("<",$file);
+    my $fh = is_compressed_file($file)
+        ? open_compressed_at($file, "bytes", 0)
+        : open_or_exit("<",$file);
     my $firstlinelen = 0;
     if($opt::skip_first_line) {
 	my $newline;
@@ -711,6 +770,7 @@ sub pipe_part_files(@) {
 	}
     }
     my $header = find_header(\$buf,$fh);
+    close $fh if is_compressed_file($file);
     # find positions
     my @pos = find_split_positions($file,int($Global::blocksize),
 				   $header,$firstlinelen);
@@ -718,8 +778,12 @@ sub pipe_part_files(@) {
     my @cat_prepends = ();
     for(my $i=0; $i<$#pos; $i++) {
 	push(@cat_prepends,
-	     cat_partial($file, $firstlinelen, $firstlinelen+length($header),
-			 $pos[$i], $pos[$i+1]));
+	     is_compressed_file($file)
+	     ? cat_partial_compressed($file,
+		   $firstlinelen, $firstlinelen+length($header),
+		   $pos[$i], $pos[$i+1])
+	     : cat_partial($file, $firstlinelen, $firstlinelen+length($header),
+			   $pos[$i], $pos[$i+1]));
     }
     return @cat_prepends;
 }
@@ -766,15 +830,9 @@ sub find_split_positions($$$) {
     #	@positions of block start/end
     my($file, $block, $header, $firstlinelen) = @_;
     my $skiplen = $firstlinelen + length $header;
-    # TODO size of gz - binary search?
-    #  gztool -l -I 18g.gzi  18g.gz 
-    #  Size of uncompressed file: 18.00 GiB (19327352832 Bytes)
-    #  Number of lines          : 1391156 (1.39 M)
-    my $size = -s $file;
-    if(-b $file) {
-	# $file is a blockdevice
-	$size = size_of_block_dev($file);
-    }
+    my $size = is_compressed_file($file) ? zextract_uncompressed_size($file)
+             : -b $file                  ? size_of_block_dev($file)
+             :                             -s $file;
     $block = int $block;
     if($opt::groupby) {
 	return split_positions_for_group_by($file,$size,$block,
@@ -787,7 +845,7 @@ sub find_split_positions($$$) {
     my @pos;
     my ($recstart,$recend) = recstartrecend();
     my $recendrecstart = $recend.$recstart;
-    my $fh = ::open_or_exit("<",$file);
+    my $fh = is_compressed_file($file) ? undef : ::open_or_exit("<",$file);
     push(@pos,$skiplen);
     for(my $pos = $block+$skiplen; $pos < $size; $pos += $block) {
 	my $buf;
@@ -795,11 +853,13 @@ sub find_split_positions($$$) {
 	    # records ends anywhere
 	    push(@pos,$pos);
 	} else {
-	    # Seek the the block start
-	    # TODO uncompress open($fh,"-|","gztool",$file,$pos,"..");
-	    if(not sysseek($fh, $pos, 0)) {
+	    # Seek to the block start (or open a new zextract pipe for compressed)
+	    if(is_compressed_file($file)) {
+		$fh = open_compressed_at($file, "bytes", $pos);
+		$buf = "";
+	    } elsif(not sysseek($fh, $pos, 0)) {
 		::error("Cannot seek to $pos in $file");
-		edit(255);
+		wait_and_exit(255);
 	    }
 	    while(sysread($fh,$buf,$dd_block_size,length $buf)) {
 		if($opt::regexp) {
@@ -824,34 +884,44 @@ sub find_split_positions($$$) {
 		    }
 		}
 	    }
+	    if(is_compressed_file($file)) { close $fh; }
 	}
     }
     if($pos[$#pos] != $size) {
 	# Last splitpoint was not at end of the file: add $size as the last
 	push @pos, $size;
     }
-    close $fh;
+    close $fh if defined $fh;
     return @pos;
 }
 
 sub split_positions_for_group_by($$$$) {
+    my ($file,$size,$block,$header,$firstlinelen) = @_;
     my($fh);
     my %value;
     sub value_at($) {
 	my $pos = shift;
 	if(not defined $value{$pos}) {
-	    if($pos != 0) {
-		# TODO uncompress open($fh,"-|","gztool",$file,$pos,"..");
-		seek($fh, $pos-1, 0) || die;
-		# Read half line
-		<$fh>;
+	    my ($linepos, $handle);
+	    if(is_compressed_file($file)) {
+		$handle = open_compressed_at($file, "bytes",
+					     $pos > 0 ? $pos - 1 : 0);
+		if($pos > 0) {
+		    my $partial = <$handle>;
+		    $linepos = $pos - 1 + length($partial);
+		} else {
+		    $linepos = 0;
+		}
+	    } else {
+		if($pos != 0) {
+		    seek($fh, $pos-1, 0) || die;
+		    <$fh>;
+		}
+		$linepos = tell($fh);
+		$handle = $fh;
 	    }
-	    # Read full line
-	    # TODO compressed input cannot tell():
-	    #   instead use $pos + length halfline
-	    my $linepos = tell($fh);
 	    if(not defined $value{$linepos}) {
-		$_ = <$fh>;
+		$_ = <$handle>;
 		if(defined $_) {
 		    # Not end of file
 		    my @F;
@@ -864,6 +934,7 @@ sub split_positions_for_group_by($$$$) {
 		}
 		$value{$linepos} = [$_,$linepos];
 	    }
+	    close $handle if is_compressed_file($file);
 	    $value{$pos} = $value{$linepos};
 	}
 	return (@{$value{$pos}});
@@ -907,9 +978,10 @@ sub split_positions_for_group_by($$$$) {
 	return($v,$vpos);
     }
 
-    my ($file,$size,$block,$header,$firstlinelen) = @_;
     my @pos;
-    $fh = open_or_exit("<",$file);
+    $fh = is_compressed_file($file)
+        ? open_compressed_at($file, "bytes", 0)
+        : open_or_exit("<",$file);
     # Set $Global::group_by_column $Global::group_by_perlexpr
     group_by_loop($fh,$opt::recsep);
     if($opt::max_args) {
@@ -920,7 +992,7 @@ sub split_positions_for_group_by($$$$) {
 	for(($a,$apos) = value_at($apos); $apos < $size;) {
 	    push @pos, $apos;
 	    ($a,$apos) = binary_search_end($a,$apos,$size);
-	    if(eof($fh)) {
+	    if(is_compressed_file($file) ? $apos >= $size : eof($fh)) {
 		push @pos, $size; last;
 	    }
 	}
@@ -939,7 +1011,7 @@ sub split_positions_for_group_by($$$$) {
 	    push @pos, $apos;
 	    $bpos = $apos + $block;
 	    ($b,$bpos) = value_at($bpos);
-	    if(eof($fh)) {
+	    if(is_compressed_file($file) ? $bpos >= $size : eof($fh)) {
 		# EOF is less than 1 block away
 		push @pos, $size; last;
 	    }
@@ -1032,6 +1104,31 @@ sub cat_partial($@) {
 	 });
     return "<". Q($file) .
 	" perl -e '$script' @start_len |";
+}
+
+sub cat_partial_compressed($@) {
+    # Like cat_partial() but streams byte ranges from a compressed file
+    # using `zextract --range START-END`.  zextract auto-manages indexes.
+    #
+    # Input:
+    #   $file          path to the compressed file
+    #   @start_end     flat list of (start_byte, end_byte) pairs;
+    #                  end_byte is exclusive (same convention as cat_partial).
+    # Returns:
+    #   shell string   "zextract --range S-E file |"
+    my ($file, @start_end) = @_;
+    my @parts;
+    my $i = 0;
+    while($i < @start_end) {
+	my $start = $start_end[$i++];
+	my $end   = $start_end[$i++];
+	next if $end <= $start;
+	push @parts,
+	    "zextract --range ${start}-" . ($end-1) . " " . Q($file);
+    }
+    return @parts == 1
+        ? $parts[0] . " |"
+        : "{ " . join("; ", @parts) . "; } |";
 }
 
 sub column_perlexpr($$$) {

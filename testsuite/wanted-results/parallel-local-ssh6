@@ -7,7 +7,8 @@ par_nonall_basefile_cleanup	tmp/nonall--basefile--clean
 par_nonall_basefile_cleanup	rm: cannot remove 'tmp/nonall--basefile--clean': No such file or directory
 par_nonall_basefile_cleanup	rm: cannot remove 'tmp/nonall--basefile--clean': No such file or directory
 par_nonall_ssh	bug #59181: --ssh is not propagated to --nonall
-par_nonall_ssh	OK
+par_nonall_ssh	run on all
+par_nonall_ssh	myssh called: myarg -l parallel lo -- exec perl - 1
 par_nonall_wd	### Test --nonall --wd
 par_nonall_wd	/tmp
 par_onall_basefile	### Test --onall --basefile

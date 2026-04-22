@@ -777,8 +777,11 @@ par__test_ipv6_format() {
             # 9.9.9.9q22 => 9.9.9.9
             perl -pe 's/q.*//;'
     ) |
-	nice parallel -j50% --argsep , parallel -S {} true ::: 1 ||
-	echo Failed
+	(
+	    stdout nice parallel -j50% --argsep , parallel -S {} true ::: 1 ||
+		echo Failed
+	) |
+	perl -ne '/Starting .* processes|Consider adjusting/ or print'
 }
 
 # was -j6 before segfault circus

@@ -159,7 +159,7 @@ par__--tmux_different_shells() {
 	stdout parallel -Scsh@lo,tcsh@lo,parallel@lo,zsh@lo --tmux echo ::: 1 2 3 4; echo $?
 	stdout parallel -Scsh@lo,tcsh@lo,parallel@lo,zsh@lo --tmux false ::: 1 2 3 4; echo $?
 
-	export PARTMUX='parallel -Scsh@lo,tcsh@lo,parallel@lo,zsh@lo --tmux '; 
+	export PARTMUX='parallel --timeout 30 -Scsh@lo,tcsh@lo,parallel@lo,zsh@lo --tmux '; 
 	stdout ssh zsh@lo      "$PARTMUX" 'true  ::: 1 2 3 4; echo $status' 
 	stdout ssh zsh@lo      "$PARTMUX" 'false ::: 1 2 3 4; echo $status' 
 	stdout ssh parallel@lo "$PARTMUX" 'true  ::: 1 2 3 4; echo $?'      
@@ -184,16 +184,17 @@ par__--tmux_length() {
 	mkdir -p "$TMPDIR"
     }
     short_TMPDIR
+    export PARALLEL="--timeout 30 --tmux"
     (
 	stdout parallel -Sparallel@lo --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
         stdout parallel -Sparallel@lo --tmux echo ::: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 	echo '### These blocked due to length'
-	stdout parallel -Slo      --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
-	stdout parallel -Scsh@lo  --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
-	stdout parallel -Stcsh@lo --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
-	stdout parallel -Szsh@lo  --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
-	stdout parallel -Scsh@lo  --tmux echo ::: 111111111111111111111111111111111111111111111111111111111
+	stdout parallel -Slo      echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Scsh@lo  echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Stcsh@lo echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Szsh@lo  echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Scsh@lo  echo ::: 111111111111111111111111111111111111111111111111111111111
      ) | replace_tmpdir |
 	perl -pe 's:tms.....:tmsXXXXX:'
 }

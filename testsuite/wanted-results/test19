@@ -77,7 +77,7 @@ ls: tmp/parallel.file*: No such file or directory
 Input for ssh
 -l vagrant one-server -- exec mkdir -p ./.
 -l vagrant one-server rsync --server -lDrRze.iLsfxCIvu . ./.
--l vagrant one-server -- exec perl -X -e GNU_Parallel_worker,eval+pack+q/H10000000/,join+q//,@ARGV hex
+-l vagrant one-server -- exec perl - X
 -l vagrant one-server cd ././tmp; rsync --server --sender -lDrRze.iLsfxCIvu . './parallel.file.
 newlineX.out'
 -l vagrant one-server cd ././tmp; rsync --server --sender -lDrRze.iLsfxCIvu . './parallel.file.
@@ -90,7 +90,7 @@ newlineX.out'"'"' 2>/dev/null;rmdir ./tmp/ ./ 2>/dev/null;'
 newlineX.out2'"'"' 2>/dev/null;rmdir ./tmp/ ./ 2>/dev/null;'
 -l vagrant one-server -- exec mkdir -p ./.
 -l vagrant one-server rsync --server -lDrRze.iLsfxCIvu . ./.
--l vagrant one-server -- exec perl -X -e GNU_Parallel_worker,eval+pack+q/H10000000/,join+q//,@ARGV hex
+-l vagrant one-server -- exec perl - X
 -l vagrant one-server cd ././tmp; rsync --server --sender -lDrRze.iLsfxCIvu . './parallel.file.
 newlineX.out'
 -l vagrant one-server cd ././tmp; rsync --server --sender -lDrRze.iLsfxCIvu . './parallel.file.

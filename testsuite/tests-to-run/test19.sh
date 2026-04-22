@@ -144,8 +144,10 @@ echo good if no file
     stdout ssh $SSHLOGIN2 ls 'tmp/parallel.file*' || echo OK
 ) | sort
 echo 'Input for ssh'
-cat /tmp/myssh1-run /tmp/myssh2-run | perl -pe 's/(PID.)\d+/${1}00000/g;s/(SEQ[ =]|line)\d/$1X/g;' | 
-  perl -pe 's/\S*parallel-server\S*/one-server/;s:( [0-9a-f]{500,})+( [0-9a-f]+)?: hex:g;'
+cat /tmp/myssh1-run /tmp/myssh2-run | 
+    perl -pe 's/(PID.)\d+/${1}00000/g;s/(SEQ[ =]|line)\d/$1X/g;' | 
+    perl -pe 's/\S*parallel-server\S*/one-server/;s:( [0-9a-f]{500,})+( [0-9a-f]+)?: hex:g;' |
+    perl -pe 's/server -- exec perl - \d/server -- exec perl - X/'
 rm /tmp/myssh1-run /tmp/myssh2-run
 
 rm -rf /tmp/parallel.file*

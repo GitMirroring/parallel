@@ -14,9 +14,9 @@ par__environment_too_big_dash	OK_bigfunc_quote
 par__environment_too_big_dash	OK_bigfunc_quote_remote
 par__environment_too_big_dash	Rest should fail - functions not supported in dash
 par__environment_too_big_dash	parallel: Error: Command line too long (7XXXX >= 6XXXX) at input 0: fail_bigvar
-par__environment_too_big_dash	parallel: Error: Command line too long (7XXXX >= 6XXXX) at input 0: fail_bigvar_remote
+par__environment_too_big_dash	fail_bigvar_remote
 par__environment_too_big_dash	parallel: Error: Command line too long (8XXXX >= 6XXXX) at input 0: fail_bigvar_quote
-par__environment_too_big_dash	parallel: Error: Command line too long (8XXXX >= 6XXXX) at input 0: fail_bigvar_quote_remote
+par__environment_too_big_dash	fail_bigvar_quote_remote
 par__environment_too_big_dash	fail_bigfunc-not-supported
 par__environment_too_big_dash	fail_bigfunc_remote-not-supported
 par__environment_too_big_dash	fail_bigfunc_quote-not-supported
@@ -32,13 +32,13 @@ par__environment_too_big_zsh	OK_bigfunc_quote
 par__environment_too_big_zsh	OK_bigfunc_quote_remote
 par__environment_too_big_zsh	Rest should fail
 par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5XXXX) at input 0: fail_bigvar
-par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5XXXX) at input 0: fail_bigvar_remote
+par__environment_too_big_zsh	fail_bigvar_remote
 par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5XXXX) at input 0: fail_bigvar_quote
-par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5XXXX) at input 0: fail_bigvar_quote_remote
+par__environment_too_big_zsh	fail_bigvar_quote_remote
 par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5XXXX) at input 0: fail_bigfunc
-par__environment_too_big_zsh	parallel: Error: Command line too long (7XXXX >= 5XXXX) at input 0: fail_bigfunc_remote
+par__environment_too_big_zsh	fail_bigfunc_remote
 par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5XXXX) at input 0: fail_bigfunc_quote
-par__environment_too_big_zsh	parallel: Error: Command line too long (6XXXX >= 5XXXX) at input 0: fail_bigfunc_quote_remote
+par__environment_too_big_zsh	fail_bigfunc_quote_remote
 par__sockets_cores_threads	### Test --number-of-sockets/cores/threads
 par__sockets_cores_threads	1
 par__sockets_cores_threads	6
