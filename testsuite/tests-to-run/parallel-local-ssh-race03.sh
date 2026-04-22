@@ -99,20 +99,6 @@ par_change_content_--jobs_filename() {
     parallel -j /tmp/jobs_to_run2 -v sleep {} ::: 3.3 2.{1..5} 0.{1..7}
 }
 
-par_nonall_u() {
-    SSHLOGIN1=vagrant@parallel-server1
-    SSHLOGIN2=vagrant@parallel-server2
-    echo '### Test --nonall -u - should be interleaved x y x y'
-    parallel --nonall --sshdelay 2 -S $SSHLOGIN1,$SSHLOGIN2 -u \
-	     'hostname|grep -q rhel && sleep 2; hostname;sleep 4;hostname;' |
-	uniq -c | sort
-}
-
-par_more_than_9_relative_sshlogin() {
-    echo '### Check more than 9(relative) simultaneous sshlogins'
-    seq 1 11 | stdout parallel -k -j10000% -S "ssh vagrant@freebsd13" echo |
-	grep -v 'parallel: Warning:'
-}
 
 par_continuous_output() {
     # After the first batch, each jobs should output when it finishes.

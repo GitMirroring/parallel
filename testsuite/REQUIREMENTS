@@ -88,7 +88,7 @@ install_packages() {
 	wget -m https://releases.hashicorp.com/vagrant/2.3.7/vagrant_2.3.7-1_amd64.deb
 	sudo dpkg -i releases.hashicorp.com/vagrant/2.3.7/vagrant_2.3.7-1_amd64.deb
     fi
-    sudo apt install python3-sphinx-rtd-theme || pip install sphinx-rtd-theme
+    sudo apt install -y python3-sphinx-rtd-theme || pip install sphinx-rtd-theme
     sudo apt update &
 }
 
@@ -165,7 +165,7 @@ install_oracle_server() {
     sql --showtables oracle://SYSTEM:$VM_ORACLE_PWD@/FREE > /dev/null &&
 	echo "oracle server installed OK" && return 0
     # set up vagrant oracle server
-    vagrantid=OracleDatabase/23.7.0-Free
+    vagrantid=OracleDatabase/26ai-Free
     git clone https://github.com/oracle/vagrant-projects.git
     (
 	cd vagrant-projects/"$vagrantid"

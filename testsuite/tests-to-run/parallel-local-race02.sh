@@ -7,44 +7,6 @@
 # These fail regularly
 
 
-par_hostgroup() {
-    echo '### --hostgroup force ncpu - 2x parallel, 6x me'
-    parallel --delay 0.1 --hgrp -S @g1/1/parallel@lo -S @g2/3/lo \
-	     'whoami;sleep 0.4{}' ::: {1..8} | sort
-
-    echo '### --hostgroup two group arg - 2x parallel, 6x me'
-    parallel -k --sshdelay 0.1 --hgrp -S @g1/1/parallel@lo -S @g2/3/lo \
-	     'whoami;sleep 0.3{}' ::: {1..8}@g1+g2 | sort
-
-    echo '### --hostgroup one group arg - 8x me'
-    parallel --delay 0.2 --hgrp -S @g1/1/parallel@lo -S @g2/3/lo \
-	     'whoami;sleep 0.4{}' ::: {1..8}@g2
-
-    echo '### --hostgroup multiple group arg + unused group - 2x parallel, 6x me, 0x tcsh'
-    parallel --delay 0.2 --hgrp -S @g1/1/parallel@lo -S @g1/3/lo -S @g3/30/tcsh@lo \
-	     'whoami;sleep 0.8{}' ::: {1..8}@g1+g2 2>&1 | sort -u | grep -v Warning
-
-    echo '### --hostgroup two groups @'
-    parallel -k --hgrp -S @g1/parallel@lo -S @g2/lo --tag whoami\;echo ::: parallel@g1 tange@g2
-
-    echo '### --hostgroup'
-    parallel -k --hostgroup -S @grp1/lo echo ::: no_group explicit_group@grp1 implicit_group@lo
-
-    echo '### --hostgroup --sshlogin with @'
-    parallel -k --hostgroups -S parallel@lo echo ::: no_group implicit_group@parallel@lo
-
-    echo '### --hostgroup -S @group - bad if you get parallel@lo'
-    parallel -S @g1/ -S @g1/1/tcsh@lo -S @g1/1/localhost -S @g2/1/parallel@lo \
-	     'whoami;true' ::: {1..6} | sort -u
-
-    echo '### --hostgroup -S @group1 -Sgrp2 - get all twice'
-    parallel -S @g1/ -S @g2/ -S @g1/1/tcsh@lo -S @g1/1/localhost -S @g2/1/parallel@lo \
-	     'whoami;sleep 1;true' ::: {1..6} | sort
-
-    echo '### --hostgroup -S @group1+grp2 - get all twice'
-    parallel -S @g1+g2/ -S @g1/1/tcsh@lo -S @g1/1/localhost -S @g2/1/parallel@lo \
-	     'whoami;sleep 1;true' ::: {1..6} | sort
-}
 
 par_totaljob_repl() {
     echo '{##} bug #45841: Replacement string for total no of jobs'
@@ -78,63 +40,6 @@ par_sql_CSV() {
 	perl -pe 's/\d/0/g'
 }
 
-par_PARALLEL_RSYNC_OPTS() {
-    echo '### test rsync opts'
-    touch parallel_rsync_opts.test
-    
-    parallel --rsync-opts -rlDzRRRR -vv -S parallel@lo --trc {}.out touch {}.out ::: parallel_rsync_opts.test |
-	perl -nE 's/(\S+RRRR)/say $1/ge'
-    export PARALLEL_RSYNC_OPTS=-zzzzrldRRRR
-    parallel -vv -S parallel@lo --trc {}.out touch {}.out ::: parallel_rsync_opts.test |
-	perl -nE 's/(\S+RRRR)/say $1/ge'
-    rm parallel_rsync_opts.test parallel_rsync_opts.test.out
-    echo
-}
-
-par_retries_bug_from_2010() {
-    echo '### Bug with --retries'
-    seq 1 8 |
-	parallel --retries 2 --sshlogin 8/localhost,8/: -j+0 "hostname; false" |
-	wc -l
-    seq 1 8 |
-	parallel --retries 2 --sshlogin 8/localhost,8/: -j+1 "hostname; false" |
-	wc -l
-    seq 1 2 |
-	parallel --retries 2 --sshlogin 8/localhost,8/: -j-1 "hostname; false" |
-	wc -l
-    seq 1 1 |
-	parallel --retries 2 --sshlogin 1/localhost,1/: -j1 "hostname; false" |
-	wc -l
-    seq 1 1 |
-	parallel --retries 2 --sshlogin 1/localhost,1/: -j9 "hostname; false" |
-	wc -l
-    seq 1 1 |
-	parallel --retries 2 --sshlogin 1/localhost,1/: -j0 "hostname; false" |
-	wc -l
-
-    echo '### These were not affected by the bug'
-    seq 1 8 |
-	parallel --retries 2 --sshlogin 1/localhost,9/: -j-1 "hostname; false" |
-	wc -l
-    seq 1 8 |
-	parallel --retries 2 --sshlogin 8/localhost,8/: -j-1 "hostname; false" |
-	wc -l
-    seq 1 1 |
-	parallel --retries 2 --sshlogin 1/localhost,1/:  "hostname; false" |
-	wc -l
-    seq 1 4 |
-	parallel --retries 2 --sshlogin 2/localhost,2/: -j-1 "hostname; false" |
-	wc -l
-    seq 1 4 |
-	parallel --retries 2 --sshlogin 2/localhost,2/: -j1 "hostname; false" |
-	wc -l
-    seq 1 4 |
-	parallel --retries 2 --sshlogin 1/localhost,1/: -j1 "hostname; false" |
-	wc -l
-    seq 1 2 |
-	parallel --retries 2 --sshlogin 1/localhost,1/: -j1 "hostname; false" |
-	wc -l
-}
 
 par_kill_hup() {
     echo '### Are children killed if GNU Parallel receives HUP? There should be no sleep at the end'

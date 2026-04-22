@@ -53,11 +53,26 @@ polar: ../src/parallel tests-to-run/*polar* wanted-results/*polar* prereqlocal
 
 # *local* only
 local:	../src/parallel tests-to-run/*local* wanted-results/*local* prereqlocal installparallel
-	time bash Start.sh local mem
+	time bash Start.sh local 'mem|ssh'
 
 # short
 short:	 ../src/parallel tests-to-run/* wanted-results/* prereqlocal installparallel
 	TRIES=1 time bash Start.sh '' 'polar|mem|100s|300s|manual'
+
+# Tests using SSH to localhost/lo only
+local-ssh: ../src/parallel tests-to-run/*local-ssh* wanted-results/*local-ssh* prereqlocal installparallel
+	TRIES=1 time bash Start.sh local-ssh NONE || true
+	touch ~/.parallel/will-cite
+
+# Tests using SSH to remote servers
+remote-ssh: ../src/parallel tests-to-run/*remote-ssh* wanted-results/*remote-ssh* prereqlocal prereqremote installparallel
+	TRIES=1 time bash Start.sh remote-ssh NONE || true
+	touch ~/.parallel/will-cite
+
+# Tests not requiring SSH (includes timing/load tests)
+default: ../src/parallel tests-to-run/* wanted-results/* prereqlocal installparallel
+	TRIES=1 time bash Start.sh '' 'local-ssh|remote-ssh|mem|manual|polar|install' || true
+	touch ~/.parallel/will-cite
 
 # long
 long:	 ../src/parallel tests-to-run/* wanted-results/* prereqlocal installparallel
@@ -83,13 +98,10 @@ REQUIRE=bash -c '\
     eval $$2 >/dev/null 2>/dev/null || (echo "$$1" is required for testsuite; /bin/false); \
   }; \
   export -f is_installed; \
-  parallel -n2 --tag is_installed ::: \
+  PARALLEL_SHELL=bash parallel -n2 --tag is_installed ::: \
 	script		"echo | script -c echo -q /dev/null"			\
-	"ssh sh@lo"	"timeout 20 ssh sh@lo true"				\
-	"ssh csh@lo"	"timeout 15 ssh csh@lo true"				\
 	niceload	"niceload echo niceload is installed"			\
 	expect	"expect -c \"spawn cat; puts \\\"expect is installed\\\"\"" 	\
-	autossh		"autossh -V"						\
 	tcsh		"tcsh -c echo tcsh installed"				\
 	seq		"seq 1 2"						\
 	stdout		"stdout echo stdout is installed"			\
@@ -98,16 +110,20 @@ REQUIRE=bash -c '\
 	gawk		"echo | gawk \"{print \\\"gawk is installed\\\"}\""	\
 	pv		"echo | pv -qL 10"					\
 	timeout		"timeout 1 echo timeout is installed"			\
-	sshpass		"sshpass echo sshpass is installed"			\
 '
-#	lsh	"lsh lo echo lsh is installed"					\
 
-prereqlocal: installparallel startvm
+prereqlocal: installparallel
 	${REQUIRE}
 	# Bug that causes systemd-logind to go into 100%
 	sudo modprobe -r ucsi_acpi
 
 prereqremote: installparallel startvm
+# TODO Check these are installed and work
+#	autossh		"autossh -V"						\
+#	lsh	"lsh lo echo lsh is installed"					\
+#	"ssh sh@lo"	"timeout 20 ssh sh@lo true"				\
+#	sshpass		"sshpass echo sshpass is installed"			\
+#	"ssh csh@lo"	"timeout 15 ssh csh@lo true"				
 	parallel -j0 --timeout 10 --tag ssh -oStrictHostKeyChecking=accept-new vagrant@parallel-server{} parallel --minversion 20121021 ::: 1 2 || (echo parallel on remote required for testsuite; /bin/true)
 
 namedservers=centos3 centos8 centos9 freebsd13 freebsd14 openindiana rhel8
@@ -148,12 +164,12 @@ snapshotclean:
 
 startdb:
 	sql oracle://SYSTEM:$$VM_ORACLE_PWD@/FREE "select 'Oracle is running' from dual;" || \
-	  (cd vagrant-projects/OracleDatabase/23.7.0-Free && vagrant up && \
+	  (cd vagrant-projects/OracleDatabase/26ai-Free && vagrant up && \
 	   sql oracle://SYSTEM:$$VM_ORACLE_PWD@/FREE "select 'Oracle is running' from dual;")
 stopdb:
-	cd vagrant-projects/OracleDatabase/23.7.0-Free; vagrant suspend
+	cd vagrant-projects/OracleDatabase/26ai-Free; vagrant suspend
 haltdb:
-	cd vagrant-projects/OracleDatabase/23.7.0-Free; vagrant halt
+	cd vagrant-projects/OracleDatabase/26ai-Free; vagrant halt
 
 ### Distribution
 installparallel: ../src/parallel

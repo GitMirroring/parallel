@@ -58,20 +58,3 @@ par_continuous_output	1
 par_continuous_output	1
 par_continuous_output	1
 par_continuous_output	1
-par_more_than_9_relative_sshlogin	### Check more than 9(relative) simultaneous sshlogins
-par_more_than_9_relative_sshlogin	1
-par_more_than_9_relative_sshlogin	2
-par_more_than_9_relative_sshlogin	3
-par_more_than_9_relative_sshlogin	4
-par_more_than_9_relative_sshlogin	5
-par_more_than_9_relative_sshlogin	6
-par_more_than_9_relative_sshlogin	7
-par_more_than_9_relative_sshlogin	8
-par_more_than_9_relative_sshlogin	9
-par_more_than_9_relative_sshlogin	10
-par_more_than_9_relative_sshlogin	11
-par_nonall_u	### Test --nonall -u - should be interleaved x y x y
-par_nonall_u	      1 openindiana
-par_nonall_u	      1 openindiana
-par_nonall_u	      1 rhel8.localdomain
-par_nonall_u	      1 rhel8.localdomain

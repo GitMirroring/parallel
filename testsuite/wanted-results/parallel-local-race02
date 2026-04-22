@@ -1,9 +1,3 @@
-par_PARALLEL_RSYNC_OPTS	### test rsync opts
-par_PARALLEL_RSYNC_OPTS	-rlDzRRRR
-par_PARALLEL_RSYNC_OPTS	-rlDzRRRR
-par_PARALLEL_RSYNC_OPTS	-zzzzrldRRRR
-par_PARALLEL_RSYNC_OPTS	-zzzzrldRRRR
-par_PARALLEL_RSYNC_OPTS	
 par__compress_prg_fails	### bug #41609: --compress fails
 par__compress_prg_fails	f1a751b1283e99e7dda40f63f1225f74  -
 par__compress_prg_fails	f1a751b1283e99e7dda40f63f1225f74  -
@@ -36,65 +30,6 @@ par__compress_prg_fails	--line-buffer --tag --files	1
 par__compress_prg_fails	--line-buffer --tag --files	parallel: Warning: Use --files0 when $TMPDIR contains newline.
 par__compress_prg_fails	--line-buffer --tag --files	parallel: Error: false failed.
 par__compress_prg_fails	--line-buffer --tag --files	parallel: Error: false failed.
-par_hostgroup	### --hostgroup force ncpu - 2x parallel, 6x me
-par_hostgroup	parallel
-par_hostgroup	parallel
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	### --hostgroup two group arg - 2x parallel, 6x me
-par_hostgroup	parallel
-par_hostgroup	parallel
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	### --hostgroup one group arg - 8x me
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	### --hostgroup multiple group arg + unused group - 2x parallel, 6x me, 0x tcsh
-par_hostgroup	parallel
-par_hostgroup	tange
-par_hostgroup	### --hostgroup two groups @
-par_hostgroup	parallel	parallel
-par_hostgroup	parallel	parallel
-par_hostgroup	tange	tange
-par_hostgroup	tange	tange
-par_hostgroup	### --hostgroup
-par_hostgroup	no_group
-par_hostgroup	explicit_group
-par_hostgroup	implicit_group
-par_hostgroup	### --hostgroup --sshlogin with @
-par_hostgroup	no_group
-par_hostgroup	implicit_group
-par_hostgroup	### --hostgroup -S @group - bad if you get parallel@lo
-par_hostgroup	tange
-par_hostgroup	tcsh
-par_hostgroup	### --hostgroup -S @group1 -Sgrp2 - get all twice
-par_hostgroup	parallel
-par_hostgroup	parallel
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tcsh
-par_hostgroup	tcsh
-par_hostgroup	### --hostgroup -S @group1+grp2 - get all twice
-par_hostgroup	parallel
-par_hostgroup	parallel
-par_hostgroup	tange
-par_hostgroup	tange
-par_hostgroup	tcsh
-par_hostgroup	tcsh
 par_kill_hup	### Are children killed if GNU Parallel receives HUP? There should be no sleep at the end
 par_kill_hup	bash-+-perl---2*[bash---sleep]
 par_kill_hup	     `-pstree
@@ -121,21 +56,6 @@ par_resume_failed_k	job3 val 2
 par_resume_failed_k	job4 val 3
 par_resume_failed_k	job6 val 1
 par_resume_failed_k	try 2 again. Gives empty
-par_retries_bug_from_2010	### Bug with --retries
-par_retries_bug_from_2010	8
-par_retries_bug_from_2010	8
-par_retries_bug_from_2010	2
-par_retries_bug_from_2010	1
-par_retries_bug_from_2010	1
-par_retries_bug_from_2010	1
-par_retries_bug_from_2010	### These were not affected by the bug
-par_retries_bug_from_2010	8
-par_retries_bug_from_2010	8
-par_retries_bug_from_2010	1
-par_retries_bug_from_2010	4
-par_retries_bug_from_2010	4
-par_retries_bug_from_2010	4
-par_retries_bug_from_2010	2
 par_semaphore	### Test if parallel invoked as sem will run parallel --semaphore
 par_semaphore	job1a 1
 par_semaphore	job2a 2

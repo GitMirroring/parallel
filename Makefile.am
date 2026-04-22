@@ -2,7 +2,12 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+AUTOMAKE_OPTIONS = -Wno-portability
 SUBDIRS = src
+
+sudoinstall:
+	make
+	sudo make install
 
 test:
 	cd testsuite; make 1
@@ -30,6 +35,55 @@ torpull:
 torsync:
 	torsocks rsync -Hazv --exclude='*.{pdf,gz,bz2,html,deb}' --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude '*hwdep*' --delete ./ tortest:privat/parallel/
 	make tortest
+
+rsync:
+	rsync -Hazv --exclude='*.{pdf,gz,bz2,html,deb}' --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude '*hwdep*' --delete ./ $(BUILD_SERVER):privat/parallel/
+
+test-%:
+	cd testsuite && make $*
+
+r-%: rsync
+	ssh -t $(BUILD_SERVER) 'cd privat/parallel && make $*'
+
+rsync64: rsync
+	ssh $(BUILD_SERVER) 'torsocks rsync -Hazv --exclude="*.{pdf,gz,bz2,html,deb}" --exclude authorized_keys --exclude vagrant.box --exclude .vagrant/ --exclude oracle*box --exclude oracle-database-*.rpm --exclude actual-results --exclude "*hwdep*" --exclude="Makefile" --exclude="config.log" --exclude="config.status" --exclude="stamp-h1" --delete privat/parallel/ tange@h5k6xzcednnws4tsi6zr5w2txd3ashqwiul2wknr2lnpyvvxsamxjzad.onion:privat/parallel/'
+
+64-%:
+	torsocks ssh -t 'tange@h5k6xzcednnws4tsi6zr5w2txd3ashqwiul2wknr2lnpyvvxsamxjzad.onion' 'cd privat/parallel && (test -f Makefile || ./configure) && make $*'
+
+r64-%: rsync64
+	ssh -t $(BUILD_SERVER) 'cd privat/parallel && make 64-$*'
+
+test-filter-delay:
+	@echo "=== filter+delay: expect ~2s ==="
+	touch 1 2
+	bash -c 'time src/parallel --delay 1 --retries 3 -uj1 --halt soon,fail=5 --filter '"'"'not -e "{}"'"'"' echo ::: {1..5}'
+	rm -f 1 2
+
+test-minimal:
+	src/parallel -k echo ::: It works
+
+test-zextract:
+	seq 10000000 | gzip -1 > /tmp/big.gz
+	src/parallel --pipepart -a /tmp/big.gz wc
+
+# Test that the pipewrap (piped stdin delivery) remote execution path works.
+# Requires SSH access to $(BUILD_SERVER) with parallel installed.
+# Tests: basic remote echo, --pipe, --env, --workdir
+test-pipewrap:
+	@echo "=== pipewrap test 1: basic remote echo ==="
+	src/parallel --sshlogin $(BUILD_SERVER) echo ::: a b c | sort | diff - <(printf 'a\nb\nc\n') && echo PASS || echo FAIL
+	@echo "=== pipewrap test 2: multiple args ==="
+	src/parallel -k --sshlogin $(BUILD_SERVER) echo ::: 1 2 3 | diff - <(printf '1\n2\n3\n') && echo PASS || echo FAIL
+	@echo "=== pipewrap test 3: --pipe ==="
+	seq 10 | src/parallel --pipe --sshlogin $(BUILD_SERVER) 'wc -l' | awk '{s+=$$1}END{print s}' | diff - <(echo 10) && echo PASS || echo FAIL
+	@echo "=== pipewrap test 4: --env ==="
+	MYVAR=hello src/parallel --nonall --env MYVAR --sshlogin $(BUILD_SERVER) 'echo $$MYVAR' | diff - <(echo hello) && echo PASS || echo FAIL
+	@echo "=== pipewrap test 5: --workdir ==="
+	src/parallel --workdir /tmp --sshlogin $(BUILD_SERVER) pwd ::: dummy | diff - <(echo /tmp) && echo PASS || echo FAIL
+	@echo "=== All pipewrap tests done ==="
+
+
 
 web:
 	cd src; make web

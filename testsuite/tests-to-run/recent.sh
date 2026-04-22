@@ -296,6 +296,137 @@ par_skip_no_delay() {
 # 11
 # FAST: skipped jobs skipped delay
 
+par_--onall_--transfer() {
+    echo '### bug #46519: --onall ignores --transfer'
+    touch bug46519.{a,b,c}; rm -f bug46519.?? bug46519.???
+    parallel --onall --tf bug46519.{} --trc bug46519.{}{} --trc bug46519.{}{}{} -S csh@lo,sh@lo 'ls bug46519.{}; touch bug46519.{}{} bug46519.{}{}{}' ::: a b c
+    ls bug46519.?? bug46519.???
+    parallel --onall -S csh@lo,sh@lo ls bug46519.{}{} bug46519.{}{}{} ::: a b c &&
+	echo Cleanup failed
+}
+# Expected output:
+# ### bug #46519: --onall ignores --transfer
+# bug46519.aa
+# bug46519.aaa
+# bug46519.bb
+# bug46519.bbb
+# bug46519.cc
+# bug46519.ccc
+
+par__trc_colon() {
+    echo '### Test --trc ./:dir/:foo2'
+    mkdir -p ./:dir; echo 'Content :dir/:foo2' > ./:dir/:foo2
+    stdout parallel --trc {}.1 -S sh@lo '(cat {}; echo remote1) > {}.1' ::: ./:dir/:foo2
+    cat ./:dir/:foo2.1
+    stdout parallel --trc {}.2 -S sh@lo '(cat ./{}; echo remote2) > {}.2' ::: :dir/:foo2
+    cat ./:dir/:foo2.2
+}
+# Expected output:
+# ### Test --trc ./:dir/:foo2
+# Content :dir/:foo2
+# remote1
+# Content :dir/:foo2
+# remote2
+
+par_env_parallel_fish() {
+    myscript=$(cat <<'_EOF'
+    echo 'bug #50435: Remote fifo broke in 20150522'
+    env_parallel --session
+    set OK OK
+    echo data from stdin | env_parallel --pipe -S lo --fifo 'cat {}; and echo $OK'
+    echo data from stdin | env_parallel --pipe -S lo --cat 'cat {}; and echo $OK'
+    echo OK: 0==$status
+    echo '### Test failing command with --cat'
+    echo data from stdin | env_parallel --pipe -S lo --cat 'cat {}; false'
+    echo OK: 1==$status
+    echo data from stdin | parallel --pipe -S lo --cat 'cat {}; false'
+    echo OK: 1==$status
+_EOF
+    )
+    ssh fish@lo "$myscript"
+}
+# Expected output:
+# bug #50435: Remote fifo broke in 20150522
+# data from stdin
+# OK
+# data from stdin
+# OK
+# OK: 0==0
+# ### Test failing command with --cat
+# data from stdin
+# OK: 1==1
+# data from stdin
+# OK: 1==1
+
+par__--tmux_different_shells() {
+    echo '### Test tmux works on different shells'
+    export TMPDIR=/tmp
+    (
+	stdout parallel -Scsh@lo,tcsh@lo,parallel@lo,zsh@lo --tmux echo ::: 1 2 3 4; echo $?
+	stdout parallel -Scsh@lo,tcsh@lo,parallel@lo,zsh@lo --tmux false ::: 1 2 3 4; echo $?
+	export PARTMUX='parallel -Scsh@lo,tcsh@lo,parallel@lo,zsh@lo --tmux '
+	stdout ssh zsh@lo      "$PARTMUX" 'true  ::: 1 2 3 4; echo $status'
+	stdout ssh zsh@lo      "$PARTMUX" 'false ::: 1 2 3 4; echo $status'
+	stdout ssh parallel@lo "$PARTMUX" 'true  ::: 1 2 3 4; echo $?'
+	stdout ssh parallel@lo "$PARTMUX" 'false ::: 1 2 3 4; echo $?'
+	stdout ssh tcsh@lo     "$PARTMUX" 'true  ::: 1 2 3 4; echo $status'
+	stdout ssh tcsh@lo     "$PARTMUX" 'false ::: 1 2 3 4; echo $status'
+	echo "# command is currently too long for csh. Maybe it can be fixed?"
+	stdout ssh csh@lo      "$PARTMUX" 'true  ::: 1 2 3 4; echo $status'
+	stdout ssh csh@lo      "$PARTMUX" 'false ::: 1 2 3 4; echo $status'
+    ) | replace_tmpdir | perl -pe 's/tms...../tmsXXXXX/g'
+}
+# Expected output:
+# ### Test tmux works on different shells
+# See output with: tmux -S /TMP/tmsXXXXX attach
+# 0
+# See output with: tmux -S /TMP/tmsXXXXX attach
+# 4
+# (repeated for each ssh invocation)
+
+par__--tmux_length() {
+    echo '### tmux examples that earlier blocked'
+    export TMPDIR=/tmp
+    (
+	stdout parallel -Sparallel@lo --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Sparallel@lo --tmux echo ::: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	echo '### These blocked due to length'
+	stdout parallel -Slo      --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Scsh@lo  --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Stcsh@lo --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Szsh@lo  --tmux echo ::: \\\\\\\"\\\\\\\"\\\;\@
+	stdout parallel -Scsh@lo  --tmux echo ::: 111111111111111111111111111111111111111111111111111111111
+    ) | replace_tmpdir | perl -pe 's:tms.....:tmsXXXXX:'
+}
+# Expected output:
+# ### tmux examples that earlier blocked
+# See output with: tmux -S /TMP/tmsXXXXX attach
+# See output with: tmux -S /TMP/tmsXXXXX attach
+# ### These blocked due to length
+# (5 more "See output with" lines)
+
+par_bin() {
+    echo '### Test --bin'
+    seq 10 | parallel --pipe --bin 1 -j4 wc | sort
+    paste <(seq 10) <(seq 10 -1 1) |
+	parallel --pipe --colsep '\t' --bin 2 -j4 wc | sort
+    echo '### Test --bin with expression that gives 1..n'
+    paste <(seq 10) <(seq 10 -1 1) |
+	parallel --pipe --colsep '\t' --bin '2 $_=$_%2+1' -j4 wc | sort
+    echo '### Test --bin with expression that gives 0..n-1'
+    paste <(seq 10) <(seq 10 -1 1) |
+	parallel --pipe --colsep '\t' --bin '2 $_%=2' -j4 wc | sort
+    echo '### Blocks in version 20220122'
+    echo 10 | parallel --pipe --bin 1 -j100% cat | sort
+    paste <(seq 10) <(seq 10 -1 1) |
+	parallel --pipe --colsep '\t' --bin 2 cat | sort
+}
+
+par_z_roundrobin_blocks() {
+    echo "bug #49664: --round-robin does not complete"
+    seq 20000000 | parallel -j8 --block 10M --round-robin --pipe wc -c | wc -l
+}
+
 par_groupby_compressed() {
     echo '### --groupby --pipepart on plain and gzip files give same line counts'
     seq 1 20 | awk '{print (NR%3), $1}' | sort -k1 > /tmp/test_groupby_plain.txt
@@ -304,6 +435,40 @@ par_groupby_compressed() {
     parallel --pipepart -a /tmp/test_groupby_plain.gz  --groupby 1 -k 'wc -l' | sort
     rm /tmp/test_groupby_plain.txt /tmp/test_groupby_plain.gz
 }
+
+par_path_remote_bash() {
+    echo 'bug #47695: How to set $PATH on remote? Bash'
+    rm -rf /tmp/parallel
+    cp /usr/local/bin/parallel /tmp
+
+    cat <<'_EOS' |
+    echo StArT
+    echo BASH Path before: $PATH with no parallel
+    parallel echo ::: 1 && echo ERROR
+    # Race condition stderr/stdout
+    sleep 1
+    echo 'OK: if not found ^^^^^^^^'
+    # Exporting a big variable should not fail
+    export A="`seq 1000`"
+    PATH=$PATH:/tmp
+    . /usr/local/bin/env_parallel.bash
+    # --filter-hosts to see if $PATH with parallel is transferred
+    env_parallel --filter-hosts --env A,PATH -Slo echo {}: '$PATH' ::: OK
+_EOS
+    stdout ssh nopathbash@lo -T |
+        perl -ne '/StArT/..0 and print' |
+        uniq
+    echo
+}
+# Expected output:
+# bug #47695: How to set $PATH on remote? Bash
+# StArT
+# BASH Path before: /bin:/usr/bin with no parallel
+# -bash: line 3: parallel: command not found
+# OK: if not found ^^^^^^^^
+# OK: /bin:/usr/bin:/tmp
+#
+
 
 export -f $(compgen -A function | grep par_)
 

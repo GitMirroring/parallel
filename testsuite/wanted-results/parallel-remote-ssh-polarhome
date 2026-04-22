@@ -1,0 +1,785 @@
+MAXTIME=50 RETRIES=3 MAXPROC=23 MAXINNERPROC=2
+### Filter out working servers
+1d0
+< openstep
+3,4d1
+< pidora
+< alpha
+6,14d2
+< hpux-ia64
+< syllable
+< raspbian
+< solaris
+< openindiana
+< aix
+< hpux
+< debian-ppc
+< suse
+17d4
+< ubuntu
+20,22d6
+< centos
+< miros
+< macosx
+28,33d11
+< dragonfly
+< vax
+< minix
+< hurd
+< beaglebone
+< cubieboard2
+### Copy commands to servers
+Done copying
+
+    echo
+    echo '### Works on ...'
+    echo
+    par_nonall parallel echo Works on {} ::: '`hostname`' 2>&1
+
+### Works on ...
+
+debian	Works on debian
+freebsd	Works on freebsd.polarhome.com
+mandriva	Works on mandriva.polarhome.com
+mandriva	lscpu: unrecognized option '--all'
+openbsd	Works on openbsd.polarhome.com
+qnx	Works on qnx
+qnx	parallel: Warning: Cannot figure out number of cpus. Using 1.
+redhat	Works on redhat.polarhome.com
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+scosysv	Works on scosysv.polarhome.com
+solaris-x86	Works on solaris-x86
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+    echo
+    echo '### --number-of-cores/--number-of-cpus should work with no error'
+    echo
+    par_nonall 'parallel --number-of-sockets; parallel --number-of-cores' 2>&1
+    par_nonall 'parallel --number-of-threads; parallel --number-of-cpus' 2>&1
+
+### --number-of-cores/--number-of-cpus should work with no error
+
+debian	1
+debian	2
+freebsd	1
+freebsd	1
+mandriva	1
+mandriva	1
+mandriva	lscpu: unrecognized option '--all'
+mandriva	lscpu: unrecognized option '--all'
+openbsd	1
+openbsd	1
+qnx	1
+qnx	1
+qnx	parallel: Warning: Cannot figure out number of cpus. Using 1.
+qnx	parallel: Warning: Cannot figure out number of cpus. Using 1.
+redhat	1
+redhat	2
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+scosysv	1
+scosysv	1
+solaris-x86	1
+solaris-x86	1
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+debian	2
+debian	2
+freebsd	1
+freebsd	1
+mandriva	1
+mandriva	1
+mandriva	lscpu: unrecognized option '--all'
+mandriva	lscpu: unrecognized option '--all'
+openbsd	1
+openbsd	1
+qnx	1
+qnx	1
+qnx	parallel: Warning: Cannot figure out number of cpus. Using 1.
+qnx	parallel: Warning: Cannot figure out number of cpus. Using 1.
+redhat	2
+redhat	2
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+scosysv	1
+scosysv	1
+solaris-x86	1
+solaris-x86	1
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+    echo
+    echo '### Fails if tmpdir is R/O'
+    echo
+    par_nonall "stdout parallel --tmpdir / echo ::: test read-only tmp |
+	        perl -pe '\$exit += s:/[a-z0-9_]+.arg:/XXXXXXXX.arg:gi; \$exit += s/[0-9][0-9][0-9][0-9]/0000/gi; END { exit not \$exit }' &&
+	        echo OK readonly tmp" 2>&1
+
+### Fails if tmpdir is R/O
+
+debian	Error in tempfile() using template /XXXXXXXX.arg: Could not create temp file /XXXXXXXX.arg: Permission denied at ~/bin/parallel line 0000.
+debian	OK readonly tmp
+freebsd	/tmp/parScript: stdout: not found
+mandriva	Error in tempfile() using /XXXXXXXX.arg: Could not create temp file /XXXXXXXX.arg: Permission denied at ~/bin/parallel line 0000
+mandriva	OK readonly tmp
+netbsd	Invalid null command.
+openbsd	Error in tempfile() using /XXXXXXXX.arg: Could not create temp file /XXXXXXXX.arg: Permission denied at ~/bin/parallel line 0000
+openbsd	OK readonly tmp
+qnx	Error in tempfile() using /XXXXXXXX.arg: Could not create temp file /XXXXXXXX.arg: Permission denied at ~/bin/parallel line 0000
+qnx	OK readonly tmp
+redhat	Error in tempfile() using /XXXXXXXX.arg: Could not create temp file /XXXXXXXX.arg: Permission denied at ~/bin/parallel line 0000
+redhat	OK readonly tmp
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+scosysv	Error in tempfile() using /XXXXXXXX.arg: Parent directory (/) is not writable
+scosysv	 at ~/bin/parallel line 0000
+scosysv	OK readonly tmp
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+solaris-x86	/tmp/parScript: line 2: stdout: command not found
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 0000.
+tru64	OK readonly tmp
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+    echo
+    echo '### Does exporting a bash function make parallel fail?'
+    echo 'If login shell is not bash compatible it fails'
+    echo
+    # http://zmwangx.github.io/blog/2015-11-25-bash-function-exporting-fiasco.html
+    par_nonall 'echo test funcA
+        funcA() {
+            cat <(echo bash only A)
+        }
+        export -f funcA;
+        bin/parallel funcA ::: 1' 2>&1 | LANG=C sort
+
+### Does exporting a bash function make parallel fail?
+If login shell is not bash compatible it fails
+
+debian	bash only A
+debian	test funcA
+freebsd	/tmp/parScript: 4: Syntax error: "(" unexpected (expecting word)
+freebsd	test funcA
+mandriva	bash only A
+mandriva	lscpu: unrecognized option '--all'
+mandriva	test funcA
+netbsd	Badly placed ()'s.
+netbsd	test funcA
+openbsd	bash only A
+openbsd	test funcA
+qnx	/tmp/parScript[4]: syntax error: `(' unexpected
+qnx	test funcA
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+redhat	bash only A
+redhat	test funcA
+scosysv	bash only A
+scosysv	test funcA
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+solaris-x86	bash only A
+solaris-x86	test funcA
+tru64	Can't find string terminator '"' anywhere before EOF at bin/parallel line 2211.
+tru64	test funcA
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+unixware	UX:sh (parScript): ERROR: source: Not found
+    echo
+    echo '### Does PARALLEL_SHELL help exporting a bash function'
+    echo 'If login shell is not bash compatible it should work'
+    echo
+    mkdir -p tmp/bin
+    cp /bin/bash tmp/bin
+    cd tmp
+    export PARALLEL_SHELL=bin/bash
+    par_nonall 'echo test funcB
+        funcB() {
+            cat <(echo bash only B)
+        }
+        export -f funcB
+        export PARALLEL_SHELL=bin/bash
+        bin/parallel funcB ::: 1' 2>&1
+
+### Does PARALLEL_SHELL help exporting a bash function
+If login shell is not bash compatible it should work
+
+debian	test funcB
+debian	bash only B
+freebsd	test funcB
+freebsd	bash only B
+mandriva	test funcB
+mandriva	bash only B
+mandriva	lscpu: unrecognized option '--all'
+netbsd	test funcB
+netbsd	bash only B
+netbsd	~/setupenv: line 9: syntax error: unexpected end of file
+openbsd	test funcB
+openbsd	bash only B
+qnx	test funcB
+qnx	bash only B
+qnx	parallel: Warning: Cannot figure out number of cpus. Using 1.
+scosysv	test funcB
+scosysv	bash only B
+tru64	test funcB
+tru64	Can't find string terminator '"' anywhere before EOF at bin/parallel line 2211.
+unixware	test funcB
+unixware	bash only B
+    echo
+    echo '### env_parallel --install'
+    echo '(bash ksh mksh zsh only)'
+    echo
+    par_nonall 'bin/env_parallel --install && echo install-OK' 2>&1
+
+### env_parallel --install
+(bash ksh mksh zsh only)
+
+debian	Installed env_parallel in:
+debian	     ~/.bashrc
+debian	     ~/.shrc
+debian	     ~/.zshenv
+debian	     ~/.config/fish/config.fish
+debian	     ~/.kshrc
+debian	     ~/.mkshrc
+debian	     ~/.profile
+debian	     ~/.cshrc
+debian	     ~/.tcshrc
+debian	install-OK
+freebsd	Installed env_parallel in:
+freebsd	     ~/.bashrc
+freebsd	     ~/.shrc
+freebsd	     ~/.zshenv
+freebsd	     ~/.config/fish/config.fish
+freebsd	     ~/.kshrc
+freebsd	     ~/.mkshrc
+freebsd	     ~/.profile
+freebsd	     ~/.cshrc
+freebsd	     ~/.tcshrc
+freebsd	install-OK
+mandriva	Installed env_parallel in:
+mandriva	     ~/.bashrc
+mandriva	     ~/.shrc
+mandriva	     ~/.zshenv
+mandriva	     ~/.config/fish/config.fish
+mandriva	     ~/.kshrc
+mandriva	     ~/.mkshrc
+mandriva	     ~/.profile
+mandriva	     ~/.cshrc
+mandriva	     ~/.tcshrc
+mandriva	install-OK
+openbsd	Installed env_parallel in:
+openbsd	     ~/.bashrc
+openbsd	     ~/.shrc
+openbsd	     ~/.zshenv
+openbsd	     ~/.config/fish/config.fish
+openbsd	     ~/.kshrc
+openbsd	     ~/.mkshrc
+openbsd	     ~/.profile
+openbsd	     ~/.cshrc
+openbsd	     ~/.tcshrc
+openbsd	install-OK
+qnx	Installed env_parallel in:
+qnx	     ~/.bashrc
+qnx	     ~/.shrc
+qnx	     ~/.zshenv
+qnx	     ~/.config/fish/config.fish
+qnx	     ~/.kshrc
+qnx	     ~/.mkshrc
+qnx	     ~/.profile
+qnx	     ~/.cshrc
+qnx	     ~/.tcshrc
+qnx	install-OK
+redhat	Installed env_parallel in:
+redhat	     ~/.bashrc
+redhat	     ~/.shrc
+redhat	     ~/.zshenv
+redhat	     ~/.config/fish/config.fish
+redhat	     ~/.kshrc
+redhat	     ~/.mkshrc
+redhat	     ~/.profile
+redhat	     ~/.cshrc
+redhat	     ~/.tcshrc
+redhat	install-OK
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+scosysv	Installed env_parallel in:
+scosysv	     ~/.bashrc
+scosysv	     ~/.shrc
+scosysv	     ~/.zshenv
+scosysv	     ~/.config/fish/config.fish
+scosysv	     ~/.kshrc
+scosysv	     ~/.mkshrc
+scosysv	     ~/.profile
+scosysv	     ~/.cshrc
+scosysv	     ~/.tcshrc
+scosysv	install-OK
+solaris-x86	Installed env_parallel in:
+solaris-x86	     ~/.bashrc
+solaris-x86	     ~/.shrc
+solaris-x86	     ~/.zshenv
+solaris-x86	     ~/.config/fish/config.fish
+solaris-x86	     ~/.kshrc
+solaris-x86	     ~/.mkshrc
+solaris-x86	     ~/.profile
+solaris-x86	     ~/.cshrc
+solaris-x86	     ~/.tcshrc
+solaris-x86	install-OK
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+tru64	Installed env_parallel in:
+tru64	     ~/.bashrc
+tru64	     ~/.shrc
+tru64	     ~/.zshenv
+tru64	     ~/.config/fish/config.fish
+tru64	     ~/.kshrc
+tru64	     ~/.mkshrc
+tru64	     ~/.profile
+tru64	     ~/.cshrc
+tru64	     ~/.tcshrc
+tru64	install-OK
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+    echo
+    echo '### env_parallel echo env_parallel ::: run-OK'
+    echo '(bash ksh mksh zsh only)'
+    echo
+    par_nonall 'env_parallel echo env_parallel ::: run-OK' 2>&1
+
+### env_parallel echo env_parallel ::: run-OK
+(bash ksh mksh zsh only)
+
+debian	env_parallel run-OK
+freebsd	env_parallel run-OK
+mandriva	env_parallel run-OK
+mandriva	lscpu: unrecognized option '--all'
+openbsd	env_parallel run-OK
+qnx	parallel: Warning: Cannot figure out number of cpus. Using 1.
+qnx	/bin/sh: syntax error: `_' unexpected
+redhat	Unknown option: echo
+redhat	Unknown option: env_parallel
+redhat	Unknown option: :::
+redhat	Unknown option: run-OK
+redhat	You have called the dummy script "env_parallel".
+redhat	
+redhat	env_parallel only works if it is a function.
+redhat	
+redhat	You need to do this and restart your shell:
+redhat	
+redhat	bash:  Put this in $HOME/.bashrc:  . env_parallel.bash
+redhat	       E.g. by doing:  echo '. env_parallel.bash' >> $HOME/.bashrc
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	fish:  Put this in $HOME/.config/fish/config.fish:  . (which env_parallel.fish)
+redhat	       E.g. by doing:
+redhat	         echo '. (which env_parallel.fish)' >> $HOME/.config/fish/config.fish
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	ksh:   Put this in $HOME/.kshrc:  source env_parallel.ksh
+redhat	       E.g. by doing:  echo 'source env_parallel.ksh' >> $HOME/.kshrc
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	mksh:  Put this in $HOME/.mkshrc:  source env_parallel.mksh
+redhat	       E.g. by doing:  echo 'source env_parallel.mksh' >> $HOME/.mkshrc
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	pdksh: Put this in $HOME/.profile:  source env_parallel.pdksh
+redhat	       E.g. by doing:  echo '. env_parallel.pdksh' >> $HOME/.profile
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	zsh:   Put this in $HOME/.zshrc:  . env_parallel.zsh
+redhat	       E.g. by doing:  echo '. env_parallel.zsh' >> $HOME/.zshenv
+redhat	       Supports: variables, functions, arrays
+redhat	
+redhat	ash:   Put this in $HOME/.profile:  . env_parallel.ash
+redhat	       E.g. by doing:  echo '. env_parallel.ash' >> $HOME/.profile
+redhat	       Supports: variables, aliases
+redhat	
+redhat	dash:  Put this in $HOME/.profile:  . env_parallel.dash
+redhat	       E.g. by doing:  echo '. env_parallel.dash' >> $HOME/.profile
+redhat	       Supports: variables, aliases
+redhat	
+redhat	csh:   Put this in $HOME/.cshrc:  source `which env_parallel.csh`
+redhat	       E.g. by doing:  echo 'source `which env_parallel.csh`' >> $HOME/.cshrc
+redhat	       Supports: variables, aliases, arrays with no special chars
+redhat	
+redhat	tcsh:  Put this in $HOME/.tcshrc:  source `which env_parallel.tcsh`
+redhat	       E.g. by doing:  echo 'source `which env_parallel.tcsh`' >> $HOME/.tcshrc
+redhat	       Supports: variables, aliases, arrays with no special chars
+redhat	
+redhat	To install in all shells run:
+redhat	
+redhat	  env_parallel --install
+redhat	
+redhat	In a script you need to run this before using env_parallel:
+redhat	
+redhat	bash:  . env_parallel.bash
+redhat	ksh:   source env_parallel.ksh
+redhat	mksh:  source env_parallel.mksh
+redhat	pdksh: source env_parallel.pdksh
+redhat	zsh:   . env_parallel.zsh
+redhat	ash:   . env_parallel.ash
+redhat	dash:  . env_parallel.dash
+redhat	
+redhat	For details: see  man env_parallel
+redhat	
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+scosysv	env_parallel run-OK
+solaris-x86	Unknown option: echo
+solaris-x86	Unknown option: env_parallel
+solaris-x86	Unknown option: :::
+solaris-x86	Unknown option: run-OK
+solaris-x86	You have called the dummy script "env_parallel".
+solaris-x86	
+solaris-x86	env_parallel only works if it is a function.
+solaris-x86	
+solaris-x86	You need to do this and restart your shell:
+solaris-x86	
+solaris-x86	bash:  Put this in $HOME/.bashrc:  . env_parallel.bash
+solaris-x86	       E.g. by doing:  echo '. env_parallel.bash' >> $HOME/.bashrc
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	fish:  Put this in $HOME/.config/fish/config.fish:  . (which env_parallel.fish)
+solaris-x86	       E.g. by doing:
+solaris-x86	         echo '. (which env_parallel.fish)' >> $HOME/.config/fish/config.fish
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	ksh:   Put this in $HOME/.kshrc:  source env_parallel.ksh
+solaris-x86	       E.g. by doing:  echo 'source env_parallel.ksh' >> $HOME/.kshrc
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	mksh:  Put this in $HOME/.mkshrc:  source env_parallel.mksh
+solaris-x86	       E.g. by doing:  echo 'source env_parallel.mksh' >> $HOME/.mkshrc
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	pdksh: Put this in $HOME/.profile:  source env_parallel.pdksh
+solaris-x86	       E.g. by doing:  echo '. env_parallel.pdksh' >> $HOME/.profile
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	zsh:   Put this in $HOME/.zshrc:  . env_parallel.zsh
+solaris-x86	       E.g. by doing:  echo '. env_parallel.zsh' >> $HOME/.zshenv
+solaris-x86	       Supports: variables, functions, arrays
+solaris-x86	
+solaris-x86	ash:   Put this in $HOME/.profile:  . env_parallel.ash
+solaris-x86	       E.g. by doing:  echo '. env_parallel.ash' >> $HOME/.profile
+solaris-x86	       Supports: variables, aliases
+solaris-x86	
+solaris-x86	dash:  Put this in $HOME/.profile:  . env_parallel.dash
+solaris-x86	       E.g. by doing:  echo '. env_parallel.dash' >> $HOME/.profile
+solaris-x86	       Supports: variables, aliases
+solaris-x86	
+solaris-x86	csh:   Put this in $HOME/.cshrc:  source `which env_parallel.csh`
+solaris-x86	       E.g. by doing:  echo 'source `which env_parallel.csh`' >> $HOME/.cshrc
+solaris-x86	       Supports: variables, aliases, arrays with no special chars
+solaris-x86	
+solaris-x86	tcsh:  Put this in $HOME/.tcshrc:  source `which env_parallel.tcsh`
+solaris-x86	       E.g. by doing:  echo 'source `which env_parallel.tcsh`' >> $HOME/.tcshrc
+solaris-x86	       Supports: variables, aliases, arrays with no special chars
+solaris-x86	
+solaris-x86	To install in all shells run:
+solaris-x86	
+solaris-x86	  env_parallel --install
+solaris-x86	
+solaris-x86	In a script you need to run this before using env_parallel:
+solaris-x86	
+solaris-x86	bash:  . env_parallel.bash
+solaris-x86	ksh:   source env_parallel.ksh
+solaris-x86	mksh:  source env_parallel.mksh
+solaris-x86	pdksh: source env_parallel.pdksh
+solaris-x86	zsh:   . env_parallel.zsh
+solaris-x86	ash:   . env_parallel.ash
+solaris-x86	dash:  . env_parallel.dash
+solaris-x86	
+solaris-x86	For details: see  man env_parallel
+solaris-x86	
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+    echo
+    echo '### env_parallel echo reading from process substitution :::: <(echo OK)'
+    echo '(bash ksh mksh zsh only)'
+    echo
+    # csh on NetBSD does not support process substitution 
+    par_nonall 'env_parallel echo reading from process substitution :::: <(echo OK)' 2>&1 | 
+	grep -v ': /tmp/.*: No such file or directory'
+
+### env_parallel echo reading from process substitution :::: <(echo OK)
+(bash ksh mksh zsh only)
+
+debian	reading from process substitution OK
+freebsd	/tmp/parScript: 2: Syntax error: "(" unexpected (expecting word)
+mandriva	parallel: Error: Cannot open `/dev/fd/63': No such file or directory
+openbsd	parallel: Error: Cannot open `/dev/fd/63': Bad file descriptor
+qnx	/tmp/parScript[2]: syntax error: `(' unexpected
+redhat	Unknown option: echo
+redhat	Unknown option: reading
+redhat	Unknown option: from
+redhat	Unknown option: process
+redhat	Unknown option: substitution
+redhat	Unknown option: ::::
+redhat	Unknown option: /dev/fd/63
+redhat	You have called the dummy script "env_parallel".
+redhat	
+redhat	env_parallel only works if it is a function.
+redhat	
+redhat	You need to do this and restart your shell:
+redhat	
+redhat	bash:  Put this in $HOME/.bashrc:  . env_parallel.bash
+redhat	       E.g. by doing:  echo '. env_parallel.bash' >> $HOME/.bashrc
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	fish:  Put this in $HOME/.config/fish/config.fish:  . (which env_parallel.fish)
+redhat	       E.g. by doing:
+redhat	         echo '. (which env_parallel.fish)' >> $HOME/.config/fish/config.fish
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	ksh:   Put this in $HOME/.kshrc:  source env_parallel.ksh
+redhat	       E.g. by doing:  echo 'source env_parallel.ksh' >> $HOME/.kshrc
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	mksh:  Put this in $HOME/.mkshrc:  source env_parallel.mksh
+redhat	       E.g. by doing:  echo 'source env_parallel.mksh' >> $HOME/.mkshrc
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	pdksh: Put this in $HOME/.profile:  source env_parallel.pdksh
+redhat	       E.g. by doing:  echo '. env_parallel.pdksh' >> $HOME/.profile
+redhat	       Supports: variables, aliases, functions, arrays
+redhat	
+redhat	zsh:   Put this in $HOME/.zshrc:  . env_parallel.zsh
+redhat	       E.g. by doing:  echo '. env_parallel.zsh' >> $HOME/.zshenv
+redhat	       Supports: variables, functions, arrays
+redhat	
+redhat	ash:   Put this in $HOME/.profile:  . env_parallel.ash
+redhat	       E.g. by doing:  echo '. env_parallel.ash' >> $HOME/.profile
+redhat	       Supports: variables, aliases
+redhat	
+redhat	dash:  Put this in $HOME/.profile:  . env_parallel.dash
+redhat	       E.g. by doing:  echo '. env_parallel.dash' >> $HOME/.profile
+redhat	       Supports: variables, aliases
+redhat	
+redhat	csh:   Put this in $HOME/.cshrc:  source `which env_parallel.csh`
+redhat	       E.g. by doing:  echo 'source `which env_parallel.csh`' >> $HOME/.cshrc
+redhat	       Supports: variables, aliases, arrays with no special chars
+redhat	
+redhat	tcsh:  Put this in $HOME/.tcshrc:  source `which env_parallel.tcsh`
+redhat	       E.g. by doing:  echo 'source `which env_parallel.tcsh`' >> $HOME/.tcshrc
+redhat	       Supports: variables, aliases, arrays with no special chars
+redhat	
+redhat	To install in all shells run:
+redhat	
+redhat	  env_parallel --install
+redhat	
+redhat	In a script you need to run this before using env_parallel:
+redhat	
+redhat	bash:  . env_parallel.bash
+redhat	ksh:   source env_parallel.ksh
+redhat	mksh:  source env_parallel.mksh
+redhat	pdksh: source env_parallel.pdksh
+redhat	zsh:   . env_parallel.zsh
+redhat	ash:   . env_parallel.ash
+redhat	dash:  . env_parallel.dash
+redhat	
+redhat	For details: see  man env_parallel
+redhat	
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+scosysv	parallel: Error: Cannot open `/dev/fd/63': Bad file number
+solaris-x86	Unknown option: echo
+solaris-x86	Unknown option: reading
+solaris-x86	Unknown option: from
+solaris-x86	Unknown option: process
+solaris-x86	Unknown option: substitution
+solaris-x86	Unknown option: ::::
+solaris-x86	Unknown option: /dev/fd/63
+solaris-x86	You have called the dummy script "env_parallel".
+solaris-x86	
+solaris-x86	env_parallel only works if it is a function.
+solaris-x86	
+solaris-x86	You need to do this and restart your shell:
+solaris-x86	
+solaris-x86	bash:  Put this in $HOME/.bashrc:  . env_parallel.bash
+solaris-x86	       E.g. by doing:  echo '. env_parallel.bash' >> $HOME/.bashrc
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	fish:  Put this in $HOME/.config/fish/config.fish:  . (which env_parallel.fish)
+solaris-x86	       E.g. by doing:
+solaris-x86	         echo '. (which env_parallel.fish)' >> $HOME/.config/fish/config.fish
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	ksh:   Put this in $HOME/.kshrc:  source env_parallel.ksh
+solaris-x86	       E.g. by doing:  echo 'source env_parallel.ksh' >> $HOME/.kshrc
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	mksh:  Put this in $HOME/.mkshrc:  source env_parallel.mksh
+solaris-x86	       E.g. by doing:  echo 'source env_parallel.mksh' >> $HOME/.mkshrc
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	pdksh: Put this in $HOME/.profile:  source env_parallel.pdksh
+solaris-x86	       E.g. by doing:  echo '. env_parallel.pdksh' >> $HOME/.profile
+solaris-x86	       Supports: variables, aliases, functions, arrays
+solaris-x86	
+solaris-x86	zsh:   Put this in $HOME/.zshrc:  . env_parallel.zsh
+solaris-x86	       E.g. by doing:  echo '. env_parallel.zsh' >> $HOME/.zshenv
+solaris-x86	       Supports: variables, functions, arrays
+solaris-x86	
+solaris-x86	ash:   Put this in $HOME/.profile:  . env_parallel.ash
+solaris-x86	       E.g. by doing:  echo '. env_parallel.ash' >> $HOME/.profile
+solaris-x86	       Supports: variables, aliases
+solaris-x86	
+solaris-x86	dash:  Put this in $HOME/.profile:  . env_parallel.dash
+solaris-x86	       E.g. by doing:  echo '. env_parallel.dash' >> $HOME/.profile
+solaris-x86	       Supports: variables, aliases
+solaris-x86	
+solaris-x86	csh:   Put this in $HOME/.cshrc:  source `which env_parallel.csh`
+solaris-x86	       E.g. by doing:  echo 'source `which env_parallel.csh`' >> $HOME/.cshrc
+solaris-x86	       Supports: variables, aliases, arrays with no special chars
+solaris-x86	
+solaris-x86	tcsh:  Put this in $HOME/.tcshrc:  source `which env_parallel.tcsh`
+solaris-x86	       E.g. by doing:  echo 'source `which env_parallel.tcsh`' >> $HOME/.tcshrc
+solaris-x86	       Supports: variables, aliases, arrays with no special chars
+solaris-x86	
+solaris-x86	To install in all shells run:
+solaris-x86	
+solaris-x86	  env_parallel --install
+solaris-x86	
+solaris-x86	In a script you need to run this before using env_parallel:
+solaris-x86	
+solaris-x86	bash:  . env_parallel.bash
+solaris-x86	ksh:   source env_parallel.ksh
+solaris-x86	mksh:  source env_parallel.mksh
+solaris-x86	pdksh: source env_parallel.pdksh
+solaris-x86	zsh:   . env_parallel.zsh
+solaris-x86	ash:   . env_parallel.ash
+solaris-x86	dash:  . env_parallel.dash
+solaris-x86	
+solaris-x86	For details: see  man env_parallel
+solaris-x86	
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+parallel: Warning: This job was killed because it timed out:
+parallel: Warning: source ./setupenv 2>/dev/null; . `pwd`/setupenv; env_parallel echo reading from process substitution :::: <(echo OK) 
+parallel: Warning: This job was killed because it timed out:
+parallel: Warning: source ./setupenv 2>/dev/null; . `pwd`/setupenv; env_parallel echo reading from process substitution :::: <(echo OK) 
+parallel: Warning: This job was killed because it timed out:
+parallel: Warning: source ./setupenv 2>/dev/null; . `pwd`/setupenv; env_parallel echo reading from process substitution :::: <(echo OK) 
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 2: `(' unexpected
+    echo
+    echo '### Test empty command name in process list'
+    echo '(bash ksh mksh zsh only)'
+    echo
+    test_empty_cmd() {
+	echo '### Test if empty command name in process list causes problems'
+	perl -e '$0=" ";sleep 1000' &
+        pid=$!
+	parallel echo ::: OK_with_empty_cmd
+        kill $pid
+    }
+    export -f test_empty_cmd
+    export PARALLEL_SHELL=bin/bash
+    PARALLEL='--env test_empty_cmd' par_nonall test_empty_cmd 2>&1
+
+### Test empty command name in process list
+(bash ksh mksh zsh only)
+
+parallel: Error: Shell 'bin/bash' not found.
+    echo
+    echo '### parset arr seq ::: 2 3 4'
+    echo '(bash ksh mksh zsh only)'
+    echo
+    par_nonall 'parset arr seq ::: 2 3 4; echo ${arr[*]}' 2>&1
+    echo '### env_parset arr seq ::: 2 3 4'
+    par_nonall 'start=2;env_parset arr seq \$start ::: 2 3 4; echo ${arr[*]}' 2>&1
+
+### parset arr seq ::: 2 3 4
+(bash ksh mksh zsh only)
+
+debian	1 2 1 2 3 1 2 3 4
+freebsd	eval: 1: Syntax error: word unexpected (expecting ")")
+mandriva	1 2 1 2 3 1 2 3 4
+mandriva	lscpu: unrecognized option '--all'
+openbsd	1 2 1 2 3 1 2 3 4
+qnx	
+qnx	parset: Warning: Cannot figure out number of cpus. Using 1.
+qnx	/tmp/parScript: syntax error: `(' unexpected
+redhat	
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+redhat	/tmp/parScript: line 2: parset: command not found
+scosysv	1 2 1 2 3 1 2 3 4
+solaris-x86	
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+solaris-x86	/tmp/parScript: line 2: parset: command not found
+tru64	
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+### env_parset arr seq ::: 2 3 4
+debian	2 2 3 2 3 4
+freebsd	eval: 1: Syntax error: word unexpected (expecting ")")
+mandriva	2 2 3 2 3 4
+mandriva	lscpu: unrecognized option '--all'
+openbsd	2 3 3 4 4 5
+qnx	
+qnx	parset: Warning: Cannot figure out number of cpus. Using 1.
+qnx	/bin/sh: syntax error: `_' unexpected
+qnx	/bin/sh: syntax error: `_' unexpected
+qnx	/bin/sh: syntax error: `_' unexpected
+qnx	/tmp/parScript: syntax error: `(' unexpected
+redhat	
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+redhat	/tmp/parScript: line 2: env_parset: command not found
+scosysv	2 2 3 2 3 4
+solaris-x86	
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+solaris-x86	/tmp/parScript: line 2: env_parset: command not found
+tru64	
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+    echo
+    echo '### parset var1,var2,var3 seq ::: 2 3 4'
+    echo '(bash ksh mksh zsh ash dash only)'
+    echo
+    par_nonall 'parset var1,var2,var3 seq ::: 2 3 4; echo $var1,$var2,$var3' 2>&1
+    echo '### env_parset var1,var2,var3 seq ::: 2 3 4'
+    par_nonall 'start=2; env_parset var1,var2,var3 seq \$start ::: 2 3 4; echo $var1,$var2,$var3' 2>&1
+
+
+### parset var1,var2,var3 seq ::: 2 3 4
+(bash ksh mksh zsh ash dash only)
+
+debian	1 2,1 2 3,1 2 3 4
+freebsd	1 2,1 2 3,1 2 3 4
+mandriva	1 2,1 2 3,1 2 3 4
+mandriva	lscpu: unrecognized option '--all'
+openbsd	1 2,1 2 3,1 2 3 4
+qnx	1 2,1 2 3,1 2 3 4
+qnx	parset: Warning: Cannot figure out number of cpus. Using 1.
+redhat	,,
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+redhat	/tmp/parScript: line 2: parset: command not found
+scosysv	1 2,1 2 3,1 2 3 4
+solaris-x86	,,
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+solaris-x86	/tmp/parScript: line 2: parset: command not found
+tru64	,,
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
+### env_parset var1,var2,var3 seq ::: 2 3 4
+debian	2,2 3,2 3 4
+freebsd	2,2 3,2 3 4
+mandriva	2,2 3,2 3 4
+mandriva	lscpu: unrecognized option '--all'
+openbsd	2 3,3 4,4 5
+qnx	,,
+qnx	parset: Warning: Cannot figure out number of cpus. Using 1.
+qnx	/bin/sh: syntax error: `_' unexpected
+qnx	/bin/sh: syntax error: `_' unexpected
+qnx	/bin/sh: syntax error: `_' unexpected
+redhat	,,
+redhat	/tmp/parScript: line 2: ~/setupenv: No such file or directory
+redhat	/tmp/parScript: line 2: env_parset: command not found
+scosysv	2,2 3,2 3 4
+solaris-x86	,,
+solaris-x86	/tmp/parScript: line 2: /export~/setupenv: No such file or directory
+solaris-x86	/tmp/parScript: line 2: env_parset: command not found
+tru64	,,
+tru64	Can't find string terminator '"' anywhere before EOF at ~/bin/parallel line 2211.
+unixware	UX:sh (parScript): ERROR: source: Not found
+unixware	UX:sh (parScript): ERROR: /tmp/parScript: Syntax error at line 83: `(' unexpected
