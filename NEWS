@@ -6,6 +6,10 @@ New in this release:
 
 * --pipe-part -a supports .gz, .bz2, .zst-files if zextract is installed.
 
+* Comments in code is redone.
+
+* Bug fixes.
+
 
 20260322
 

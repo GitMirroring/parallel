@@ -212,6 +212,90 @@ par_bug45691() {
 # 4
 # 5
 
+par_filter_dryrun() {
+    echo 'bug #65840: --dry-run doesnot apply filters'
+    parallel -k --filter='"{1}" ne "Not"' echo '{1} {2} {3}' ::: Not Is ::: good OK
+    parallel --dr -k --filter='"{1}" ne "Not"' echo '{1} {2} {3}' ::: Not Is ::: good OK
+}
+# Expected output:
+# bug #65840: --dry-run doesnot apply filters
+# Is good
+# Is OK
+# echo Is good
+# echo Is OK
+
+par_filter_no_halt() {
+    echo '### --filter + --halt: filtered jobs must not trigger halt failure'
+    parallel --halt soon,fail=1 --filter '(-e "{}")' echo ::: /tmp/recent-noexist /tmp/recent-noexist2
+    echo "exit:$?"
+}
+# Expected output:
+# ### --filter + --halt: filtered jobs must not trigger halt failure
+# exit:0
+
+par_filter_no_delay() {
+    echo '### --filter + --delay: filtered jobs must not consume delay slots'
+    start=$SECONDS
+    parallel --delay 1 -j1 --filter '{} > 4' echo ::: {1..8}
+    elapsed=$((SECONDS - start))
+    [ "$elapsed" -lt 7 ] && echo "FAST: filtered jobs skipped delay" || echo "SLOW: $elapsed s"
+}
+# Expected output:
+# ### --filter + --delay: filtered jobs must not consume delay slots
+# 5
+# 6
+# 7
+# 8
+# FAST: filtered jobs skipped delay
+
+par_filter_no_retries() {
+    echo '### --filter + --retries: filtered jobs must not trigger retries'
+    parallel -u --retries 3 --filter '{} % 2' 'echo ran {};false' ::: 1 2 3
+    echo "exit:$?"
+}
+# Expected output (odd jobs run 3 times each, even filtered out):
+# ### --filter + --retries: filtered jobs must not trigger retries
+# ran 1
+# ran 1
+# ran 1
+# ran 3
+# ran 3
+# ran 3
+# exit:2
+
+par_skip_in_expr() {
+    echo '### skip() in {= =} with --keep-order: must print a c (not just a)'
+    parallel -k echo {= '$_ eq "b" and $job->skip()' =} ::: a b c
+}
+# Expected output:
+# ### skip() in {= =} with --keep-order: must print a c (not just a)
+# a
+# c
+
+par_skip_no_halt() {
+    echo '### skip() must not count as failure for --halt'
+    parallel -k --halt soon,fail=1 echo '{= $job->skip() =}' ::: a b c
+    echo "exit:$?"
+}
+# Expected output:
+# ### skip() must not count as failure for --halt
+# exit:0
+
+par_skip_no_delay() {
+    echo '### skip() must not consume --delay slot'
+    start=$SECONDS
+    parallel --delay 1 -j1 echo '{= 2 < seq and seq() < 10 and skip(); =}' ::: {1..11}
+    elapsed=$((SECONDS - start))
+    [ "$elapsed" -lt 10 ] && echo "FAST: skipped jobs skipped delay" || echo "SLOW: $elapsed s (should be <10, unfixed would be ~11)"
+}
+# Expected output:
+# ### skip() must not consume --delay slot
+# 1
+# 2
+# 10
+# 11
+# FAST: skipped jobs skipped delay
+
 par_groupby_compressed() {
     echo '### --groupby --pipepart on plain and gzip files give same line counts'
     seq 1 20 | awk '{print (NR%3), $1}' | sort -k1 > /tmp/test_groupby_plain.txt

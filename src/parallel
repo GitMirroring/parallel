@@ -4523,10 +4523,13 @@ sub init_run_jobs() {
 		debug("start", "Not starting: JobQueue empty\n");
 		return 0;
 	    } else {
-		my $job;
+		my ($job,$skip);
 		# Skip jobs already in job log
+		# Skip jobs that called skip()
 		# Skip jobs already in results
+		# Skip jobs rejected by --filter
 		do {
+		    $skip = 0;
 		    $job = get_job_with_sshlogin($sshlogin);
 		    if(not defined $job) {
 			# No command available for that sshlogin
@@ -4534,13 +4537,23 @@ sub init_run_jobs() {
 			      $sshlogin->string(), "\n");
 			return 0;
 		    }
-		    if($job->is_already_in_joblog()) {
+		    if($job->is_already_in_joblog()
+		       or
+		       $job->{'commandline'}{'skip'}
+		       or
+		       not $job->filter()) {
+			# Already in joblog
+			# {= $job->skip() =} called,
+			# or --filter false:
+			# silently discard, no delay/retry/halt
 			$job->free_slot();
+			# Mark seq so --keep-order can advance past this gap
+			$job->set_job_in_joblog();
+			$skip = 1;
 		    }
-		} while ($job->is_already_in_joblog()
-			 or
-			 ($opt::results and $opt::resume
-			  and $job->is_already_in_results()));
+		} while ($skip
+			 or ($opt::results and $opt::resume
+			     and $job->is_already_in_results()));
 		debug("start", "Command to run on '",
 		      $job->sshlogin()->string(), "': '",
 		      $job->replaced(),"'\n");
