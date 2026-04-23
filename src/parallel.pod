@@ -214,7 +214,7 @@ job being run. It contains the same number as $PARALLEL_SEQ.
 See also: B<{}> B<--seqreplace>
 
 
-=item B<{%}>
+=item B<{%}> (alpha testing)
 
 Job slot number.
 
@@ -370,7 +370,7 @@ Number of jobs in total. Example:
 
   parallel echo Number of jobs: '{= $_=total_jobs() =}' ::: a b c
 
-=item Z<> B<slot()>
+=item Z<> B<slot()> (alpha testing)
 
 Slot number of job. Example:
 
@@ -392,7 +392,7 @@ The arguments counting from 1 ($arg[1] = {1} = first argument). Example:
 ('{=1' forces this to be a positional replacement string, and
 therefore will not repeat the value for each arg.)
 
-=item Z<> B<skip()>
+=item Z<> B<skip()> (alpha testing)
 
 Skip this job (see also B<--filter>). Example:
 
@@ -619,9 +619,9 @@ It is compatible with B<zenity>:
 See also: B<--eta> B<--progress> B<--total-jobs>
 
 
-=item B<--basefile> I<file>
+=item B<--basefile> I<file> (alpha testing)
 
-=item B<--bf> I<file>
+=item B<--bf> I<file> (alpha testing)
 
 I<file> will be transferred to each sshlogin before first job is
 started.
@@ -727,9 +727,9 @@ using another tool instead of GNU B<parallel>. You can find some of
 the alternatives in B<man parallel_alternatives>.
 
 
-=item B<--block> I<size>
+=item B<--block> I<size> (alpha testing)
 
-=item B<--block-size> I<size>
+=item B<--block-size> I<size> (alpha testing)
 
 Size of block in bytes to read at a time.
 
@@ -777,7 +777,7 @@ I<duration> is in seconds, but can be postfixed with s, m, h, or d.
 See also: TIME POSTFIXES B<--pipe> B<--block>
 
 
-=item B<--cat>
+=item B<--cat> (alpha testing)
 
 Create a temporary file with content.
 
@@ -791,7 +791,7 @@ Implies B<--pipe> unless B<--pipe-part> is used.
 See also: B<--pipe> B<--pipe-part> B<--fifo>
 
 
-=item B<--cleanup>
+=item B<--cleanup> (alpha testing)
 
 Remove transferred files.
 
@@ -1025,7 +1025,7 @@ dirname of input line.
 See also: B<{//}>
 
 
-=item B<--dry-run>
+=item B<--dry-run> (alpha testing)
 
 Print the job to run on stdout (standard output), but do not run the
 job.
@@ -1074,7 +1074,7 @@ After which you add your code at the end of B<new_script>. This is tested
 on B<ash>, B<bash>, B<dash>, B<ksh>, B<sh>, and B<zsh>.
 
 
-=item B<--env> I<var>
+=item B<--env> I<var> (alpha testing)
 
 Copy exported environment variable I<var>.
 
@@ -1155,7 +1155,7 @@ before exiting. Exit code will be that of the command.
 See also: B<--bg> B<man sem>
 
 
-=item B<--fifo>
+=item B<--fifo> (alpha testing)
 
 Create a temporary fifo with content.
 
@@ -1178,7 +1178,7 @@ Implies B<--pipe> unless B<--pipe-part> is used.
 See also: B<--cat> B<--pipe> B<--pipe-part>
 
 
-=item B<--filter> I<filter>
+=item B<--filter> I<filter> (alpha testing)
 
 Only run jobs where I<filter> is true.
 
@@ -1202,7 +1202,7 @@ Outputs: 1,2,3 1,2,4 1,2,5 1,3,4 1,3,5 1,4,5 2,3,4 2,3,5 2,4,5 3,4,5
 See also: B<skip()> B<--no-run-if-empty> B<{choose_k}>
 
 
-=item B<--filter-hosts>
+=item B<--filter-hosts> (alpha testing)
 
 Remove down hosts.
 
@@ -1247,7 +1247,7 @@ B<--group> is the default.
 See also: B<--line-buffer> B<--ungroup> B<--tag>
 
 
-=item B<--group-by> I<val>
+=item B<--group-by> I<val> (alpha testing)
 
 Group input by value.
 
@@ -1623,9 +1623,9 @@ See also: B<--use-cores-instead-of-threads>
 B<--use-sockets-instead-of-threads>
 
 
-=item B<--keep-order>
+=item B<--keep-order> (alpha testing)
 
-=item B<-k>
+=item B<-k> (alpha testing)
 
 Keep sequence of output same as the order of input.
 
@@ -2048,7 +2048,7 @@ is somewhat slower than B<--block>.
 See also: UNIT PREFIX B<--pipe> B<--block> B<-m> B<-X> B<--max-args>
 
 
-=item B<--nonall>
+=item B<--nonall> (alpha testing)
 
 B<--onall> with no arguments.
 
@@ -2063,7 +2063,7 @@ servers.
 See also: B<--onall> B<--sshlogin>
 
 
-=item B<--onall>
+=item B<--onall> (alpha testing)
 
 Run all the jobs on all computers given with B<--sshlogin>.
 
@@ -2109,9 +2109,9 @@ B<--files0> uses NUL (\0) instead of newline (\n) as separator.
 See also: B<--results>
 
 
-=item B<--pipe>
+=item B<--pipe> (alpha testing)
 
-=item B<--spreadstdin>
+=item B<--spreadstdin> (alpha testing)
 
 Spread input to jobs on stdin (standard input).
 
@@ -2149,7 +2149,7 @@ See also: B<--block> B<--block-timeout> B<--recstart> B<--recend>
 B<--fifo> B<--cat> B<--pipe-part> B<-N> B<-L> B<--round-robin>
 
 
-=item B<--pipe-part>
+=item B<--pipe-part> (alpha testing)
 
 Pipe parts of a physical file.
 
@@ -2754,7 +2754,7 @@ line:
 See also: B<--joblog> B<--resume> B<--resume-failed> B<--retries>
 
 
-=item B<--retries> I<n>
+=item B<--retries> I<n> (alpha testing)
 
 Try failing jobs I<n> times.
 
@@ -2769,7 +2769,7 @@ I<n>=0 means infinite.
 See also: B<--term-seq> B<--sshlogin>
 
 
-=item B<--return> I<filename>
+=item B<--return> I<filename> (alpha testing)
 
 Transfer files from remote computers.
 
@@ -2815,9 +2815,9 @@ See also: B<--transfer> B<--transferfile> B<--sshlogin> B<--cleanup>
 B<--workdir>
 
 
-=item B<--round-robin>
+=item B<--round-robin> (alpha testing)
 
-=item B<--round>
+=item B<--round> (alpha testing)
 
 Distribute chunks of standard input in a round robin fashion.
 
@@ -3281,7 +3281,7 @@ table will not be ':' but instead the hostname of the machine.
 See also: B<--sql-master> B<--sql-and-worker>
 
 
-=item B<--ssh> I<sshcommand>
+=item B<--ssh> I<sshcommand> (alpha testing)
 
 GNU B<parallel> defaults to using B<ssh> for remote access. This can
 be overridden with B<--ssh>. It can also be set on a per server
@@ -3301,11 +3301,11 @@ I<duration> is in seconds, but can be postfixed with s, m, h, or d.
 See also: TIME POSTFIXES B<--sshlogin> B<--delay>
 
 
-=item B<--sshlogin> I<[@hostgroups/][ncpus/][[user][:[password]]@]host[:port][,...]>
+=item B<--sshlogin> I<[@hostgroups/][ncpus/][[user][:[password]]@]host[:port][,...]> (alpha testing)
 
 =item B<--sshlogin> I<@hostgroup>/
 
-=item B<-S> I<[@hostgroups/][ncpus/][ssh command][[user][:[password]]@]host[:port][,...]>
+=item B<-S> I<[@hostgroups/][ncpus/][ssh command][[user][:[password]]@]host[:port][,...]> (alpha testing)
 
 =item B<-S> I<@hostgroup>/
 
@@ -3431,9 +3431,9 @@ B<--trc> B<--sshloginfile> B<--workdir> B<--filter-hosts>
 B<--ssh>
 
 
-=item B<--sshloginfile> I<filename>
+=item B<--sshloginfile> I<filename> (alpha testing)
 
-=item B<--slf> I<filename>
+=item B<--slf> I<filename> (alpha testing)
 
 File with sshlogins. The file consists of sshlogins on separate
 lines. Empty lines and lines starting with '#' are ignored. Example:
@@ -3613,7 +3613,7 @@ B<--tagstring> is ignored when using B<-u>, B<--onall>, and B<--nonall>.
 See also: B<--tag> B<--ctagstring>
 
 
-=item B<--tee>
+=item B<--tee> (alpha testing)
 
 Pipe all data to all jobs.
 
@@ -3678,7 +3678,7 @@ files. Setting B<--tmpdir> is equivalent to setting $TMPDIR.
 See also: B<--compress> B<$TMPDIR> B<$PARALLEL_REMOTE_TMPDIR>
 
 
-=item B<--tmux> (Long beta testing)
+=item B<--tmux> (alpha testing)
 
 Use B<tmux> for output. Start a B<tmux> session and run each job in a
 window in that session. No other output will be produced.
@@ -3686,7 +3686,7 @@ window in that session. No other output will be produced.
 See also: B<--tmuxpane>
 
 
-=item B<--tmuxpane> (Long beta testing)
+=item B<--tmuxpane> (alpha testing)
 
 Use B<tmux> for output but put output into panes in the first window.
 Useful if you want to monitor the progress of less than 100 concurrent
@@ -3727,9 +3727,9 @@ Shorthand for: B<--transferfile {}>.
 See also: B<--transferfile>.
 
 
-=item B<--transferfile> I<filename>
+=item B<--transferfile> I<filename> (alpha testing)
 
-=item B<--tf> I<filename>
+=item B<--tf> I<filename> (alpha testing)
 
 Transfer I<filename> to remote computers.
 
@@ -3781,7 +3781,7 @@ See also: B<--workdir> B<--sshlogin> B<--basefile> B<--return>
 B<--cleanup>
 
 
-=item B<--trc> I<filename>
+=item B<--trc> I<filename> (alpha testing)
 
 Transfer, Return, Cleanup. Shorthand for: B<--transfer> B<--return>
 I<filename> B<--cleanup>
