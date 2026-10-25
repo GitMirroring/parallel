@@ -29,7 +29,7 @@ export -f par_tmux
 # echo '### bug #48841: --tmux(pane) --fg should start tmux in foreground'
 # stdout /usr/bin/time -f %e script -q -f -c /tmp/parallel-local7-script /dev/null |  perl -ne '$_ >= 26 and $_ <= 45 and print "OK\n"'
 
-cat <<'EOF' | sed -e 's/;$/; /;s/$SERVER1/'$SERVER1'/;s/$SERVER2/'$SERVER2'/' | stdout parallel -vj8 --delay 1 --timeout 240 --retries 3 -k --joblog /tmp/jl-`basename $0` -L1 -r
+cat <<'EOF' | sed -e 's/;$/; /;s/$SERVER1/'$SERVER1'/;s/$SERVER2/'$SERVER2'/' | stdout parallel -vj8 --delay 1 --timeout 40 --retries 3 -k --joblog /tmp/jl-`basename $0` -L1 -r
 
 echo '### tmux-1.9'
   seq 510 512 | PARALLEL_TMUX=tmux-1.9 par_tmux

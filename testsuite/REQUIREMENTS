@@ -89,8 +89,7 @@ install_packages() {
 	wget -m https://releases.hashicorp.com/vagrant/2.3.7/vagrant_2.3.7-1_amd64.deb
 	sudo dpkg -i releases.hashicorp.com/vagrant/2.3.7/vagrant_2.3.7-1_amd64.deb
 	# Vagrant 2.3.7 only supports VirtualBox up to 7.0; patch it to also accept 7.1 and 7.2
-	sudo sed -i '/"7.0" => Version_7_0,/a            "7.1" => Version_7_0,
-            "7.2" => Version_7_0,' /opt/vagrant/embedded/gems/gems/vagrant-2.3.7/plugins/providers/virtualbox/driver/meta.rb
+	sudo perl -i -pe 's/("7.0" => Version_7_0,)/$1\n"7.1" => Version_7_0,\n"7.2" => Version_7_0,/' /opt/vagrant/embedded/gems/gems/vagrant-2.3.7/plugins/providers/virtualbox/driver/meta.rb
     fi
     sudo apt install -y python3-sphinx-rtd-theme || pip install sphinx-rtd-theme
     sudo apt update &

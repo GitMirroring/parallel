@@ -16,6 +16,58 @@ export -f stdsort
 # Test amount of parallelization
 # parallel --shuf --jl /tmp/myjl -j1 'export JOBS={1};'bash tests-to-run/parallel-local-0.3s.sh ::: {1..16} ::: {1..5}
 
+par_header() {
+    echo '### bug #68690: --results CSV overwrites --header column names with :::: input filenames'
+    doit() {
+	header=$1
+	parallel -k \
+	    --header "$header" \
+	    --colsep , \
+	    --results -.csv \
+	    true col2={2} - {}\
+	    ::: 'A,B' '1,2' \
+	    ::: 'C,D' '3,4' |
+	    perl -pe 's/([^,]+,){8}//'
+
+	echo 'A,B' > first.csv
+	echo '1,2' >> first.csv
+
+	echo 'C,D' > second.csv
+	echo '3,4' >> second.csv
+
+	parallel -k \
+	    --header "$header" \
+	    --colsep , \
+	    --results -.csv \
+	    true col2={2} - {}\
+	    :::: first.csv \
+	    :::: second.csv |
+	    perl -pe 's/([^,]+,){8}//'
+
+	echo '## Improper way to use --header 0 (--colsep in file)'
+	parallel -k \
+	    --header "$header" \
+	    --colsep , \
+	    --results -.csv \
+	    true second.csv={second.csv} - {}\
+	    :::: first.csv \
+	    :::: second.csv |
+	    perl -pe 's/([^,]+,){8}//' 
+	echo '## Proper way to use --header 0 (--colsep not in file)'
+	parallel -k \
+	    --header "$header" \
+	    --colsep '\0' \
+	    --results -.csv \
+	    true second.csv={second.csv} - {}\
+	    :::: first.csv \
+	    :::: second.csv |
+	    perl -pe 's/([^,]+,){8}//'
+    }
+    export -f doit
+    parallel --tag -k doit ::: : 1 0
+    rm first.csv second.csv
+}
+
 par_shell_not_set_pipe() {
     echo "### --pipe should not fail if SHELL unset"
     echo OK | env -u SHELL parallel --pipe cat

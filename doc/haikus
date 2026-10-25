@@ -4,17 +4,8 @@
  
 Quote of the month:
 
-  Parallel has an option for almost everything, it's almost too much.
-  tester457@ycombinator
-
-  GNU parallel is awesome. Use it more often in your scripts!
-    -- Wade @WadeGrimshire@twitter
-
   by extreme do you mean extremely slow? you could do it at least 100x faster using awk + grep + gnu parallel
     -- @ObssessedDev@twitter
-
-  gnu parallel is amazing
-    -- Tarun Agarwal @axrawal
 
 --line-buffer, a flag
 parallel, now more precise
@@ -226,6 +217,15 @@ https://negfeedback.blogspot.com/2020/05/indispensable-command-line-tools.html
     -- @alinajaf@twitter
 
 === Used ===
+
+  gnu parallel is amazing
+    -- Tarun Agarwal @axrawal
+
+  Parallel has an option for almost everything, it's almost too much.
+  tester457@ycombinator
+
+  GNU parallel is awesome. Use it more often in your scripts!
+    -- Wade @WadeGrimshire@twitter
 
   gnu parallelすごい！！！
     -- たらたら@nosennyuu@twitter

@@ -1,3 +1,8 @@
+20260922
+
+* Bug fixes and man page updates.
+
+
 20260822
 
 * Replacement string: {%jq: jq-expression %}

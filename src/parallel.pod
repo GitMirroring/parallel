@@ -214,7 +214,7 @@ job being run. It contains the same number as $PARALLEL_SEQ.
 See also: B<{}> B<--seqreplace>
 
 
-=item B<{%}> (beta testing)
+=item B<{%}>
 
 Job slot number.
 
@@ -370,7 +370,7 @@ Number of jobs in total. Example:
 
   parallel echo Number of jobs: '{= $_=total_jobs() =}' ::: a b c
 
-=item Z<> B<slot()> (beta testing)
+=item Z<> B<slot()>
 
 Slot number of job. Example:
 
@@ -392,7 +392,7 @@ The arguments counting from 1 ($arg[1] = {1} = first argument). Example:
 ('{=1' forces this to be a positional replacement string, and
 therefore will not repeat the value for each arg.)
 
-=item Z<> B<skip()> (beta testing)
+=item Z<> B<skip()>
 
 Skip this job (see also B<--filter>). Example:
 
@@ -1074,7 +1074,7 @@ After which you add your code at the end of B<new_script>. This is tested
 on B<ash>, B<bash>, B<dash>, B<ksh>, B<sh>, and B<zsh>.
 
 
-=item B<--env> I<var> (beta testing)
+=item B<--env> I<var>
 
 Copy exported environment variable I<var>.
 
@@ -1120,7 +1120,7 @@ line without extension.
 See also: B<{.}>
 
 
-=item B<--fast> (beta testing)
+=item B<--fast>
 
 Run jobs fast.
 
@@ -1260,7 +1260,7 @@ before exiting. Exit code will be that of the command.
 See also: B<--bg> B<man sem>
 
 
-=item B<--fifo> (beta testing)
+=item B<--fifo>
 
 Create a temporary fifo with content.
 
@@ -1283,7 +1283,7 @@ Implies B<--pipe> unless B<--pipe-part> is used.
 See also: B<--cat> B<--pipe> B<--pipe-part>
 
 
-=item B<--filter> I<filter> (beta testing)
+=item B<--filter> I<filter>
 
 Only run jobs where I<filter> is true.
 
@@ -1358,7 +1358,7 @@ correct per-job labelling.
 See also: B<--line-buffer> B<--ungroup> B<--tag>
 
 
-=item B<--group-by> I<val> (beta testing)
+=item B<--group-by> I<val>
 
 Group input by value.
 
@@ -1536,7 +1536,7 @@ soon,fail=1-99%
 =back
 
 
-=item B<--header> I<regexp>
+=item B<--header> I<regexp> (beta testing)
 
 Use regexp as header.
 
@@ -1555,7 +1555,7 @@ If I<regexp> is a number, it is a fixed number of lines.
 
 B<--header 0> is special: It will make replacement strings for files
 given with B<--arg-file> or B<::::>. It will make B<{foo/bar}> for the
-file B<foo/bar>.
+file B<foo/bar>. The files cannot contain the B<--colsep> string.
 
 See also: B<--colsep> B<--pipe> B<--pipe-part> B<--arg-file>
 
@@ -1734,9 +1734,9 @@ See also: B<--use-cores-instead-of-threads>
 B<--use-sockets-instead-of-threads>
 
 
-=item B<--keep-order> (beta testing)
+=item B<--keep-order>
 
-=item B<-k> (beta testing)
+=item B<-k>
 
 Keep sequence of output same as the order of input.
 
@@ -2159,7 +2159,7 @@ is somewhat slower than B<--block>.
 See also: UNIT PREFIX B<--pipe> B<--block> B<-m> B<-X> B<--max-args>
 
 
-=item B<--nonall> (beta testing)
+=item B<--nonall>
 
 B<--onall> with no arguments.
 
@@ -2174,7 +2174,7 @@ servers.
 See also: B<--onall> B<--sshlogin>
 
 
-=item B<--onall> (beta testing)
+=item B<--onall>
 
 Run all the jobs on all computers given with B<--sshlogin>.
 
@@ -2260,7 +2260,7 @@ See also: B<--block> B<--block-timeout> B<--recstart> B<--recend>
 B<--fifo> B<--cat> B<--pipe-part> B<-N> B<-L> B<--round-robin>
 
 
-=item B<--pipe-part> (beta testing)
+=item B<--pipe-part>
 
 Pipe parts of a physical file.
 
@@ -2315,7 +2315,7 @@ Example wrapper script running as root:
 See also: B<--profile>
 
 
-=item B<--plus> (alpha testing)
+=item B<--plus>
 
 Add more replacement strings.
 
@@ -2935,9 +2935,9 @@ See also: B<--transfer> B<--transferfile> B<--sshlogin> B<--cleanup>
 B<--workdir>
 
 
-=item B<--round-robin> (beta testing)
+=item B<--round-robin>
 
-=item B<--round> (beta testing)
+=item B<--round>
 
 Distribute chunks of standard input in a round robin fashion.
 
@@ -3401,7 +3401,7 @@ table will not be ':' but instead the hostname of the machine.
 See also: B<--sql-master> B<--sql-and-worker>
 
 
-=item B<--ssh> I<sshcommand> (beta testing)
+=item B<--ssh> I<sshcommand>
 
 GNU B<parallel> defaults to using B<ssh> for remote access. This can
 be overridden with B<--ssh>. It can also be set on a per server
@@ -3421,11 +3421,11 @@ I<duration> is in seconds, but can be postfixed with s, m, h, or d.
 See also: TIME POSTFIXES B<--sshlogin> B<--delay>
 
 
-=item B<--sshlogin> I<[@hostgroups/][ncpus/][[user][:[password]]@]host[:port][,...]> (beta testing)
+=item B<--sshlogin> I<[@hostgroups/][ncpus/][[user][:[password]]@]host[:port][,...]>
 
 =item B<--sshlogin> I<@hostgroup>/
 
-=item B<-S> I<[@hostgroups/][ncpus/][ssh command][[user][:[password]]@]host[:port][,...]> (beta testing)
+=item B<-S> I<[@hostgroups/][ncpus/][ssh command][[user][:[password]]@]host[:port][,...]>
 
 =item B<-S> I<@hostgroup>/
 
@@ -3733,7 +3733,7 @@ B<--tagstring> is ignored when using B<-u>, B<--onall>, and B<--nonall>.
 See also: B<--tag> B<--ctagstring>
 
 
-=item B<--tee> (beta testing)
+=item B<--tee>
 
 Pipe all data to all jobs.
 
@@ -3798,7 +3798,7 @@ files. Setting B<--tmpdir> is equivalent to setting $TMPDIR.
 See also: B<--compress> B<$TMPDIR> B<$PARALLEL_REMOTE_TMPDIR>
 
 
-=item B<--tmux> (alpha testing)
+=item B<--tmux> (beta testing)
 
 Use B<tmux> for output. Start a B<tmux> session and run each job in a
 window in that session. No other output will be produced.
@@ -3806,7 +3806,7 @@ window in that session. No other output will be produced.
 See also: B<--tmuxpane>
 
 
-=item B<--tmuxpane> (alpha testing)
+=item B<--tmuxpane> (beta testing)
 
 Use B<tmux> for output but put output into panes in the first window.
 Useful if you want to monitor the progress of less than 100 concurrent

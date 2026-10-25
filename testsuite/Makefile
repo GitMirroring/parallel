@@ -11,7 +11,8 @@ testsuite: short
 all: mem short long polar 
 	true
 
-3: ../src/parallel tests-to-run/* wanted-results/* dbstart prereqlocal prereqremote
+#3: ../src/parallel tests-to-run/* wanted-results/* dbstart prereqlocal prereqremote
+3: ../src/parallel tests-to-run/* wanted-results/* prereqlocal prereqremote
 	TRIES=3 time bash Start.sh '' 'mem|manual' || true
 	touch ~/.parallel/will-cite
 	make stopvm

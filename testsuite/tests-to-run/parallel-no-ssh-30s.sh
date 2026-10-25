@@ -482,10 +482,13 @@ par__groupby_pipepart() {
 		 -a "$tmp" --colsep "$colsep" --groupby "$groupby" 'echo NewRec; wc'
     }
     export -f tester
-    parallel --tag -k tester \
+    stdout parallel --tag -k tester \
 	     ::: tsv ssv cssv csv \
 	     :::+ '\t' '\s+' '[\s,]+' ',' \
-	     ::: '3 $_%=2' 3 c1 'c1 $_%=2' 's/^(\d+[\t ,]+){2}(\d+).*/$2/'
+	     ::: '3 $_%=2' 3 c1 'c1 $_%=2' 's/^(\d+[\t ,]+){2}(\d+).*/$2/' |
+	perl -ne '/parallel: Warning: Starting .* processes took > 2 sec./ && next;
+                  /parallel: Warning: Consider adjusting -j. Press CTRL-C to stop./ && next;
+                  print;'
 }
 
 par_sighup() {

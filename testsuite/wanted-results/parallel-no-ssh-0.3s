@@ -247,6 +247,49 @@ par_halt_one_job	echo 1;exit 1
 par_hash_and_time_functions	### Functions for replacement string
 par_hash_and_time_functions	9999-99-99T99:99:99 9999-99-99T99:99 9999-99-99 99:99:99 99:99 99999999999999 999999999999 99999999 999999 9999
 par_hash_and_time_functions	XxX
+par_header	### bug #68690: --results CSV overwrites --header column names with :::: input filenames
+par_header	:	Command,A,B,C,D,Stdout,Stderr
+par_header	:	"true col2=2 - 1 2 3 4",1,2,3,4,,
+par_header	:	Command,A,B,C,D,Stdout,Stderr
+par_header	:	"true col2=2 - 1 2 3 4",1,2,3,4,,
+par_header	:	## Improper way to use --header 0 (--colsep in file)
+par_header	:	Command,A,B,C,D,Stdout,Stderr
+par_header	:	"true second.csv={second.csv} - 1 2 3 4",1,2,3,4,,
+par_header	:	## Proper way to use --header 0 (--colsep not in file)
+par_header	:	Command,"A,B","C,D",Stdout,Stderr
+par_header	:	"true second.csv={second.csv} - '1,2' '3,4'","1,2","3,4",,
+par_header	1	Command,A,B,C,D,Stdout,Stderr
+par_header	1	"true col2=2 - 1 2 3 4",1,2,3,4,,
+par_header	1	Command,A,B,C,D,Stdout,Stderr
+par_header	1	"true col2=2 - 1 2 3 4",1,2,3,4,,
+par_header	1	## Improper way to use --header 0 (--colsep in file)
+par_header	1	Command,A,B,C,D,Stdout,Stderr
+par_header	1	"true second.csv={second.csv} - 1 2 3 4",1,2,3,4,,
+par_header	1	## Proper way to use --header 0 (--colsep not in file)
+par_header	1	Command,"A,B","C,D",Stdout,Stderr
+par_header	1	"true second.csv={second.csv} - '1,2' '3,4'","1,2","3,4",,
+par_header	0	Command,V1,V2,V3,V4,Stdout,Stderr
+par_header	0	"true col2=B - A B C D",A,B,C,D,,
+par_header	0	"true col2=B - A B 3 4",A,B,3,4,,
+par_header	0	"true col2=2 - 1 2 C D",1,2,C,D,,
+par_header	0	"true col2=2 - 1 2 3 4",1,2,3,4,,
+par_header	0	Command,V1,V2,V3,V4,Stdout,Stderr
+par_header	0	"true col2=B - A B C D",A,B,C,D,,
+par_header	0	"true col2=B - A B 3 4",A,B,3,4,,
+par_header	0	"true col2=2 - 1 2 C D",1,2,C,D,,
+par_header	0	"true col2=2 - 1 2 3 4",1,2,3,4,,
+par_header	0	## Improper way to use --header 0 (--colsep in file)
+par_header	0	Command,V1,V2,V3,V4,Stdout,Stderr
+par_header	0	"true second.csv=B - A B C D",A,B,C,D,,
+par_header	0	"true second.csv=B - A B 3 4",A,B,3,4,,
+par_header	0	"true second.csv=2 - 1 2 C D",1,2,C,D,,
+par_header	0	"true second.csv=2 - 1 2 3 4",1,2,3,4,,
+par_header	0	## Proper way to use --header 0 (--colsep not in file)
+par_header	0	Command,V1,V2,Stdout,Stderr
+par_header	0	"true second.csv='C,D' - 'A,B' 'C,D'","A,B","C,D",,
+par_header	0	"true second.csv='3,4' - 'A,B' '3,4'","A,B","3,4",,
+par_header	0	"true second.csv='C,D' - '1,2' 'C,D'","1,2","C,D",,
+par_header	0	"true second.csv='3,4' - '1,2' '3,4'","1,2","3,4",,
 par_help	### Test --help and -h: Help output (just check we get the same amount of lines)
 par_help	Output from -h and --help
 par_help	37
@@ -981,6 +1024,7 @@ par_rpl_that_is_substring_of_longer_rpl	a.b/c.d/e.f=a.b/c.d/e.f
 par_sem_quote	### sem --quote should not add empty argument
 par_sem_quote	echo
 par_sem_quote	
+par_shell_not_set_pipe	### --pipe should not fail if SHELL unset
 par_shell_not_set_pipe	OK
 par_shellcompletion	### --shellcompletion
 par_shellcompletion	e29ff2d5f549f95d5fd45501eacb13d4  -
