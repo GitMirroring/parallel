@@ -3344,7 +3344,7 @@ sub init_globals() {
     #   SSH / remote host data structures
     #   Job counters and state flags
     # Defaults:
-    $Global::version = 20260922;
+    $Global::version = 20261022;
     # Deliver perl bootstrap source via stdin pipe (ssh host -- exec perl).
     # Set to 0 to use an alternative delivery mechanism (future option).
     $Global::command_via_pipe = 1;
@@ -6646,8 +6646,8 @@ sub usage() {
 	 "If you use programs that use GNU Parallel to process data for an article in a",
 	 "scientific publication, please cite:",
 	 "",
-	 "  Tange, O. (2026, September 22). GNU Parallel 20260922 ('Parton').",
-	 "  Zenodo. https://doi.org/10.5281/zenodo.22904078",
+	 "  Tange, O. (2026, October 22). GNU Parallel 20261022 ('Lycée').",
+	 "  Zenodo. https://doi.org/10.5281/zenodo.23745544",
 	 "",
 	 # Before changing these lines,  please read
 	 # https://www.gnu.org/software/parallel/parallel_design.html#citation-notice
@@ -6695,8 +6695,8 @@ sub citation_notice() {
 		 "If you use programs that use GNU Parallel to process data for an article in a",
 		 "scientific publication, please cite:",
 		 "",
-		 "  Tange, O. (2026, September 22). GNU Parallel 20260922 ('Parton').",
-		 "  Zenodo. https://doi.org/10.5281/zenodo.22904078",
+		 "  Tange, O. (2026, October 22). GNU Parallel 20261022 ('Lycée').",
+		 "  Zenodo. https://doi.org/10.5281/zenodo.23745544",
 		 "",
 		 # Before changing the code to block printing the citation notice
 		 # if the user has not accepted to cite, please read:
@@ -6809,20 +6809,20 @@ sub citation() {
 	"If you use programs that use GNU Parallel to process data for an article in a",
 	"scientific publication, please cite:",
 	"",
-	"\@software{tange_2026_22904078,",
+	"\@software{tange_2026_23745544,",
 	"      author       = {Tange, Ole},",
-	"      title        = {GNU Parallel 20260922 ('Parton')},",
-	"      month        = Sep,",
+	"      title        = {GNU Parallel 20261022 ('Lycée')},",
+	"      month        = Oct,",
 	"      year         = 2026,",
 	"      note         = {{GNU Parallel is a general parallelizer to run",
 	"                       multiple serial command line programs in parallel",
 	"                       without changing them.}},",
 	"      publisher    = {Zenodo},",
-	"      doi          = {10.5281/zenodo.22904078},",
-	"      url          = {https://doi.org/10.5281/zenodo.22904078}",
+	"      doi          = {10.5281/zenodo.23745544},",
+	"      url          = {https://doi.org/10.5281/zenodo.23745544}",
 	"}",
 	"",
-	"(Feel free to use \\nocite{tange_2026_22904078})",
+	"(Feel free to use \\nocite{tange_2026_23745544})",
 	"",
 	# Before changing the code to block printing the citation notice
 	# if the user has not accepted to cite, please read:

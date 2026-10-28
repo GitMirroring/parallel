@@ -194,6 +194,7 @@ echo "$TAG" | grep ' ' && (STOP;STOP;STOP)
 echo "Released as $YYYYMMDD ('$SPCTAG')."
 
 git commit -a -m "Released as $YYYYMMDD ('$SPCTAG')"
+export GPG_TTY=$(tty)
 git tag -s -u 88888888 -m "Released as $YYYYMMDD ('$SPCTAG')" $TAG
 git tag -s -u 88888888 -m "Released as $YYYYMMDD ('$SPCTAG')" $YYYYMMDD
 
